@@ -3,6 +3,7 @@
 export(doROC)
 export(multGGplot)
 export(set.var.labels)
+export(stepLR)
 export(tabOR_lr)
 import(Hmisc)
 import(ggplot2)
