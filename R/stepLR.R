@@ -2,7 +2,7 @@
 #'
 #' Construye el mejor modelo de regresion logistica basandose en el AIC y cuyo pvalor 
 #' al comparar los modelos sea inferior a 0.1,  partiendo de "x" variables explicativas.
-#' IMPORTANTE: para la construcción de todos los modelos se tendra en cuenta na.omit(data) excepto para el final que tendra 
+#' IMPORTANTE: para la construcción de todos los modelos se tendran en cuenta solo aquellos pacientes que tengan valores para todas las variables indicadas excepto para el final que tendra 
 #' en cuenta las variables finales.
 #' @param VR Nombre de la variable respuesta. Debe ser una variable categorica dicotomica
 #' @param varExpl vector con los nombre de las variables explicativas que se quieren tener en cuenta para construir el modelo.
@@ -35,10 +35,10 @@ stepLR <- function(VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1 
     ## Creació de model null o de model inicial
     if (sum(is.na(var2mod)) >= 1) {
       frml <- as.formula( paste(VR, "~", "1"))
-      mod <- glm(frml , data =  na.omit(data), family = binomial)
+      mod <- glm(frml , data =  na.omit(data[,c(VR,varExpl)]), family = binomial)
     }else{  
       frml <- as.formula( paste(VR, "~", paste(var2mod,collapse = "+" )))
-      mod <- glm(frml , data =  na.omit(data), family = binomial)
+      mod <- glm(frml , data =  na.omit(data[,c(VR,varExpl)]), family = binomial)
       if (trace) {
         cat(paste(VR, "~", paste(var2mod,collapse = " + " )),"\n")
         print(round(tabOR_lr(mod,xtab = F),3))
@@ -53,7 +53,7 @@ stepLR <- function(VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1 
                        }else{  
                          formula    <- as.formula(paste( VR, " ~ ",paste(var2mod,collapse = "+"),"+", var ))
                        }
-                       res.logist <- glm(formula, data =  na.omit(data), 
+                       res.logist <- glm(formula, data =  na.omit(data[,c(VR,varExpl)]), 
                                          family = binomial)
                        c(var, res.logist$aic, anova(mod, res.logist,test = "LRT" )$Pr[2])
                      })
@@ -77,7 +77,7 @@ stepLR <- function(VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1 
     ## model final. Quan ja no hi ha més variables per entrar o quan no hi ha cap que sigui significativa.
     if (length(varSelStep) == 0) {
       modfin <- list()
-      modfin[[1]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data), family = binomial)
+      modfin[[1]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,varExpl)]), family = binomial)
       modfin[[2]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,var2mod)]), family = binomial)
       return(modfin)
       break 
