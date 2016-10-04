@@ -3,9 +3,13 @@ Title: Primer paquet, funcions R habituals
 Version: 0.0.0.9000
 Authors@R: person("Mota", "Miriam", email = "mmota.foix@gmail.com", role = c("aut", "cre"))
 Description: Primer paquet, funcions R habituals
-Depends: 
-    R (>= 3.2.2)
-License: What license is it under?
+Depends:
+    R (>= 3.2.0),xtable,Hmisc,
+    grid,
+    ggplot2,
+    pROC
+License: GPL (>= 2)
 LazyData: true
 RoxygenNote: 5.0.1
-Imports: grid, xtable, Hmisc
+Encoding: UTF-8
+BugReports: https://github.com/miriamMota/mmotaF/issues

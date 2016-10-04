@@ -4,7 +4,7 @@
 #' @param dataframe en el cual queremos añadir etiquetas
 #' @param label.vector vector string con el nombre de las etiquetas de las variables
 #' @keywords labels
-#' @export
+#' @export set.var.labels
 #' @import Hmisc
 #' @examples
 #' # dat <- data.frame(a=c(0,1,2),b=c(1,3,4),d=c(3,4,5))

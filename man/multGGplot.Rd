@@ -17,7 +17,6 @@ multGGplot(..., plotlist = NULL, file, cols = 1, layout = NULL)
 Similar a par(mfrow=c(row,col)) para "ggplot" (Obtenida de cookbook for R )
 }
 \examples{
-installifnot("ggplot2")
 p1 <- qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),fill=gear)
 p2 <- p3 <- p4 <- p1
 multGGplot(p1,p2,p3,p4, cols=2)

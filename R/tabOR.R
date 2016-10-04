@@ -28,8 +28,9 @@
 
 tabOR_lr <- function(mod, xtab=FALSE, title = "title"){
   ORcoef <- exp(mod$coeff) ## OR
-  infORcoef <- exp(confint(mod))[,1] ## IC dels OR
-  supORcoef <- exp(confint(mod))[,2]
+  IC <- exp(confint(mod))
+  infORcoef <- IC[,1] ## IC dels OR 
+  supORcoef <- IC[,2]
   p.val <- summary(mod)$coef[,4]
   tauORcoef <- data.frame(ORcoef, infORcoef,supORcoef,p.val)
   colnames(tauORcoef) <- c("OR", "IC inferior", "IC superior","P.valor")

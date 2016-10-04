@@ -7,8 +7,8 @@
 #' @keywords multiGGplot
 #' @export multGGplot
 #' @import grid
+#' @import ggplot2
 #' @examples
-#' installifnot("ggplot2")
 #' p1 <- qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),fill=gear)
 #' p2 <- p3 <- p4 <- p1
 #' multGGplot(p1,p2,p3,p4, cols=2)
