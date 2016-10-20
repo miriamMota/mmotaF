@@ -12,7 +12,6 @@
 #' @param  thrPval valor a partir del cual se considerara que una variable es significativa (p.valor resultante de comparar dos modelos). Por defecto 0.1
 #' @keywords step regresion logisitica stepwise forward glm aic 
 #' @export stepLR
-#' @import xtable
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' # data("mtcars")
