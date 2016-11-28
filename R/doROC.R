@@ -10,6 +10,7 @@
 #' @param test data.frame indicando los nuevos valores de la variable explicativa
 #' @param test_y vector factor indicando grupo de los nuevos individuos
 #' @param col.thres color de la cruz que indica el punto de corte óptimo en el gráfico
+#' @param col.ic color para el intervalo de confianza. Debe ser translucido, por lo que se puede usar la función makeTransparent para cualquier color R. 
 #' @export doROC
 #' @import pROC
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
@@ -27,7 +28,7 @@
 #' @keywords roc glm test validation
 
 
-doROC <- function(frml, titol,validation = FALSE, test, test_y,col.thres = "blue")
+doROC <- function(frml, titol,validation = FALSE, test, test_y,col.thres = "blue", col.ic = "#aaddddAA")
 {
   mod <- glm(frml , family = binomial, na.action = "na.omit")
   
@@ -38,7 +39,7 @@ doROC <- function(frml, titol,validation = FALSE, test, test_y,col.thres = "blue
   thres <- rocobj$sensitivities - (1 - rocobj$specificities)
   thres.best <- rocobj$thresholds[which(thres == max(thres))] # threshold  de Youden
   ciobj <- ci.se(rocobj, boot.n = 100,progress = "none")
-  plot(ciobj, type = "shape", col = "#aaddddAA") # plot as a blue shape
+  plot(ciobj, type = "shape", col = col.ic) # plot as a blue shape
   plot(ci(rocobj, of = "thresholds", thresholds = "best",progress = "none"), col = col.thres,lwd=2)
   ic <- rocobj$ci
   auc_text <- paste(round(ic[2],2), "% (", 

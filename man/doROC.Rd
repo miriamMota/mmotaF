@@ -4,7 +4,8 @@
 \alias{doROC}
 \title{A doROC Function}
 \usage{
-doROC(frml, titol, validation = FALSE, test, test_y, col.thres = "blue")
+doROC(frml, titol, validation = FALSE, test, test_y, col.thres = "blue",
+  col.ic = "#aaddddAA")
 }
 \arguments{
 \item{frml}{objeto tipo formula indicando como variable respuesta una variable binaria y como explicativa una contínua}
@@ -18,6 +19,8 @@ doROC(frml, titol, validation = FALSE, test, test_y, col.thres = "blue")
 \item{test_y}{vector factor indicando grupo de los nuevos individuos}
 
 \item{col.thres}{color de la cruz que indica el punto de corte óptimo en el gráfico}
+
+\item{col.ic}{color para el intervalo de confianza. Debe ser translucido, por lo que se puede usar la función makeTransparent para cualquier color R.}
 }
 \value{
 auc: Area bajo la curva y correspondiente intervalo de confianza
