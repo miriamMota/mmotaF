@@ -59,7 +59,7 @@ doROC <- function(frml, titol,validation = FALSE, test, test_y,col.thres = "blue
     misc.test <- 1  - (sum(diag(tab.pred))/sum(tab.pred))
     return(list(auc = auc_text, pvalue = p.val, thres.best = thres.best, misc.test = misc.test))
   }
-  if (!validation) return(list(auc = auc_text, pvalue = p.val, thres.best = thres.best))
+  if (!validation) return(list(auc = auc_text, pvalue = p.val, thres.best = thres.best, levels = rocobj[15], cases = rocobj[6], controls = rocobj[7] ))
 }
 
 
