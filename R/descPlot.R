@@ -14,11 +14,12 @@
 
 descPlot <- function(data, topdf = FALSE, nameFile = "descriptive_plots.pdf"){
   if (topdf) pdf(nameFile)
-  par(mfrow = c(3,2))
-  for (i in 2:dim(data)[2]) {
-    if (class(data[,i]) == "factor") {plot(data[,i], xlab = names(data)[i], main = "Histograma")
+  par(mfrow = c(4,2))
+  for (i in 2:dim(dat)[2]) {
+    if (class(dat[,i]) == "factor") {
+      try(plot(dat[,i], xlab = names(dat)[i], main = "Diagrama de barras"),TRUE)
     }else {
-      hist(data[,i], xlab = names(data)[i], main = "Histograma")
+      try(hist(dat[,i], xlab = names(dat)[i], main = "Histograma"),TRUE)
     }
   }
   if (topdf) dev.off()
