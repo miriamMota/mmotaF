@@ -4,7 +4,8 @@
 \alias{descPlot}
 \title{A descPlot Function}
 \usage{
-descPlot(dat, topdf = FALSE, nameFile = "descriptive_plots.pdf")
+descPlot(dat, topdf = FALSE, nameFile = "descriptive_plots.pdf",
+  color = "gray48", nrow.par = 4, ncol.par = 2)
 }
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
@@ -12,6 +13,12 @@ descPlot(dat, topdf = FALSE, nameFile = "descriptive_plots.pdf")
 \item{topdf}{valor lógico indicando si se quieren guardar los gráficos en pdf. Por defecto FALSE.}
 
 \item{nameFile}{nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto "descriptive_plots.pdf".}
+
+\item{color}{nombre del color para pintar el gráfico}
+
+\item{nrow.par}{número de filas que mostrar en la interficie gráfica}
+
+\item{ncol.par}{número de columnas que mostrar en la interficie gráfica}
 }
 \description{
 Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es "data.frame"
