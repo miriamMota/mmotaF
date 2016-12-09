@@ -28,14 +28,14 @@
 #' @keywords roc glm test validation
 
 
-doROC <- function(frml, titol,validation = FALSE, test, test_y,col.thres = "blue", col.ic = "#aaddddAA")
+doROC <- function(frml, titol,validation = FALSE, test, test_y,col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE)
 {
   mod <- glm(frml , family = binomial, na.action = "na.omit")
   
   pred <- predict(mod, type = "response")  
   
   rocobj <- plot.roc(mod$y, pred,  main = titol, ci = TRUE, 
-                     percent = TRUE, print.thres = "best") 
+                     percent = TRUE, print.thres = "best",legacy.axes = x.axes) 
   thres <- rocobj$sensitivities - (1 - rocobj$specificities)
   thres.best <- rocobj$thresholds[which(thres == max(thres))] # threshold  de Youden
   ciobj <- ci.se(rocobj, boot.n = 100,progress = "none")
