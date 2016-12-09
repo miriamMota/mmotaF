@@ -5,7 +5,7 @@
 \title{A doROC Function}
 \usage{
 doROC(frml, titol, validation = FALSE, test, test_y, col.thres = "blue",
-  col.ic = "#aaddddAA")
+  col.ic = "#aaddddAA", x.axes = FALSE)
 }
 \arguments{
 \item{frml}{objeto tipo formula indicando como variable respuesta una variable binaria y como explicativa una contínua}
@@ -21,6 +21,8 @@ doROC(frml, titol, validation = FALSE, test, test_y, col.thres = "blue",
 \item{col.thres}{color de la cruz que indica el punto de corte óptimo en el gráfico}
 
 \item{col.ic}{color para el intervalo de confianza. Debe ser translucido, por lo que se puede usar la función makeTransparent para cualquier color R.}
+
+\item{x.axes}{a logical indicating if the specificity axis (x axis) must be plotted as as decreasing “specificity” (FALSE, the default) or increasing “1 - specificity” (TRUE) as in most legacy software. This affects only the axis, not the plot coordinates.}
 }
 \value{
 auc: Area bajo la curva y correspondiente intervalo de confianza

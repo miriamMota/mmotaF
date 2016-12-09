@@ -11,6 +11,7 @@
 #' @param test_y vector factor indicando grupo de los nuevos individuos
 #' @param col.thres color de la cruz que indica el punto de corte óptimo en el gráfico
 #' @param col.ic color para el intervalo de confianza. Debe ser translucido, por lo que se puede usar la función makeTransparent para cualquier color R. 
+#' @param x.axes a logical indicating if the specificity axis (x axis) must be plotted as as decreasing “specificity” (FALSE, the default) or increasing “1 - specificity” (TRUE) as in most legacy software. This affects only the axis, not the plot coordinates.
 #' @export doROC
 #' @import pROC
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
