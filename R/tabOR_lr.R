@@ -8,8 +8,8 @@
 #' @export tabOR_lr
 #' @import xtable
 #' @examples
-#' tabOR_lr(glm(rnorm(50,10,1)~ as.factor(rbinom(50,1,.40))),
-#' xtab=TRUE,title="OR de los coeficientes")
+#' #tabOR_lr(glm(rnorm(50,10,1)~ as.factor(rbinom(50,1,.40))),
+#' #xtab=TRUE,title="OR de los coeficientes")
 
 
 tabOR_lr <- function(mod, xtab = FALSE, title = "title"){
