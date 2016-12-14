@@ -4,9 +4,12 @@ Version: 0.0.0.9000
 Authors@R: person("Mota", "Miriam", email = "mmota.foix@gmail.com", role = c("aut", "cre"))
 Description: Primer paquet, funcions R habituals
 Depends:
-    R (>= 3.2.0),xtable,Hmisc, grid, ggplot2
+    R (>= 3.2.0),xtable,Hmisc,
+    grid,
+    ggplot2,
+    pROC
 License: GPL (>= 2)
 LazyData: true
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 5.0.1
 Encoding: UTF-8
 BugReports: https://github.com/miriamMota/mmotaF/issues
