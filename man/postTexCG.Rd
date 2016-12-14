@@ -13,7 +13,8 @@ postTexCG(nameFile)
 Reescribe el fichero eliminando "2*"
 }
 \description{
-Corrige problema con funcion export2latex del paquete compareGroups, donde por defecto indica: "2*p.overall" y "2*N"
+Corrige problema con funcion export2latex del paquete compareGroups, 
+donde por defecto indica: "2*p.overall" y "2*N"
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

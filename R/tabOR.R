@@ -8,29 +8,15 @@
 #' @export tabOR_lr
 #' @import xtable
 #' @examples
-#' # tabOR_lr(glm(c(0,0,0,1,1)~ c(1,2,3,20,12)))
-#' # tabOR_lr(glm(c(0,0,0,1,1)~ c(1,2,3,20,12)),xtab=TRUE,title="OR de los coeficientes")
+#' tabOR_lr(glm(rnorm(50,10,1)~ as.factor(rbinom(50,1,.40))),
+#' xtab=TRUE,title="OR de los coeficientes")
 
-############################
-## Miriam Mota Foix
-## 24.11.2015
-############################
-
-############################
-## tabOR
-############################
-###
-### mod = model de regressió logística (sense el summary)
-###
-### Generar taula amb els coeficients OR , intervals de confiança i p-valors
-###
-############################
 
 tabOR_lr <- function(mod, xtab = FALSE, title = "title"){
   ORcoef <- exp(mod$coeff) ## OR 
   ic <- exp(confint(mod))
-  infORcoef <- ifelse(  length(mod_fac$coefficients) == 1, ic[1], ic[,1]) ## IC dels OR 
-  supORcoef <- ifelse(  length(mod_fac$coefficients) == 1, ic[2], ic[,2])
+  infORcoef <- ifelse(  length(mod$coefficients) == 1, ic[1], ic[,1]) ## IC dels OR 
+  supORcoef <- ifelse(  length(mod$coefficients) == 1, ic[2], ic[,2])
   p.val <- summary(mod)$coef[,4]
   tauORcoef <- data.frame(ORcoef, infORcoef,supORcoef,p.val)
   colnames(tauORcoef) <- c("OR", "IC inferior", "IC superior","P.valor")
@@ -39,4 +25,3 @@ tabOR_lr <- function(mod, xtab = FALSE, title = "title"){
   }else {return(tauORcoef)}
   
 }
-

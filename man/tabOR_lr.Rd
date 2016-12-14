@@ -17,8 +17,8 @@ tabOR_lr(mod, xtab = FALSE, title = "title")
 Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un modelo de regresión logística
 }
 \examples{
-# tabOR_lr(glm(c(0,0,0,1,1)~ c(1,2,3,20,12)))
-# tabOR_lr(glm(c(0,0,0,1,1)~ c(1,2,3,20,12)),xtab=TRUE,title="OR de los coeficientes")
+tabOR_lr(glm(rnorm(50,10,1)~ as.factor(rbinom(50,1,.40))),
+xtab=TRUE,title="OR de los coeficientes")
 }
 \keyword{OR}
 \keyword{logisitica}

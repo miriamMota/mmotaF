@@ -36,4 +36,3 @@ multGGplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
   }
 }
 
-# #' @import grid
