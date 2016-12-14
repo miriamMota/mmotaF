@@ -1,7 +1,7 @@
 #' A stepLR Function
 #'
 #' Construye el mejor modelo de regresion logistica basandose en el AIC y cuyo pvalor 
-#' al comparar los modelos sea inferior a 0.1,  partiendo de "x" variables explicativas.
+#' al comparar los modelos mediante LRT sea inferior a 0.1,  partiendo de "x" variables explicativas.
 #' IMPORTANTE: para la construcción de todos los modelos se tendran en cuenta solo aquellos pacientes que tengan valores para todas las variables indicadas excepto para el final que tendra 
 #' en cuenta las variables finales.
 #' @param VR Nombre de la variable respuesta. Debe ser una variable categorica dicotomica
@@ -69,7 +69,7 @@ stepLR <- function(VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1 
     if (length(varSelStep) == 0) {
       modfin <- list()
       modfin[[1]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,varExpl,var2mod)]), family = binomial)
-      modfin[[2]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,var2mod,var2mod)]), family = binomial)
+      modfin[[2]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,var2mod)]), family = binomial)
       return(modfin)
       if (trace) {
         print(summary(modfin[[1]]))
