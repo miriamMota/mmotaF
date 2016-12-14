@@ -26,18 +26,17 @@
 ###
 ############################
 
-tabOR_lr <- function(mod, xtab=FALSE, title = "title"){
-  ORcoef <- exp(mod$coeff) ## OR
-  IC <- exp(confint(mod))
-  infORcoef <- IC[,1] ## IC dels OR 
-  supORcoef <- IC[,2]
+tabOR_lr <- function(mod, xtab = FALSE, title = "title"){
+  ORcoef <- exp(mod$coeff) ## OR 
+  ic <- exp(confint(mod))
+  infORcoef <- ifelse(  length(mod_fac$coefficients) == 1, ic[1], ic[,1]) ## IC dels OR 
+  supORcoef <- ifelse(  length(mod_fac$coefficients) == 1, ic[2], ic[,2])
   p.val <- summary(mod)$coef[,4]
   tauORcoef <- data.frame(ORcoef, infORcoef,supORcoef,p.val)
   colnames(tauORcoef) <- c("OR", "IC inferior", "IC superior","P.valor")
   if (xtab)   {
     xtable(tauORcoef,caption = title,digits = 2)
-  }else{ return(tauORcoef)}
-
+  }else {return(tauORcoef)}
+  
 }
-
 
