@@ -15,8 +15,14 @@
 tabOR_lr <- function(mod, xtab = FALSE, title = "title"){
   ORcoef <- exp(mod$coeff) ## OR 
   ic <- exp(confint(mod))
-  infORcoef <- ifelse(  length(mod$coefficients) == 1, ic[1], ic[,1]) ## IC dels OR 
-  supORcoef <- ifelse(  length(mod$coefficients) == 1, ic[2], ic[,2])
+  if(length(mod_fac$coefficients) == 1) {
+    infORcoef <- ic[1]
+    supORcoef <-ic[2]
+  }else{
+    infORcoef <- ic[,1]
+    supORcoef <- ic[,2]
+  } 
+  supORcoef <- ifelse(  length(mod_fac$coefficients) == 1, ic[2], ic[,2])
   p.val <- summary(mod)$coef[,4]
   tauORcoef <- data.frame(ORcoef, infORcoef,supORcoef,p.val)
   colnames(tauORcoef) <- c("OR", "IC inferior", "IC superior","P.valor")
