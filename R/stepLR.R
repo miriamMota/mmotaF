@@ -37,7 +37,7 @@ stepLR <- function(VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1 
       mod <- glm(frml , data =  na.omit(data[,c(VR,varExpl)]), family = binomial)
     }else{  
       frml <- as.formula( paste(VR, "~", paste(var2mod,collapse = "+" )))
-      mod <- glm(frml , data =  na.omit(data[,c(VR,varExpl)]), family = binomial)
+      mod <- glm(frml , data =  na.omit(data[,c(VR,var2mod,varExpl)]), family = binomial)
       if (trace) {
         cat(paste(VR, "~", paste(var2mod,collapse = " + " )),"\n")
         print(round(tabOR_lr(mod,xtab = F),3))
