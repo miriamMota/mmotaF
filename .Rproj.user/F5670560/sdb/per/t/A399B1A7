@@ -1,0 +1,17 @@
+{
+    "contents" : "#' installifnot Function\n#'\n#' Comprueba si un paquete de Bioconductor esta instalado y si no lo instala y carga.\n#' @param pkg Nombre del paquete en formato caracter\n#' @keywords install\n#' @export\n#' @examples\n#' # installBiocifnot(\"CMA\")\n\n\n\ninstallBiocifnot <- function(pckgName){\n  if (!(require(pckgName, character.only = TRUE))) {\n    source(\"http://Bioconductor.org/biocLite.R\")\n    biocLite(pckgName)\n    require(pckgName)\n  }\n}\n# Example\n# installBiocifnot(\"CMA\")\n\n\n\n#' installifnot Function\n#'\n#' Comprueba si un paquete de R cran esta instalado y si no lo instala y carga.\n#' @param pkg Nombre del paquete en formato caracter\n#' @keywords install\n#' @export\n#' @examples\n#' # installifnot(\"rpart\")\n\ninstallifnot <- function(pckgName){\n  if (!(require(pckgName, character.only = TRUE))) {\n    install.packages(pckgName, dep = TRUE)\n    require(pckgName)\n  }\n}\n# Example\n# installifnot(\"xlsx\")\n\n\n\n#' installifnot Function\n#'\n#' Comprueba si un paquete de Github esta instalado y si no lo instala y carga.\n#' @param pkg Nombre del paquete en formato caracter\n#' @param pathGit carpeta on esta el paquet dins de git amb \"/\" final\n#' @keywords install\n#' @export\n#' @examples\n#' # installGitifnot(\"miriammota/\",\"mmotaF\")\n\ninstallGitifnot <- function(pathGit, pckgName){\n  if (!(require(pckgName, character.only = TRUE))) {\n    installifnot(\"devtools\")\n    install_github(file.path(pathGit,pckgName))\n    require(pckgName)\n  }\n}\n# Example\n# installGitifnot(\"miriammota/\",\"mmotaF\")\n",
+    "created" : 1456827217444.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "797796030",
+    "id" : "A399B1A7",
+    "lastKnownWriteTime" : 1456827345,
+    "path" : "~/mmotaF/R/installifnot.R",
+    "project_path" : "R/installifnot.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

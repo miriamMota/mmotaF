@@ -1,0 +1,18 @@
+{
+    "contents" : "# http://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/\n# http://r-pkgs.had.co.nz/git.html\n\nrequire(\"devtools\")\nrequire(\"roxygen2\")\npkgDir <- \"/home/miriam/\"\nsetwd(pkgDir)\ncreate(\"mmotaF\")\n\n\n# agregar funciones a carpeta \"R\" \n\n# añadir documentacion en script funcion.R \n\n#' A Cat Function\n#'\n#' This function allows you to express your love of cats.\n#' @param love Do you love cats? Defaults to TRUE.\n#' @keywords cats\n#' @export\n#' @examples\n#' cat_function()\n\n# procesar documento \nsetwd(\"./mmotaF\")\ndocument()\n\ncheck()\n\n# per instalar \nsetwd(pkgDir)\n# install(\"mmotaF\")  # desde local\n\n\ninstall_github('miriamMota/mmotaF') # desde github\nrequire(tabORrl)\n?tabORrl",
+    "created" : 1456827224669.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "486948650",
+    "id" : "12D79059",
+    "lastKnownWriteTime" : 1456824713,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
