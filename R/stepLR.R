@@ -21,14 +21,6 @@
 #' # summary(modfin[[1]])
 #' # summary(modfin[[2]])
 #' @return modfin: exporta dos modelos, el final teniendo en cuenta solo aquellos individuos que tienen todos los valores para todas las variables y un segundo modelo que tiene en cuenta todos aquellos individuos que tienen valores para las variables finales. 
-
-
-
-############################
-## Miriam Mota Foix
-## 2016.10.04
-############################
-
 stepLR <- function(VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1  ){
   for (i in 1:length(varExpl)) {
     ## Creació de model null o de model inicial
@@ -52,7 +44,7 @@ stepLR <- function(VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1 
                        }else{  
                          formula    <- as.formula(paste( VR, " ~ ",paste(var2mod,collapse = "+"),"+", var ))
                        }
-                       res.logist <- glm(formula, data =  na.omit(data[,c(VR,varExpl)]), 
+                       res.logist <- glm(formula, data =  na.omit(data[,c(VR,varExpl,var2mod)]), 
                                          family = binomial)
                        c(var, res.logist$aic, anova(mod, res.logist,test = "LRT" )$Pr[2])
                      })
@@ -76,10 +68,10 @@ stepLR <- function(VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1 
     ## model final. Quan ja no hi ha més variables per entrar o quan no hi ha cap que sigui significativa.
     if (length(varSelStep) == 0) {
       modfin <- list()
-      modfin[[1]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,varExpl)]), family = binomial)
-      modfin[[2]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,var2mod)]), family = binomial)
+      modfin[[1]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,varExpl,var2mod)]), family = binomial)
+      modfin[[2]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,var2mod,var2mod)]), family = binomial)
       return(modfin)
-      if(trace) {
+      if (trace) {
         print(summary(modfin[[1]]))
         print(summary(modfin[[2]]))
       }
