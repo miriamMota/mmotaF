@@ -7,6 +7,7 @@
 #' @param color nombre del color para pintar el gráfico
 #' @param nrow.par número de filas que mostrar en la interficie gráfica 
 #' @param ncol.par número de columnas que mostrar en la interficie gráfica 
+#' @param show.lg TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.
 #' @export descPlot
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
@@ -16,24 +17,38 @@
 #' @keywords plots descriptive 
 
 
-descPlot <- function(dat, topdf = FALSE, nameFile = "descriptive_plots.pdf", color = "gray48", nrow.par = 4, ncol.par = 2) 
+descPlot <- function(dat, topdf = FALSE, nameFile = "descriptive_plots.pdf", 
+                      color = "gray48", nrow.par = 4, ncol.par = 2, show.lg = FALSE) 
 {
-  if (topdf)   pdf(nameFile)
+  if (topdf) 
+    pdf(nameFile)
   par(mfrow = c(nrow.par, ncol.par))
   for (i in 1:dim(dat)[2]) {
     if (class(dat[, i]) == "factor") {
-      try(plot(dat[, i], xlab = names(dat)[i], main = "Diagrama de barras", col = makeTransparent(color)), 
-          TRUE)
+      col.lev <- makeTransparent(color, "#3498db", "#95a5a6", "#e74c3c", "olivedrab4", "#2ecc71")[1:length(levels(dat[,i])) ]
+      #col.lev <-  makeTransparent(rainbow(length(levels(dat[,i]))))
+      tab2bar <- prop.table(table(dat[, i])) * 100
+      try(barplot(tab2bar, 
+                  xlab = names(dat)[i], 
+                  ylab = "%",
+                  main = "Diagrama de barras", 
+                  col = col.lev ,#legend.text = T,  
+                  ylim = c(0, max(tab2bar) ) ), TRUE)
+      if (show.lg) {
+        legend("topleft", levels(dat[,i]), bty = "n", fill = col.lev, cex = 0.75 )
+      }
     }
     else {
-      # par(mar = c(3.1, 3.1, 1.1, 2.1))
-      try(hist(dat[, i], xlab = names(dat)[i], main = "Histograma", col = makeTransparent(color)), TRUE)
-      try(rug(dat[,i]))
-      # try(boxplot(dat[,i], horizontal = TRUE, outline = TRUE, frame = FALSE,  col = "green1", add = TRUE),TRUE)
+      try(hist(dat[, i], xlab = names(dat)[i], main = "Histograma", 
+               col = makeTransparent(color)), TRUE)
+      try(rug(dat[, i]))
     }
   }
-  if (topdf)    dev.off()
+  if (topdf) 
+    dev.off()
 }
+
+
 
 
 

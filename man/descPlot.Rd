@@ -5,7 +5,7 @@
 \title{A descPlot Function}
 \usage{
 descPlot(dat, topdf = FALSE, nameFile = "descriptive_plots.pdf",
-  color = "gray48", nrow.par = 4, ncol.par = 2)
+  color = "gray48", nrow.par = 4, ncol.par = 2, show.lg = FALSE)
 }
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
@@ -19,6 +19,8 @@ descPlot(dat, topdf = FALSE, nameFile = "descriptive_plots.pdf",
 \item{nrow.par}{número de filas que mostrar en la interficie gráfica}
 
 \item{ncol.par}{número de columnas que mostrar en la interficie gráfica}
+
+\item{show.lg}{TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.}
 }
 \description{
 Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es "data.frame"
