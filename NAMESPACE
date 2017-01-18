@@ -3,7 +3,6 @@
 export(descPlot)
 export(doROC)
 export(makeTransparent)
-export(postTexCG)
 export(set.var.labels)
 export(stepLR)
 export(tabOR_lr)
