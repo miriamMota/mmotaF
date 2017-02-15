@@ -17,22 +17,26 @@
 #' @keywords plots descriptive 
 
 
-descPlot <- function(dat, topdf = FALSE, nameFile = "descriptive_plots.pdf", 
-                     color = "gray48", nrow.par = 4, ncol.par = 2, show.lg = FALSE) 
+descPlot <- function(dat, 
+                     nameFile = "descriptive_plots.pdf",
+                     topdf = FALSE,  
+                     color = "#8D4ABA", 
+                     nrow.par = 4, 
+                     ncol.par = 2, 
+                     show.lg = FALSE) 
 {
-  if (topdf) 
-    pdf(nameFile)
+  if (topdf) {pdf(nameFile)}
+  if(sum(label(dat) == "") != 0){
+    namevar <- names(dat)
+  }else{
+    namevar <- label(dat)
+  }    
+  
   par(mfrow = c(nrow.par, ncol.par))
+  
   for (i in 1:dim(dat)[2]) {
-    if(sum(label(dat) == "") != 0){
-      namevar <- names(dat)
-    }else{
-      namevar <- label(dat)
-    }    
     if (class(dat[, i])[length(class(dat[, i]))] == "factor") {
-      #col.lev <- makeTransparent(color, "#3498db", "#95a5a6", "#e74c3c", "olivedrab4", "#2ecc71")[1:length(levels(dat[,i])) ]
       col.lev <-  gg_color_hue(length(levels(dat[,i])))
-      #col.lev <-  makeTransparent(rainbow(length(levels(dat[,i]))))
       tab2bar <- prop.table(table(dat[, i])) * 100
       try(barplot(tab2bar, 
                   xlab = namevar[i], 
@@ -46,12 +50,11 @@ descPlot <- function(dat, topdf = FALSE, nameFile = "descriptive_plots.pdf",
     }
     else {
       try(hist(dat[, i], xlab = namevar[i], main = "Histograma", 
-               col = makeTransparent("#8D4ABA",alpha = 0.8)), TRUE)
+               col = makeTransparent(color,alpha = 0.8)), TRUE)
       try(rug(dat[, i]))
     }
   }
-  if (topdf) 
-    dev.off()
+  if (topdf) { dev.off() }
 }
 
 
