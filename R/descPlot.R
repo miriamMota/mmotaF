@@ -21,7 +21,7 @@ descPlot <- function(dat,
                      nameFile = "descriptive_plots.pdf",
                      topdf = FALSE,  
                      color = "#8D4ABA", 
-                     nrow.par = 4, 
+                     nrow.par = 3, 
                      ncol.par = 2, 
                      show.lg = FALSE) 
 {
@@ -52,6 +52,7 @@ descPlot <- function(dat,
       try(hist(dat[, i], xlab = namevar[i], main = "Histograma", 
                col = makeTransparent(color,alpha = 0.8)), TRUE)
       try(rug(dat[, i]))
+      # try(rug(jitter(dat[, i],amount = 0)))
     }
   }
   if (topdf) { dev.off() }
