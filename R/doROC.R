@@ -37,9 +37,9 @@ doROC <- function(frml, dat, titol,validation = FALSE, test, test_y,col.thres = 
   
   pred <- predict(mod, type = "response")  
   
-  rocobj <- plot.roc(mod$y, pred,  main = titol,sub ="hola",  ci = TRUE, 
+  rocobj <- plot.roc(mod$y, pred,  main = titol,  ci = TRUE, 
                      percent = TRUE, print.thres = "best",legacy.axes = x.axes) 
-  if (show.cascon) text(10,5,paste0("cases: ",length(rocobj[6]$cases),  "\n controls: ", length(rocobj[7]$controls)))
+  if (show.cascon) text(10,20,paste0("cases: ",length(rocobj[6]$cases),  "\n controls: ", length(rocobj[7]$controls)))
   thres <- rocobj$sensitivities - (1 - rocobj$specificities)
   thres.best <- rocobj$thresholds[which(thres == max(thres))] # threshold  de Youden
   ciobj <- ci.se(rocobj, boot.n = 100,progress = "none")
