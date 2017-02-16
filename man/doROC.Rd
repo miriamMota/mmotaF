@@ -4,11 +4,13 @@
 \alias{doROC}
 \title{A doROC Function}
 \usage{
-doROC(frml, titol, validation = FALSE, test, test_y, col.thres = "blue",
-  col.ic = "#aaddddAA", x.axes = FALSE)
+doROC(frml, dat, titol, validation = FALSE, test, test_y,
+  col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE)
 }
 \arguments{
 \item{frml}{objeto tipo formula indicando como variable respuesta una variable binaria y como explicativa una contínua}
+
+\item{dat}{data.frame donde estan las variables de la formula.}
 
 \item{titol}{tipo caracter. Título para el gráfico}
 

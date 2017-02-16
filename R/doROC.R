@@ -5,6 +5,7 @@
 #' mediante regresión logística teniendo en cuenta la variable explicativa. Una vez ajustado el modelo se realiza las curva
 #' ROC(representación gráfica de la sensibilidad en frente a la especificidad).
 #' @param frml objeto tipo formula indicando como variable respuesta una variable binaria y como explicativa una contínua
+#' @param dat data.frame donde estan las variables de la formula.
 #' @param titol tipo caracter. Título para el gráfico
 #' @param validation valor lógico indicando si se entreran datos externos para testar el punto de corte elegido en el grafico
 #' @param test data.frame indicando los nuevos valores de la variable explicativa
@@ -29,9 +30,10 @@
 #' @keywords roc glm test validation
 
 
-doROC <- function(frml, titol,validation = FALSE, test, test_y,col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE)
+doROC <- function(frml, dat, titol,validation = FALSE, test, test_y,col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE)
 {
-  mod <- glm(frml , family = binomial, na.action = "na.omit")
+  
+  mod <- glm(frml , data = dat,  family = binomial, na.action = "na.omit")
   
   pred <- predict(mod, type = "response")  
   
