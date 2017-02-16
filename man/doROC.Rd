@@ -5,7 +5,8 @@
 \title{A doROC Function}
 \usage{
 doROC(frml, dat, titol, validation = FALSE, test, test_y,
-  col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE)
+  col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE,
+  show.cascon = TRUE)
 }
 \arguments{
 \item{frml}{objeto tipo formula indicando como variable respuesta una variable binaria y como explicativa una contínua}

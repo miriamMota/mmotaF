@@ -30,15 +30,16 @@
 #' @keywords roc glm test validation
 
 
-doROC <- function(frml, dat, titol,validation = FALSE, test, test_y,col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE)
+doROC <- function(frml, dat, titol,validation = FALSE, test, test_y,col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE, show.cascon = TRUE)
 {
   
   mod <- glm(frml , data = dat,  family = binomial, na.action = "na.omit")
   
   pred <- predict(mod, type = "response")  
   
-  rocobj <- plot.roc(mod$y, pred,  main = titol, ci = TRUE, 
+  rocobj <- plot.roc(mod$y, pred,  main = titol,sub ="hola",  ci = TRUE, 
                      percent = TRUE, print.thres = "best",legacy.axes = x.axes) 
+  if (show.cascon) text(10,5,paste0("cases: ",length(rocobj[6]$cases),  "\n controls: ", length(rocobj[7]$controls)))
   thres <- rocobj$sensitivities - (1 - rocobj$specificities)
   thres.best <- rocobj$thresholds[which(thres == max(thres))] # threshold  de Youden
   ciobj <- ci.se(rocobj, boot.n = 100,progress = "none")
