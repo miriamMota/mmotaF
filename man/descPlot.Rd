@@ -5,7 +5,8 @@
 \title{A descPlot Function}
 \usage{
 descPlot(dat, nameFile = "descriptive_plots.pdf", topdf = FALSE,
-  color = "#8D4ABA", nrow.par = 3, ncol.par = 2, show.lg = FALSE)
+  subtitle = NULL, color = "#8D4ABA", nrow.par = 3, ncol.par = 2,
+  show.lg = FALSE)
 }
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
@@ -13,6 +14,8 @@ descPlot(dat, nameFile = "descriptive_plots.pdf", topdf = FALSE,
 \item{nameFile}{nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto "descriptive_plots.pdf".}
 
 \item{topdf}{valor lógico indicando si se quieren guardar los gráficos en pdf. Por defecto FALSE.}
+
+\item{subtitle}{subtitol}
 
 \item{color}{nombre del color para pintar el gráfico}
 

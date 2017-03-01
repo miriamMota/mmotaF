@@ -4,6 +4,7 @@
 #' @param dat data frame que contiene las variables a graficar. 
 #' @param topdf valor lógico indicando si se quieren guardar los gráficos en pdf. Por defecto FALSE.
 #' @param nameFile nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto "descriptive_plots.pdf". 
+#' @param subtitle subtitol 
 #' @param color nombre del color para pintar el gráfico
 #' @param nrow.par número de filas que mostrar en la interficie gráfica 
 #' @param ncol.par número de columnas que mostrar en la interficie gráfica 
@@ -20,6 +21,7 @@
 descPlot <- function(dat, 
                      nameFile = "descriptive_plots.pdf",
                      topdf = FALSE,  
+                     subtitle = NULL, 
                      color = "#8D4ABA", 
                      nrow.par = 3, 
                      ncol.par = 2, 
@@ -42,6 +44,7 @@ descPlot <- function(dat,
                   xlab = namevar[i], 
                   ylab = "%",
                   main = "Diagrama de barras", 
+                  sub = ifelse(is.null(subtitle),"", subtitle),
                   col = col.lev ,#legend.text = T,  
                   ylim = c(0, max(tab2bar) ) ), TRUE)
       if (show.lg) {
@@ -50,6 +53,7 @@ descPlot <- function(dat,
     }
     else {
       try(hist(dat[, i], xlab = namevar[i], main = "Histograma", 
+               sub = ifelse(is.null(subtitle),"",subtitle), 
                col = makeTransparent(color,alpha = 0.8)), TRUE)
       try(rug(dat[, i]))
       # try(rug(jitter(dat[, i],amount = 0)))
