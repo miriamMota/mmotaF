@@ -38,7 +38,7 @@ descPlot <- function(dat,
   
   for (i in 1:dim(dat)[2]) {
     if (class(dat[, i])[length(class(dat[, i]))] == "factor") {
-      col.lev <-  gg_color_hue(length(levels(dat[,i])))
+      col.lev <-  gg_color(length(levels(dat[,i])))
       tab2bar <- prop.table(table(dat[, i])) * 100
       try(barplot(tab2bar, 
                   xlab = namevar[i], 
@@ -60,12 +60,6 @@ descPlot <- function(dat,
     }
   }
   if (topdf) { dev.off() }
-}
-
-
-gg_color_hue <- function(n) {
-  hues = seq(15, 375, length = n + 1)
-  hcl(h = hues, l = 65, c = 100)[1:n]
 }
 
 
