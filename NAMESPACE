@@ -2,6 +2,7 @@
 
 export(descPlot)
 export(doROC)
+export(gg_color)
 export(makeTransparent)
 export(set.var.labels)
 export(stepLR)
