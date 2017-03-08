@@ -68,7 +68,7 @@ doROC <- function(frml, dat, titol,validation = FALSE, test, test_y,
   }
   if (!validation) return(list(auc = auc_text, pvalue = p.val,mod = mod, thres.best = thres.best,
                                cases = paste("El total de casos es:",length(rocobj[6]$cases)),
-                               controls = paste("El total de controls es:", length(rocobj[7]$controls) )))
+                               rocobj = rocobj, controls = paste("El total de controls es:", length(rocobj[7]$controls) )))
 }
 
 
