@@ -9,6 +9,7 @@
 #' @param nrow.par número de filas que mostrar en la interficie gráfica 
 #' @param ncol.par número de columnas que mostrar en la interficie gráfica 
 #' @param show.lg TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.
+#' @param show.freq TRUE o FALSE indica si se muestran las frecuencias. Por defecto TRUE
 #' @export descPlot
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
@@ -25,7 +26,8 @@ descPlot <- function(dat,
                      color = "#8D4ABA", 
                      nrow.par = 3, 
                      ncol.par = 2, 
-                     show.lg = FALSE) 
+                     show.lg = FALSE,
+                     show.freq = TRUE) 
 {
   if (topdf) {pdf(nameFile)}
   if(sum(label(dat) == "") != 0){
@@ -40,13 +42,14 @@ descPlot <- function(dat,
     if (class(dat[, i])[length(class(dat[, i]))] == "factor") {
       col.lev <-  gg_color(length(levels(dat[,i])))
       tab2bar <- prop.table(table(dat[, i])) * 100
-      try(barplot(tab2bar, 
+      try(aa <- barplot(tab2bar, 
                   xlab = namevar[i], 
                   ylab = "%",
                   main = "Diagrama de barras", 
                   sub = ifelse(is.null(subtitle),"", subtitle),
                   col = col.lev ,#legend.text = T,  
-                  ylim = c(0, max(tab2bar) ) ), TRUE)
+                  ylim = c(0, max(tab2bar) + 6.5 ) ), TRUE)
+     if(show.freq) try(text(aa,tab2bar + 4,labels = table(dat[, i]), cex = 0.8))
       if (show.lg) {
         legend("topleft", levels(dat[,i]), bty = "n", fill = col.lev, cex = 0.75 )
       }
