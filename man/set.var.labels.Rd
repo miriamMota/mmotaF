@@ -21,4 +21,3 @@ Preparar etiquetas para las variables
 #label(dat) <- lapply(names(var.labels), function(x) label(dat[,x]) = var.labels[x])
 }
 \keyword{labels}
-

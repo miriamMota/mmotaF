@@ -4,7 +4,7 @@
 \alias{descPlot}
 \title{A descPlot Function}
 \usage{
-descPlot(dat, nameFile = "descriptive_plots.pdf", topdf = FALSE,
+descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
   subtitle = NULL, color = "#8D4ABA", nrow.par = 3, ncol.par = 2,
   show.lg = FALSE, show.freq = TRUE)
 }
@@ -40,4 +40,3 @@ Miriam Mota \email{mmota.foix@gmail.com}
 }
 \keyword{descriptive}
 \keyword{plots}
-

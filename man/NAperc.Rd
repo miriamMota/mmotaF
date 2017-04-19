@@ -20,4 +20,3 @@ Miriam Mota \email{mmota.foix@gmail.com}
 \keyword{missing}
 \keyword{na}
 \keyword{percentage}
-

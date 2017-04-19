@@ -20,4 +20,3 @@ makeTransparent("mediumorchid4")
 }
 \keyword{color}
 \keyword{transparent}
-

@@ -23,4 +23,3 @@ Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un
 \keyword{OR}
 \keyword{logisitica}
 \keyword{regresion}
-

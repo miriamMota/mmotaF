@@ -46,4 +46,3 @@ Miriam Mota \email{mmota.foix@gmail.com}
 \keyword{regresion}
 \keyword{step}
 \keyword{stepwise}
-

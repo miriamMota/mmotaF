@@ -20,4 +20,3 @@ gg_color(3)
 \keyword{gg}
 \keyword{ggplot}
 \keyword{plots}
-
