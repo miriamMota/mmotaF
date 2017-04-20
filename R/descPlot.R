@@ -41,6 +41,7 @@ descPlot <- function(dat, y = NULL,
   
   for (i in 1:dim(dat)[2]) {
     ##### variables factor
+    if (names(dat)[i] != y) {
     if (class(dat[, i])[length(class(dat[, i]))] == "factor") {
       ## descriptiu univariat
       if (is.null(y)) {
@@ -87,6 +88,7 @@ descPlot <- function(dat, y = NULL,
         boxplot(dat[,i] ~ dat[, y], add = T, 
                 col = makeTransparent("grey",alpha = 0.3))
       }
+    }
     }
   }
   if (topdf) {dev.off()}
