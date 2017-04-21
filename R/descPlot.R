@@ -14,9 +14,9 @@
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' df <- data.frame(Y=as.factor(rbinom(50,1,.40)),
-#' X = rnorm(50,10,1))
+#' df <- data.frame(Y=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
 #' descPlot(dat = df, color = "red", nrow.par = 1, ncol.par = 2)
+#' descPlot(dat = df, y = "Y", color = "red", nrow.par = 1, ncol.par = 2)
 #' @keywords plots descriptive 
 
 
@@ -41,7 +41,7 @@ descPlot <- function(dat, y = NULL,
   
   for (i in 1:dim(dat)[2]) {
     ##### variables factor
-    if (names(dat)[i] != y) {
+    if ( ifelse(!is.null(y), names(dat)[i] != y, TRUE)) {
     if (class(dat[, i])[length(class(dat[, i]))] == "factor") {
       ## descriptiu univariat
       if (is.null(y)) {

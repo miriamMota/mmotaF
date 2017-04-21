@@ -31,9 +31,9 @@ descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
 Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es "data.frame"
 }
 \examples{
-df <- data.frame(Y=as.factor(rbinom(50,1,.40)),
-X = rnorm(50,10,1))
+df <- data.frame(Y=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
 descPlot(dat = df, color = "red", nrow.par = 1, ncol.par = 2)
+descPlot(dat = df, y = "Y", color = "red", nrow.par = 1, ncol.par = 2)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
