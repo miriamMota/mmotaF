@@ -6,8 +6,7 @@
 #' @param nameFile nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto "descriptive_plots.pdf". 
 #' @param subtitle subtitol 
 #' @param color nombre del color para pintar el gráfico
-#' @param nrow.par número de filas que mostrar en la interficie gráfica 
-#' @param ncol.par número de columnas que mostrar en la interficie gráfica 
+#' @param rowcol c(nrows, ncols) to create a matrix of nrows x ncols plots that are filled in by row
 #' @param show.lg TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.
 #' @param show.freq TRUE o FALSE indica si se muestran las frecuencias. Por defecto TRUE
 #' @export descPlot
@@ -15,8 +14,8 @@
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' df <- data.frame(Y=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
-#' descPlot(dat = df, color = "red", nrow.par = 1, ncol.par = 2)
-#' descPlot(dat = df, y = "Y", color = "red", nrow.par = 1, ncol.par = 2)
+#' descPlot(dat = df, color = "red", rowcol = c(1,2))
+#' descPlot(dat = df, y = "Y", color = "red", rowcol = c(1,1))
 #' @keywords plots descriptive 
 
 
@@ -25,8 +24,7 @@ descPlot <- function(dat, y = NULL,
                      topdf = FALSE,  
                      subtitle = NULL, 
                      color = "#8D4ABA", 
-                     nrow.par = 3, 
-                     ncol.par = 2, 
+                     rowcol = c(3,2), 
                      show.lg = FALSE,
                      show.freq = TRUE) 
 {
@@ -37,7 +35,7 @@ descPlot <- function(dat, y = NULL,
     namevar <- label(dat)
   }    
   
-  par(mfrow = c(nrow.par, ncol.par))
+  if(!is.null(rowcol)) par(mfrow = rowcol )
   
   for (i in 1:dim(dat)[2]) {
     ##### variables factor

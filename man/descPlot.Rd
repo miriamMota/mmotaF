@@ -5,8 +5,8 @@
 \title{A descPlot Function}
 \usage{
 descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
-  subtitle = NULL, color = "#8D4ABA", nrow.par = 3, ncol.par = 2,
-  show.lg = FALSE, show.freq = TRUE)
+  subtitle = NULL, color = "#8D4ABA", rowcol = c(3, 2), show.lg = FALSE,
+  show.freq = TRUE)
 }
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
@@ -19,9 +19,7 @@ descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
 
 \item{color}{nombre del color para pintar el gráfico}
 
-\item{nrow.par}{número de filas que mostrar en la interficie gráfica}
-
-\item{ncol.par}{número de columnas que mostrar en la interficie gráfica}
+\item{rowcol}{c(nrows, ncols) to create a matrix of nrows x ncols plots that are filled in by row}
 
 \item{show.lg}{TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.}
 
@@ -32,8 +30,8 @@ Genera graficos univariantes para todas las variables que se indiquen, el format
 }
 \examples{
 df <- data.frame(Y=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
-descPlot(dat = df, color = "red", nrow.par = 1, ncol.par = 2)
-descPlot(dat = df, y = "Y", color = "red", nrow.par = 1, ncol.par = 2)
+descPlot(dat = df, color = "red", rowcol = c(1,2))
+descPlot(dat = df, y = "Y", color = "red", rowcol = c(1,1))
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
