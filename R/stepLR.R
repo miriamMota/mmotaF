@@ -21,62 +21,74 @@
 #' # summary(modfin[[1]])
 #' # summary(modfin[[2]])
 #' @return modfin: exporta dos modelos, el final teniendo en cuenta solo aquellos individuos que tienen todos los valores para todas las variables y un segundo modelo que tiene en cuenta todos aquellos individuos que tienen valores para las variables finales. 
-stepLR <- function(VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1  ){
+stepLR <- function (VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1) 
+{
   for (i in 1:length(varExpl)) {
-    ## Creació de model null o de model inicial
     if (sum(is.na(var2mod)) >= 1) {
-      frml <- as.formula( paste(VR, "~", "1"))
-      mod <- glm(frml , data =  na.omit(data[,c(VR,varExpl)]), family = binomial)
-    }else{  
-      frml <- as.formula( paste(VR, "~", paste(var2mod,collapse = "+" )))
-      mod <- glm(frml , data =  na.omit(data[,c(VR,var2mod,varExpl)]), family = binomial)
+      frml <- as.formula(paste(VR, "~", "1"))
+      mod <- glm(frml, data = na.omit(data[, c(VR, varExpl)]), 
+                 family = binomial)
+    }
+    else {
+      frml <- as.formula(paste(VR, "~", paste(var2mod, 
+                                              collapse = "+")))
+      mod <- glm(frml, data = na.omit(data[, c(VR, var2mod, 
+                                               varExpl)]), family = binomial)
       if (trace) {
-        cat(paste(VR, "~", paste(var2mod,collapse = " + " )),"\n")
-        print(round(tabOR_lr(mod,xtab = F),3))
+        cat(paste(VR, "~", paste(var2mod, collapse = " + ")), 
+            "\n")
+        print(round(tabOR_lr(mod, xtab = F), 3))
       }
     }
-    
-    ## Incloem cadascuna de les variables explicatives una per una i guardem: nom, aic i pvalor de la comparació entre models
-    modvar <- lapply(varExpl[!grepl(paste0(var2mod,collapse = "|"),varExpl)],
-                     function(var) {
-                       if (sum(is.na(var2mod)) >= 1) {
-                         formula    <- as.formula(paste( VR, " ~ ", var))
-                       }else{  
-                         formula    <- as.formula(paste( VR, " ~ ",paste(var2mod,collapse = "+"),"+", var ))
-                       }
-                       res.logist <- glm(formula, data =  na.omit(data[,c(VR,varExpl,var2mod)]), 
-                                         family = binomial)
-                       c(var, res.logist$aic, anova(mod, res.logist,test = "LRT" )$Pr[2])
-                     })
-    
-    
-    ## Creem taula amb les informacions per a cadascuna de les variables
-    df <- data.frame(matrix(unlist(modvar), nrow = length(modvar), byrow = T),stringsAsFactors = FALSE, row.names = 1)
-    colnames(df) <- c("AIC","p_value")
+    modvar <- lapply(varExpl[!grepl(paste0(var2mod, collapse = "|"), 
+                                    varExpl)], function(var) {
+                                      if (sum(is.na(var2mod)) >= 1) {
+                                        formula <- as.formula(paste(VR, " ~ ", var))
+                                      }
+                                      else {
+                                        formula <- as.formula(paste(VR, " ~ ", paste(var2mod, 
+                                                                                     collapse = "+"), "+", var))
+                                      }
+                                      if(sum(is.na(var2mod)) >= 1){
+                                        res.logist <- glm(formula, data = na.omit(data[, 
+                                                                                       c(VR, varExpl)]), family = binomial)
+                                      }else{
+                                        
+                                        res.logist <- glm(formula, data = na.omit(data[, 
+                                                                                       c(VR, varExpl, var2mod)]), family = binomial)
+                                        
+                                      }
+                                      
+                                      c(var, res.logist$aic, anova(mod, res.logist, test = "LRT")$Pr[2])
+                                    })
+    df <- data.frame(matrix(unlist(modvar), nrow = length(modvar), 
+                            byrow = T), stringsAsFactors = FALSE, row.names = 1)
+    colnames(df) <- c("AIC", "p_value")
     df$AIC <- as.numeric(df$AIC)
     df$p_value <- as.numeric(df$p_value)
-    ## Taula amb variables significatives al afegir-les al model
-    df_sel <- df[df$p_value < thrPval,]
-    if (trace & dim(df_sel)[1] > 0) print(round(df_sel,3))
-    
-    # Variable candidata a entrar al model
-    varSelStep <- rownames(df)[(df$AIC == min(df$AIC,na.rm = T)) & (df$p_value < thrPval) ]
-    # Variables explicatives a incloure al model
-    var2mod <- c(var2mod, varSelStep )
+    df_sel <- df[df$p_value < thrPval, ]
+    if (trace & dim(df_sel)[1] > 0) 
+      print(round(df_sel, 3))
+    varSelStep <- rownames(df)[(df$AIC == min(df$AIC, na.rm = T)) & 
+                                 (df$p_value < thrPval)]
+    var2mod <- c(var2mod, varSelStep)
     var2mod <- na.omit(var2mod)
-    
-    ## model final. Quan ja no hi ha més variables per entrar o quan no hi ha cap que sigui significativa.
     if (length(varSelStep) == 0) {
       modfin <- list()
-      modfin[[1]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,varExpl,var2mod)]), family = binomial)
-      modfin[[2]] <- glm(as.formula( paste(VR, "~", paste(var2mod,collapse = "+" ) )), data =  na.omit(data[,c(VR,var2mod)]), family = binomial)
+      modfin[[1]] <- glm(as.formula(paste(VR, "~", paste(var2mod, 
+                                                         collapse = "+"))), data = na.omit(data[, c(VR, 
+                                                                                                    varExpl, var2mod)]), family = binomial)
+      modfin[[2]] <- glm(as.formula(paste(VR, "~", paste(var2mod, 
+                                                         collapse = "+"))), data = na.omit(data[, c(VR, 
+                                                                                                    var2mod)]), family = binomial)
       return(modfin)
       if (trace) {
         print(summary(modfin[[1]]))
         print(summary(modfin[[2]]))
       }
-      break 
+      break
     }
-    if (trace) cat( "Variable candidata a entrar", varSelStep,"\n")
+    if (trace) 
+      cat("Variable candidata a entrar", varSelStep, "\n")
   }
 }
