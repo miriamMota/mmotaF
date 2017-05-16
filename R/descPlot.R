@@ -1,10 +1,10 @@
 #' A descPlot Function
 #'
 #' Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es "data.frame"
-#' @param dat data frame que contiene las variables a graficar. 
+#' @param dat data frame que contiene las variables a graficar.
 #' @param topdf valor lógico indicando si se quieren guardar los gráficos en pdf. Por defecto FALSE.
-#' @param nameFile nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto "descriptive_plots.pdf". 
-#' @param subtitle subtitol 
+#' @param nameFile nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto "descriptive_plots.pdf".
+#' @param subtitle subtitol
 #' @param color nombre del color para pintar el gráfico
 #' @param rowcol c(nrows, ncols) to create a matrix of nrows x ncols plots that are filled in by row
 #' @param show.lg TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.
@@ -16,27 +16,27 @@
 #' df <- data.frame(Y=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
 #' descPlot(dat = df, color = "red", rowcol = c(1,2))
 #' descPlot(dat = df, y = "Y", color = "red", rowcol = c(1,1))
-#' @keywords plots descriptive 
+#' @keywords plots descriptive
 
 
 descPlot <- function(dat, y = NULL,
                      nameFile = "descriptive_plots.pdf",
-                     topdf = FALSE,  
-                     subtitle = NULL, 
-                     color = "#8D4ABA", 
-                     rowcol = c(3,2), 
+                     topdf = FALSE,
+                     subtitle = NULL,
+                     color = "#8D4ABA",
+                     rowcol = c(3,2),
                      show.lg = FALSE,
-                     show.freq = TRUE) 
+                     show.freq = TRUE)
 {
   if (topdf) {pdf(nameFile)}
   if (sum(label(dat) == "") != 0) {
     namevar <- names(dat)
   }else{
     namevar <- label(dat)
-  }    
-  
-  if(!is.null(rowcol)) par(mfrow = rowcol )
-  
+  }
+
+  if (!is.null(rowcol)) par(mfrow = rowcol )
+
   for (i in 1:dim(dat)[2]) {
     ##### variables factor
     if ( ifelse(!is.null(y), names(dat)[i] != y, TRUE)) {
@@ -45,36 +45,36 @@ descPlot <- function(dat, y = NULL,
       if (is.null(y)) {
         col.lev <-  gg_color(length(levels(dat[,i])))
         tab2bar <- prop.table(table(dat[, i])) * 100
-        try(aa <- barplot(tab2bar, 
-                          xlab = namevar[i], 
+        try(aa <- barplot(tab2bar,
+                          xlab = namevar[i],
                           ylab = "%",
-                          main = "Diagrama de barras", 
+                          main = "Diagrama de barras",
                           sub = ifelse(is.null(subtitle),"", subtitle),
-                          col = col.lev ,#legend.text = T,  
+                          col = col.lev ,#legend.text = T,
                           ylim = c(0, max(tab2bar) + 6.5 ) ), TRUE)
         if (show.freq) try(text(aa,tab2bar + 4,labels = table(dat[, i]), cex = 0.8))
         if (show.lg) {
           legend("topleft", levels(dat[,i]), bty = "n", fill = col.lev, cex = 0.75 )
         }
         ## descriptiu bivariat
-      }else{ 
-        col.lev <-  gg_color(length(levels(dat[,y])))
+      }else{
+        col.lev <-  gg_color(length(levels(dat[,i])))
         tab2bar <- prop.table(table(dat[, i],dat[,y]),2) * 100
-        try(aa <- barplot(tab2bar, 
-                          xlab = y, 
+        try(aa <- barplot(tab2bar,
+                          xlab = y,
                           ylab = "%",
-                          main = names(dat)[i], 
+                          main = names(dat)[i],
                           sub = ifelse(is.null(subtitle),"", subtitle),
                           col = col.lev), TRUE)
-        
+
         if (show.lg) {legend("topleft", levels(dat[,i]), bty = "n", fill = col.lev, cex = 0.75 )}
       }
       ##### variables numeriques
     }else {
       ## descriptiu univariat
       if (is.null(y)) {
-        try(hist(dat[, i], xlab = namevar[i], main = "Histograma", 
-                 sub = ifelse(is.null(subtitle),"",subtitle), 
+        try(hist(dat[, i], xlab = namevar[i], main = "Histograma",
+                 sub = ifelse(is.null(subtitle),"",subtitle),
                  col = makeTransparent(color,alpha = 0.8)), TRUE)
         try(rug(dat[, i]))
         # try(rug(jitter(dat[, i],amount = 0)))
@@ -83,7 +83,7 @@ descPlot <- function(dat, y = NULL,
         beeswarm(dat[,i] ~ dat[, y],ylab = "", xlab = "",
                  main = names(dat)[i], axes = F,
                  pch = 20, col = gg_color(3))
-        boxplot(dat[,i] ~ dat[, y], add = T, 
+        boxplot(dat[,i] ~ dat[, y], add = T,
                 col = makeTransparent("grey",alpha = 0.3))
       }
     }
