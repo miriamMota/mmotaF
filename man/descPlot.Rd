@@ -32,7 +32,7 @@ Genera graficos univariantes para todas las variables que se indiquen, el format
 df <- data.frame(Y=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
 descPlot(dat = df, color = "red", rowcol = c(1,2))
 descPlot(dat = df, y = "Y", color = "red", rowcol = c(1,1))
-descPlot(mtc_bis,parmar = c(5.1, 4.1, 4.1, 2.1))
+descPlot(mtc_bis)
 descPlot(dat = mtc_bis, y ="gear", rowcol = c(2,2))
 }
 \author{
