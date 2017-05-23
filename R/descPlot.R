@@ -31,17 +31,18 @@ descPlot <- function(dat, y = NULL,
                      show.freq = TRUE )
 {
 
-  if(is.null(y)){
+  if (is.null(y)) {
     parmar = c(5.1, 4.1, 4.1, 2.1)
   }else{
     parmar = c(5.1, 4.1, 4.1, 7.1)
+    dat[,y] <- as.factor(as.character(dat[,y]))
   }
 
   par(mar = parmar , mfrow  = rowcol)
 
   if (topdf) {
     pdf(nameFile)
-    par(mar = parmar, xpd=TRUE , mfrow = rowcol)
+    par(mar = parmar, xpd = TRUE , mfrow = rowcol)
   }
   if (sum(label(dat) == "") != 0) {
     namevar <- names(dat)
