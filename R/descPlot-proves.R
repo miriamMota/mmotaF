@@ -1,43 +1,17 @@
-#' A descPlot Function
-#'
-#' Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es "data.frame"
-#' @param dat data frame que contiene las variables a graficar.
-#' @param topdf valor lógico indicando si se quieren guardar los gráficos en pdf. Por defecto FALSE.
-#' @param nameFile nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto "descriptive_plots.pdf".
-#' @param subtitle subtitol
-#' @param color nombre del color para pintar el gráfico
-#' @param rowcol c(nrows, ncols) to create a matrix of nrows x ncols plots that are filled in by row
-#' @param show.lg TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.
-#' @param show.freq TRUE o FALSE indica si se muestran las frecuencias. Por defecto TRUE
-#' @param cex.y size labels variable resposta
-#' @export descPlot
-#' @import beeswarm
-#' @author Miriam Mota \email{mmota.foix@@gmail.com}
-#' @examples
-#' df <- data.frame(Y=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
-#' descPlot(dat = df, color = "red", rowcol = c(1,2))
-#' descPlot(dat = df, y = "Y", color = "red", rowcol = c(1,1))
-#' descPlot(mtc_bis)
-#' descPlot(dat = mtc_bis, y ="gear", rowcol = c(2,2))
-#' @keywords plots descriptive
-
-
-descPlot <- function(dat, y = NULL,
+descPlot_proves <- function(dat, y = NULL,
                      nameFile = "descriptive_plots.pdf",
                      topdf = FALSE,
                      subtitle = NULL,
                      color = "#8D4ABA",
                      rowcol = c(3,2),
                      show.lg = FALSE,
-                     show.freq = TRUE,
-                     cex.lab = .8,
-                     las = 3)
+                     show.freq = TRUE )
 {
 
   if (is.null(y)) {
     parmar = c(5.1, 4.1, 4.1, 2.1)
   }else{
-    parmar = c(5.1, 4.1, 4.1, 7.1)
+    parmar = c(5.1, 4.1, 9.1, 2.1)
     dat[,y] <- as.factor(as.character(dat[,y]))
   }
 
@@ -45,8 +19,7 @@ descPlot <- function(dat, y = NULL,
 
   if (topdf) {
     pdf(nameFile)
-    par(mfrow = rowcol)
-    # par(mar = parmar, xpd = TRUE , mfrow = rowcol)
+    par(mar = parmar, xpd = TRUE , mfrow = rowcol)
   }
   if (sum(label(dat) == "") != 0) {
     namevar <- names(dat)
@@ -68,27 +41,24 @@ descPlot <- function(dat, y = NULL,
                             main = "Diagrama de barras",
                             sub = ifelse(is.null(subtitle),"", subtitle),
                             col = col.lev ,#legend.text = T,
-                            ylim = c(0, max(tab2bar) + 6.5 ), las = las, cex.names = cex.lab ), TRUE)
+                            ylim = c(0, max(tab2bar) + 6.5 ) ), TRUE)
           if (show.freq) try(text(aa,tab2bar + 4,labels = table(dat[, i]), cex = 0.8))
           if (show.lg) {
             legend("topleft", levels(dat[,i]), bty = "n", fill = col.lev, cex = 0.75 )
           }
           ## descriptiu bivariat
         }else{
-          op <- par(mar = parmar, xpd = TRUE )
           col.lev <-  gg_color(length(levels(dat[,i])))
           tab2bar <- prop.table(table(dat[, i],dat[,y]),2) * 100
-          try(aa <- barplot(tab2bar, cex.names = 0.7,
+          try(aa <- barplot(tab2bar,
                             xlab = y,
                             ylab = "%",
                             main = names(dat)[i],
                             sub = ifelse(is.null(subtitle),"", subtitle),
-                            col = col.lev,
-                            las = las), TRUE)
+                            col = col.lev), TRUE)
 
-          legend(length(levels(dat[,y])) + .7,50,inset = c(-0.25,0), legend = levels(dat[,i]),bg = "white",
-                 fill = col.lev, cex = 0.65,yjust = 0)
-          par(op)
+          legend("top",inset = c(0,-0.45), legend = levels(dat[,i]),
+                 bg = "white", fill = col.lev, cex = 0.75, ncol = 3 )
         }
         ##### variables numeriques
       }else {
@@ -105,7 +75,7 @@ descPlot <- function(dat, y = NULL,
                    main = names(dat)[i], axes = F,
                    pch = 20, col = gg_color(3))
           boxplot(dat[,i] ~ dat[, y], add = T,
-                  col = makeTransparent("grey",alpha = 0.3), las = las)
+                  col = makeTransparent("grey",alpha = 0.3))
         }
       }
     }
