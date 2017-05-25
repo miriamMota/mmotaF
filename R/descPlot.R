@@ -30,8 +30,8 @@ descPlot <- function(dat, y = NULL,
                      rowcol = c(3,2),
                      show.lg = FALSE,
                      show.freq = TRUE,
-                     cex.lab = .8,
-                     las = 3)
+                     cex.lab = 1,
+                     las = 1)
 {
 
   if (is.null(y)) {
@@ -60,6 +60,8 @@ descPlot <- function(dat, y = NULL,
       if (class(dat[, i])[length(class(dat[, i]))] == "factor") {
         ## descriptiu univariat
         if (is.null(y)) {
+          if (show.lg) {parmar = c(5.1, 4.1, 4.1, 7.1)}
+          op <- par(mar = parmar, xpd = TRUE )
           col.lev <-  gg_color(length(levels(dat[,i])))
           tab2bar <- prop.table(table(dat[, i])) * 100
           try(aa <- barplot(tab2bar,
@@ -71,8 +73,13 @@ descPlot <- function(dat, y = NULL,
                             ylim = c(0, max(tab2bar) + 6.5 ), las = las, cex.names = cex.lab ), TRUE)
           if (show.freq) try(text(aa,tab2bar + 4,labels = table(dat[, i]), cex = 0.8))
           if (show.lg) {
-            legend("topleft", levels(dat[,i]), bty = "n", fill = col.lev, cex = 0.75 )
+            # legend("topleft", levels(dat[,i]), bty = "n", fill = col.lev, cex = 0.75 )
+            legend(length(levels(dat[,i])) + .7,(max(tab2bar, na.rm = T ) * .4) ,
+                   inset = c(-0.25,0), legend = levels(dat[,i]),bg = "white",
+                   fill = col.lev, cex = 0.65,yjust = 0)
+            par(op)
           }
+          par(op)
           ## descriptiu bivariat
         }else{
           op <- par(mar = parmar, xpd = TRUE )

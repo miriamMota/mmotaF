@@ -6,7 +6,7 @@
 \usage{
 descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
   subtitle = NULL, color = "#8D4ABA", rowcol = c(3, 2), show.lg = FALSE,
-  show.freq = TRUE, cex.lab = 0.8, las = 3)
+  show.freq = TRUE, cex.lab = 1, las = 1)
 }
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
