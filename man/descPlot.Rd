@@ -6,7 +6,7 @@
 \usage{
 descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
   subtitle = NULL, color = "#8D4ABA", rowcol = c(3, 2), show.lg = FALSE,
-  show.freq = TRUE, cex.lab = 1, las = 1)
+  show.freq = TRUE, cex.lab = 1, cex.lg = 0.65, las = 0)
 }
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
@@ -25,7 +25,12 @@ descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
 
 \item{show.freq}{TRUE o FALSE indica si se muestran las frecuencias. Por defecto TRUE}
 
-\item{cex.y}{size labels variable resposta}
+\item{cex.lab}{expansion factor for axis names (bar labels). (size x labels)}
+
+\item{cex.lg}{character expansion factor relative to current par("cex"). Used for text, and provides the default for pt.cex and title.cex.}
+
+\item{las}{numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
+1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.}
 }
 \description{
 Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es "data.frame"

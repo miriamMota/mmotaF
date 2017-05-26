@@ -9,7 +9,10 @@
 #' @param rowcol c(nrows, ncols) to create a matrix of nrows x ncols plots that are filled in by row
 #' @param show.lg TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.
 #' @param show.freq TRUE o FALSE indica si se muestran las frecuencias. Por defecto TRUE
-#' @param cex.y size labels variable resposta
+#' @param cex.lab expansion factor for axis names (bar labels). (size x labels)
+#' @param cex.lg character expansion factor relative to current par("cex"). Used for text, and provides the default for pt.cex and title.cex.
+#' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
+#' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @export descPlot
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
@@ -31,7 +34,8 @@ descPlot <- function(dat, y = NULL,
                      show.lg = FALSE,
                      show.freq = TRUE,
                      cex.lab = 1,
-                     las = 1)
+                     cex.lg = 0.65,
+                     las = 0)
 {
 
   if (is.null(y)) {
@@ -76,7 +80,7 @@ descPlot <- function(dat, y = NULL,
             # legend("topleft", levels(dat[,i]), bty = "n", fill = col.lev, cex = 0.75 )
             legend(length(levels(dat[,i])) + .7,(max(tab2bar, na.rm = T ) * .4) ,
                    inset = c(-0.25,0), legend = levels(dat[,i]),bg = "white",
-                   fill = col.lev, cex = 0.65,yjust = 0)
+                   fill = col.lev, cex = cex.lg, yjust = 0)
             par(op)
           }
           par(op)
@@ -85,7 +89,7 @@ descPlot <- function(dat, y = NULL,
           op <- par(mar = parmar, xpd = TRUE )
           col.lev <-  gg_color(length(levels(dat[,i])))
           tab2bar <- prop.table(table(dat[, i],dat[,y]),2) * 100
-          try(aa <- barplot(tab2bar, cex.names = 0.7,
+          try(aa <- barplot(tab2bar, cex.names = cex.lab,
                             xlab = y,
                             ylab = "%",
                             main = names(dat)[i],
@@ -94,7 +98,7 @@ descPlot <- function(dat, y = NULL,
                             las = las), TRUE)
 
           legend(length(levels(dat[,y])) + .7,50,inset = c(-0.25,0), legend = levels(dat[,i]),bg = "white",
-                 fill = col.lev, cex = 0.65,yjust = 0)
+                 fill = col.lev, cex = cex.lg, yjust = 0)
           par(op)
         }
         ##### variables numeriques
