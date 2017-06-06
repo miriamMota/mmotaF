@@ -5,6 +5,7 @@
 #' @param nround integer indicating the number of decimal places (round) or significant digits (signif) to be used. Negative values are allowed
 #' @export make_surv_table
 #' @import survival stargazer
+#' @author Miriam Mota  \email{miriam.mota@@vhir.org}
 #' @examples
 #' data(aml)
 #' surv_fit <-survfit(Surv(time = aml$time, event = aml$status) ~ 1)
@@ -43,3 +44,6 @@ make_surv_table <- function(fit_surv,
   return(tab_surv)
   
 }
+
+
+

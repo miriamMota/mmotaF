@@ -26,6 +26,9 @@ stargazer(make_surv_table(surv_fit),
            summary = FALSE, type = c('latex'), title = 'Summary of status survival fit',
           rownames = FALSE)
 }
+\author{
+Miriam Mota  \email{miriam.mota@vhir.org}
+}
 \keyword{latex}
 \keyword{survival}
 \keyword{table}
