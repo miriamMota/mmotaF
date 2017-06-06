@@ -23,7 +23,7 @@ A boxplot_bw Function
 Boxplot incluyendo puntos individuales
 }
 \examples{
-boxplot_bw(dat = mtc_bis, x = " mpg" ,y ="gear")
+boxplot_bw(dat = mtc_bis, x = "qsec" ,y ="gear")
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

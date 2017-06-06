@@ -11,7 +11,7 @@
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' boxplot_bw(dat = mtc_bis, x = " mpg" ,y ="gear")
+#' boxplot_bw(dat = mtc_bis, x = "qsec" ,y ="gear")
 #' @keywords plots descriptive boxplot
 
 
