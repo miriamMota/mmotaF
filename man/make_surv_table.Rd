@@ -4,14 +4,14 @@
 \alias{make_surv_table}
 \title{Create a nice data frame from a survival model for automatically generating a table.}
 \usage{
-make_surv_table(survobj, timevec, scale = 1, col_names = NULL)
+make_surv_table(fit_surv, nround = 2, event = FALSE)
 }
 \arguments{
+\item{nround}{integer indicating the number of decimal places (round) or significant digits (signif) to be used. Negative values are allowed}
+
+\item{event}{cumulative events (f(y) = 1-y)}
+
 \item{survobj}{\code{\link[survival]{survfit}} object}
-
-\item{timevec}{a vector of times for survival summary}
-
-\item{scale}{a number that scales the timevec, e.g., if your data is recorded in days and you want months displayed, use scale = 30}
 }
 \value{
 a data frame with labeled columns
@@ -22,8 +22,8 @@ Create a nice data frame from a survival model for automatically generating a ta
 \examples{
 data(aml)
 surv_fit <-survfit(Surv(time = aml$time, event = aml$status) ~ 1)
-stargazer(make_surv_table(surv_fit, summary(surv_fit)$time),
-           summary = FALSE, type = c('latex'), title = 'Summary of HMOHIV survival fit',
+stargazer(make_surv_table(surv_fit),
+           summary = FALSE, type = c('latex'), title = 'Summary of status survival fit',
           rownames = FALSE)
 }
 \keyword{latex}
