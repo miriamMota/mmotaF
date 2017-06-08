@@ -16,7 +16,7 @@ boxplot_bw(y, x, dat, las = 0, title = NULL, ylim = NULL)
 \item{las}{numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.}
 
-\item{ylim}{ylim}
+\item{ylim}{is vector which contains lower and upper limits which are to appear on the y axes.}
 }
 \description{
 A boxplot_bw Function
