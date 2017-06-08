@@ -19,7 +19,7 @@
 
 boxplot_bw <- function(y, x, dat, las = 0, title = NULL){
   if(is.null(title)) title <- x
-  beeswarm(dat[,x] ~ dat[, y],ylab = "", xlab = "",
+  beeswarm(dat[,x] ~ dat[, y],ylab = "", xlab = y,
            main = title,
            axes = F,
            pch = 20,
