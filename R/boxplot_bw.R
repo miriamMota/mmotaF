@@ -4,6 +4,7 @@
 #' @param dat data frame que contiene las variables a graficar.
 #' @param x nombre de la variable numerica
 #' @param y nombre de la variable factor
+#' @param ylim ylim
 #' @title titulo del grafico
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
@@ -17,10 +18,11 @@
 
 
 
-boxplot_bw <- function(y, x, dat, las = 0, title = NULL, x){
+boxplot_bw <- function(y, x, dat, las = 0, title = NULL, ylim = NULL){
   if(is.null(title)) title <- x
+  if(is.null(ylim)) ylim <- c(min(dat[,x], na.rm = T), max(dat[,x]+1, na.rm = T))
   beeswarm(dat[,x] ~ dat[, y],ylab = "", xlab = y,
-           main = title, xlim = ifelse(is.null(xlim), c(min(x), max(x)), xlim),
+           main = title, ylim = ylim,
            axes = F,
            pch = 20,
            col = gg_color(length(levels(dat[, y]))))
