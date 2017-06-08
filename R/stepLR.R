@@ -75,12 +75,10 @@ stepLR <- function (VR, varExpl, data, var2mod = NA, trace = TRUE, thrPval = 0.1
     var2mod <- na.omit(var2mod)
     if (length(varSelStep) == 0) {
       modfin <- list()
-      modfin[[1]] <- glm(as.formula(paste(VR, "~", paste(var2mod, 
-                                                         collapse = "+"))), data = na.omit(data[, c(VR, 
-                                                                                                    varExpl, var2mod)]), family = binomial)
-      modfin[[2]] <- glm(as.formula(paste(VR, "~", paste(var2mod, 
-                                                         collapse = "+"))), data = na.omit(data[, c(VR, 
-                                                                                                    var2mod)]), family = binomial)
+      modfin[[1]] <- glm(as.formula(paste(VR, "~", paste(var2mod, collapse = "+"))), 
+                         data = na.omit(data[, c(VR, varExpl, var2mod)]), family = binomial)
+      modfin[[2]] <- glm(as.formula(paste(VR, "~", paste(var2mod, collapse = "+"))), 
+                         data = na.omit(data[, c(VR,var2mod)]), family = binomial)
       return(modfin)
       if (trace) {
         print(summary(modfin[[1]]))
