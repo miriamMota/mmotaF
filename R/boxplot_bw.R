@@ -17,10 +17,10 @@
 
 
 
-boxplot_bw <- function(y, x, dat, las = 0, title = NULL){
+boxplot_bw <- function(y, x, dat, las = 0, title = NULL, x){
   if(is.null(title)) title <- x
   beeswarm(dat[,x] ~ dat[, y],ylab = "", xlab = y,
-           main = title,
+           main = title, xlim = ifelse(is.null(xlim), c(min(x), max(x)), xlim),
            axes = F,
            pch = 20,
            col = gg_color(length(levels(dat[, y]))))
