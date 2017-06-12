@@ -4,19 +4,22 @@
 \alias{boxplot_bw}
 \title{titulo del grafico}
 \usage{
-boxplot_bw(y, x, dat, las = 0, title = NULL, ylim = NULL)
+boxplot_bw(x, y = NULL, dat, las = 0, title_plot = NULL,
+  ylim_plot = NULL)
 }
 \arguments{
-\item{y}{nombre de la variable factor}
-
 \item{x}{nombre de la variable numerica}
+
+\item{y}{nombre de la variable factor. Default value is NULL.}
 
 \item{dat}{data frame que contiene las variables a graficar.}
 
 \item{las}{numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.}
 
-\item{ylim}{is vector which contains lower and upper limits which are to appear on the y axes.}
+\item{title_plot}{a main title for the plot}
+
+\item{ylim_plot}{is vector which contains lower and upper limits which are to appear on the y axes.}
 }
 \description{
 A boxplot_bw Function
@@ -26,6 +29,7 @@ Boxplot incluyendo puntos individuales
 }
 \examples{
 boxplot_bw(dat = mtc_bis, x = "qsec" ,y ="gear")
+boxplot_bw(dat = mtc_bis, x = "qsec" )
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
