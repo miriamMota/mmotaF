@@ -13,7 +13,7 @@
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' boxplot_bw(dat = mtc_bis, x = "qsec" ,y ="gear")
-#' @keywords plots descriptive boxplot
+#' @keywords plots descriptive boxplot 
 
 
 
