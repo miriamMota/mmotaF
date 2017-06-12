@@ -112,13 +112,7 @@ descPlot <- function(dat, y = NULL,
           # try(rug(jitter(dat[, i],amount = 0)))
           ## descriptiu bivariat
         }else{
-          # beeswarm(dat[,i] ~ dat[, y],ylab = "", xlab = "",
-          #          main = names(dat)[i], axes = F,
-          #          pch = 20, col = gg_color(3))
-          # boxplot(dat[,i] ~ dat[, y], add = T,
-          #         col = makeTransparent("grey",alpha = 0.3), las = las)
-
-          boxplot_bw(x = i, y = y, dat = dat, title_plot = names(dat)[i])
+          boxplot_bw(x = i, y = y, dat = dat, title.plot = names(dat)[i])
         }
       }
     }

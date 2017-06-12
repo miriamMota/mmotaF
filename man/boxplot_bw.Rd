@@ -4,8 +4,8 @@
 \alias{boxplot_bw}
 \title{titulo del grafico}
 \usage{
-boxplot_bw(x, y = NULL, dat, las = 0, title_plot = NULL,
-  ylim_plot = NULL)
+boxplot_bw(x, y = NULL, dat, las = 0, title.plot = NULL,
+  ylim.plot = NULL)
 }
 \arguments{
 \item{x}{nombre de la variable numerica}
@@ -17,9 +17,9 @@ boxplot_bw(x, y = NULL, dat, las = 0, title_plot = NULL,
 \item{las}{numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.}
 
-\item{title_plot}{a main title for the plot}
+\item{title.plot}{a main title for the plot}
 
-\item{ylim_plot}{is vector which contains lower and upper limits which are to appear on the y axes.}
+\item{ylim.plot}{is vector which contains lower and upper limits which are to appear on the y axes.}
 }
 \description{
 A boxplot_bw Function
