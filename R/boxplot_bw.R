@@ -20,7 +20,7 @@
 
 boxplot_bw <- function(y, x, dat, las = 0, title = NULL, ylim = NULL){
   if(is.null(title)) title <- x
-  if(is.null(ylim)) ylim <- c(min(dat[,x], na.rm = T), max(dat[,x]+1, na.rm = T))
+  if(is.null(ylim)) ylim <- c(min(dat[,x], na.rm = T), max(dat[,x] + 0.2, na.rm = T))
   beeswarm(dat[,x] ~ dat[, y],ylab = "", xlab = y,
            main = title, ylim = ylim,
            axes = F,
