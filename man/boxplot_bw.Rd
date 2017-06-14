@@ -2,7 +2,7 @@
 % Please edit documentation in R/boxplot_bw.R
 \name{boxplot_bw}
 \alias{boxplot_bw}
-\title{titulo del grafico}
+\title{A boxplot_bw Function}
 \usage{
 boxplot_bw(x, y = NULL, dat, las = 0, title.plot = NULL,
   ylim.plot = NULL)
@@ -20,11 +20,10 @@ boxplot_bw(x, y = NULL, dat, las = 0, title.plot = NULL,
 \item{title.plot}{a main title for the plot}
 
 \item{ylim.plot}{is vector which contains lower and upper limits which are to appear on the y axes.}
+
+\item{title}{titulo del grafico}
 }
 \description{
-A boxplot_bw Function
-}
-\details{
 Boxplot incluyendo puntos individuales
 }
 \examples{
