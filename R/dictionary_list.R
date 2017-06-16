@@ -6,8 +6,6 @@
 #' @export dictionary_list
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' # if(!file.exists("dades/dictionaries.rda")){
-#' # dictionaries <- dictionary_list(variables = names(factorDat), data = factorDat)
 #' # if (!file.exists("dades/dictionaries.rda")) {
 #' # dictionaries <- dictionary_list(variables = names(factorDat), data = factorDat)
 #' # save(dictionaries, file = "dades/dictionaries.rda")
