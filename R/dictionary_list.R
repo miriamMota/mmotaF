@@ -6,22 +6,26 @@
 #' @export dictionary_list
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' # dictionary_all <- dictionary_list(names(factorDat), factorDat)
+#' # if(!file.exists("dades/dictionaries.rda")){
+#' # dictionaries <- dictionary_list(variables = names(factorDat), data = factorDat)
+#' # if (!file.exists("dades/dictionaries.rda")) {
+#' # dictionaries <- dictionary_list(variables = names(factorDat), data = factorDat)
+#' # save(dictionaries, file = "dades/dictionaries.rda")
+#' # }else{
+#' #    load("dades/dictionaries.rda")
+#' #   }
 #' # Asignar nuevos niveles a todas las variables
 #' # for (i in 1:length(dictionary_all)) {
-#' # factorDat[,gsub("^dc_","",names(dictionary_all)[i])] <- recode_factor(dict = dictionary_all[[i]],
-#' #                                                                        var = factorDat[,gsub("^dc_","",names(dictionary_all)[i])] )
-#' #                                                                        }
+#' # factorDat[,gsub("^dc_","",names(dictionaries)[i])] <- recode_factor(dict = dictionaries[[i]],
+#' #                                                                        var = factorDat[,gsub("^dc_","",names(dictionaries)[i])] )
+#' #  }
 #' @keywords dictionary variable factor
 
 dictionary_list <- function(variables, data){
   dictionary_all <- list()
   for (i in 1:length(variables)) {
-    dictionary_all[[paste0("dc_", variables[i])]] <- create_dictionary(
-      data[,variables[i]])
+    dictionary_all[[paste0("dc_", variables[i])]] <- create_dictionary(  data[,variables[i]], name.var = variables[i])
   }
   return(dictionary_all)
 }
-
-
 

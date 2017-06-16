@@ -14,14 +14,6 @@ dictionary_list(variables, data)
 \description{
 Crea una lista de diccionarios para los niveles de una seria de variables factor
 }
-\examples{
-# dictionary_all <- dictionary_list(names(factorDat), factorDat)
-# Asignar nuevos niveles a todas las variables
-# for (i in 1:length(dictionary_all)) {
-# factorDat[,gsub("^dc_","",names(dictionary_all)[i])] <- recode_factor(dict = dictionary_all[[i]],
-#                                                                        var = factorDat[,gsub("^dc_","",names(dictionary_all)[i])] )
-#                                                                        }
-}
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
 }

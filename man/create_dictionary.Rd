@@ -4,7 +4,7 @@
 \alias{create_dictionary}
 \title{A create_dictionary Function}
 \usage{
-create_dictionary(var)
+create_dictionary(var, name.var = NULL)
 }
 \arguments{
 \item{var}{object to be coerced or tested. (factor)}
@@ -15,7 +15,7 @@ create_dictionary(var)
 Crea un diccionario para los niveles de una variable factor
 }
 \examples{
-# dc_fumador <- create_dictionary(factorDat$Fumador)
+# dc_fumador <- create_dictionary(var = factorDat$Fumador)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

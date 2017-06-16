@@ -6,17 +6,20 @@
 #' @export create_dictionary
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' # dc_fumador <- create_dictionary(factorDat$Fumador)
+#' # dc_fumador <- create_dictionary(var = factorDat$Fumador)
 #' @keywords dictionary variable factor
 
 
-create_dictionary <- function(var){
+create_dictionary <- function(var, name.var = NULL){
   # if(class(var) != "factor") stop("La variable debe ser tipo factor")
   var <- as.factor(var)
   dc <- data.frame(rawtext = levels(var),recoded = rep("",length(levels(var))) )
   dc$rawtext <- as.character(dc$rawtext)
   dc$recoded <- as.character(dc$recoded)
+  names(dc) <- c(paste0("rawtext.",name.var),paste0("recoded.",name.var))
   dict <- edit(dc)
+  names(dict) <- c("rawtext","recoded")
+
   # dict$recoded[dict$recoded == na.char] <- NA
   return(dictionary = dict)
 }
