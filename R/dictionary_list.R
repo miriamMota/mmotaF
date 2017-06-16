@@ -13,7 +13,7 @@
 #' #    load("dades/dictionaries.rda")
 #' #   }
 #' # Asignar nuevos niveles a todas las variables
-#' # for (i in 1:length(dictionary_all)) {
+#' # for (i in 1:length(dictionaries)) {
 #' # factorDat[,gsub("^dc_","",names(dictionaries)[i])] <- recode_factor(dict = dictionaries[[i]],
 #' #                                                                        var = factorDat[,gsub("^dc_","",names(dictionaries)[i])] )
 #' #  }
