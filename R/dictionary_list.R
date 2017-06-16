@@ -3,7 +3,7 @@
 #' Crea una lista de diccionarios para los niveles de una seria de variables factor
 #' @param var nombre de las variables factor a recodificar
 #' @param dat data frame, list or environment (or object coercible by 'as.data.frame' to a data frame) containing the variables
-#' @export create_dictionary
+#' @export dictionary_list
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' # dictionary_all <- dictionary_list(names(factorDat), factorDat)
