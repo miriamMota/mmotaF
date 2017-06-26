@@ -28,7 +28,7 @@ boxplot_bw <- function(x, y = NULL, dat,
 
   if (is.null(title.plot)) title.plot <- x
   if (is.null(ylim.plot)) ylim.plot <- c(min(dat[,x], na.rm = T), max(dat[,x] + 0.2, na.rm = T))
-  par(cex.axis = cex.lab )
+  op <- par(cex.axis = cex.lab )
   
   if (is.null(y)) {
     beeswarm(dat[,x] ,ylab = "",
@@ -47,5 +47,5 @@ boxplot_bw <- function(x, y = NULL, dat,
     boxplot(dat[,x] ~ dat[, y], add = T, col = makeTransparent("grey",alpha = 0.3), 
             las = las,cex.lab=3)
   }
-  par(cex.axis = 1 )
+  par(op)
 }
