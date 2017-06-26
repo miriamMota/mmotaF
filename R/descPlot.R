@@ -112,7 +112,7 @@ descPlot <- function(dat, y = NULL,
           # try(rug(jitter(dat[, i],amount = 0)))
           ## descriptiu bivariat
         }else{
-          boxplot_bw(x = i, y = y, dat = dat, title.plot = names(dat)[i])
+          boxplot_bw(x = i, y = y, dat = dat, title.plot = names(dat)[i], cex.lab = cex.lab)
         }
       }
     }

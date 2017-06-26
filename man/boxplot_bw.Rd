@@ -5,7 +5,7 @@
 \title{A boxplot_bw Function}
 \usage{
 boxplot_bw(x, y = NULL, dat, las = 0, title.plot = NULL,
-  ylim.plot = NULL)
+  ylim.plot = NULL, cex.lab = 1)
 }
 \arguments{
 \item{x}{nombre de la variable numerica}

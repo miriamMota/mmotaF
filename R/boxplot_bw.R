@@ -23,7 +23,8 @@
 boxplot_bw <- function(x, y = NULL, dat,
                        las = 0,
                        title.plot = NULL,
-                       ylim.plot = NULL ){
+                       ylim.plot = NULL,
+                       cex.lab = 1){
 
   if (is.null(title.plot)) title.plot <- x
   if (is.null(ylim.plot)) ylim.plot <- c(min(dat[,x], na.rm = T), max(dat[,x] + 0.2, na.rm = T))
@@ -42,6 +43,8 @@ boxplot_bw <- function(x, y = NULL, dat,
              axes = F,
              pch = 20,
              col = gg_color(length(levels(dat[, y]))))
-    boxplot(dat[,x] ~ dat[, y], add = T, col = makeTransparent("grey",alpha = 0.3), las = las)
+    par(cex.axis = cex.lab )
+    boxplot(dat[,x] ~ dat[, y], add = T, col = makeTransparent("grey",alpha = 0.3), 
+            las = las,cex.lab=3)
   }
 }
