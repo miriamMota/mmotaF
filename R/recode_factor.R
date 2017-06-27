@@ -17,7 +17,7 @@ recode_factor <- function(dict, var, na.char = "NA"){
   var <- as.character(var)
 
   for (i in 1:nrow(dict)) {
-    var[as.character(var) == dict[i,"rawtext"]] <- dict[i,"recoded"]
+    var[as.character(var) == dict[i,1]] <- dict[i,2]
   }
   var[var == na.char] <- NA
   return(variable = factor(var))
