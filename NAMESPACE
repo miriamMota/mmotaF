@@ -3,7 +3,7 @@
 export(NAperc)
 export(boxplot_bw)
 export(create_dictionary)
-export(date_create)
+export(date.create)
 export(descPlot)
 export(dictionary_list)
 export(doROC)
