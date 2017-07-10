@@ -45,7 +45,7 @@ boxplot_bw <- function(x, y = NULL, dat,
              pch = 20,
              col = gg_color(length(levels(dat[, y]))))
     boxplot(dat[,x] ~ dat[, y], add = T, col = makeTransparent("grey",alpha = 0.3), 
-            las = las,cex.lab=3)
+            las = las,cex.lab=3, ylab = x)
   }
   par(op)
 }
