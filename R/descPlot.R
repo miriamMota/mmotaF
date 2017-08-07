@@ -37,27 +37,27 @@ descPlot <- function(dat, y = NULL,
                      cex.lg = 0.65,
                      las = 0)
 {
-
+  
   if (is.null(y)) {
     parmar = c(5.1, 4.1, 4.1, 2.1)
   }else{
     parmar = c(5.1, 4.1, 4.1, 7.1)
     dat[,y] <- as.factor(as.character(dat[,y]))
   }
-
+  
   par(mar = parmar , mfrow  = rowcol)
-
+  
   if (topdf) {
     pdf(nameFile)
     par(mfrow = rowcol)
     # par(mar = parmar, xpd = TRUE , mfrow = rowcol)
   }
-  if (sum(label(dat) == "") != 0) {
+  if (sum(label(dat[ !names(dat) %in% y]) == "") != 0) {
     namevar <- names(dat)
   }else{
     namevar <- label(dat)
   }
-
+  
   for (i in 1:dim(dat)[2]) {
     ##### variables factor
     if ( ifelse(!is.null(y), names(dat)[i] != y, TRUE)) {
@@ -92,11 +92,11 @@ descPlot <- function(dat, y = NULL,
           try(aa <- barplot(tab2bar, cex.names = cex.lab,
                             xlab = y,
                             ylab = "%",
-                            main = names(dat)[i],
+                            main = namevar[i],
                             sub = ifelse(is.null(subtitle),"", subtitle),
                             col = col.lev,
                             las = las), TRUE)
-
+          
           legend(length(levels(dat[,y])) + .7,50,inset = c(-0.25,0), legend = levels(dat[,i]),bg = "white",
                  fill = col.lev, cex = cex.lg, yjust = 0)
           par(op)
@@ -112,7 +112,7 @@ descPlot <- function(dat, y = NULL,
           # try(rug(jitter(dat[, i],amount = 0)))
           ## descriptiu bivariat
         }else{
-          boxplot_bw(x = i, y = y, dat = dat, title.plot = names(dat)[i], cex.lab = cex.lab)
+          boxplot_bw(x = i, y = y, dat = dat, title.plot = namevar[i], cex.lab = cex.lab)
         }
       }
     }
