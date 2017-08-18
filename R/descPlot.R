@@ -69,9 +69,9 @@ descPlot <- function(dat, y = NULL,
           col.lev <-  gg_color(length(levels(dat[,i])))
           tab2bar <- prop.table(table(dat[, i])) * 100
           try(aa <- barplot(tab2bar,
-                            xlab = namevar[i],
+                            xlab = "",
                             ylab = "%",
-                            main = "Diagrama de barras",
+                            main = namevar[i],
                             sub = ifelse(is.null(subtitle),"", subtitle),
                             col = col.lev ,#legend.text = T,
                             ylim = c(0, max(tab2bar) + 6.5 ), las = las, cex.names = cex.lab ), TRUE)
@@ -105,7 +105,7 @@ descPlot <- function(dat, y = NULL,
       }else {
         ## descriptiu univariat
         if (is.null(y)) {
-          try(hist(dat[, i], xlab = namevar[i], main = "Histograma",
+          try(hist(dat[, i], xlab = "", main = namevar[i],
                    sub = ifelse(is.null(subtitle),"",subtitle),
                    col = makeTransparent(color,alpha = 0.8)), TRUE)
           try(rug(dat[, i]))
