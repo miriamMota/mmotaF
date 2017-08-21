@@ -14,7 +14,7 @@
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @export descPlot
-#' @import beeswarm
+#' @import beeswarm Hmisc
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' df <- data.frame(Y=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
@@ -37,16 +37,16 @@ descPlot <- function(dat, y = NULL,
                      cex.lg = 0.65,
                      las = 0)
 {
-  
+
   if (is.null(y)) {
     parmar = c(5.1, 4.1, 4.1, 2.1)
   }else{
     parmar = c(5.1, 4.1, 4.1, 7.1)
     dat[,y] <- as.factor(as.character(dat[,y]))
   }
-  
+
   par(mar = parmar , mfrow  = rowcol)
-  
+
   if (topdf) {
     pdf(nameFile)
     par(mfrow = rowcol)
@@ -57,11 +57,13 @@ descPlot <- function(dat, y = NULL,
   }else{
     namevar <- label(dat)
   }
-  
+
   for (i in 1:dim(dat)[2]) {
+
     ##### variables factor
     if ( ifelse(!is.null(y), names(dat)[i] != y, TRUE)) {
       if (class(dat[, i])[length(class(dat[, i]))] == "factor") {
+
         ## descriptiu univariat
         if (is.null(y)) {
           if (show.lg) {parmar = c(5.1, 4.1, 4.1, 7.1)}
@@ -77,13 +79,13 @@ descPlot <- function(dat, y = NULL,
                             ylim = c(0, max(tab2bar) + 6.5 ), las = las, cex.names = cex.lab ), TRUE)
           if (show.freq) try(text(aa,tab2bar + 4,labels = table(dat[, i]), cex = 0.8))
           if (show.lg) {
-            # legend("topleft", levels(dat[,i]), bty = "n", fill = col.lev, cex = 0.75 )
             legend(length(levels(dat[,i])) + .7,(max(tab2bar, na.rm = T ) * .4) ,
                    inset = c(-0.25,0), legend = levels(dat[,i]),bg = "white",
                    fill = col.lev, cex = cex.lg, yjust = 0)
             par(op)
           }
           par(op)
+
           ## descriptiu bivariat
         }else{
           op <- par(mar = parmar, xpd = TRUE )
@@ -96,25 +98,34 @@ descPlot <- function(dat, y = NULL,
                             sub = ifelse(is.null(subtitle),"", subtitle),
                             col = col.lev,
                             las = las), TRUE)
-          
-          legend(length(levels(dat[,y])) + .7,50,inset = c(-0.25,0), legend = levels(dat[,i]),bg = "white",
-                 fill = col.lev, cex = cex.lg, yjust = 0)
+
+          legend(length(levels(dat[,y])) + .7,50,inset = c(-0.25,0),
+                 legend = levels(dat[,i]),
+                 bg = "white",
+                 fill = col.lev,
+                 cex = cex.lg,
+                 yjust = 0)
           par(op)
         }
-        ##### variables numeriques
+
+
+    ##### variables numeriques
       }else {
+
         ## descriptiu univariat
         if (is.null(y)) {
           try(hist(dat[, i], xlab = "", main = namevar[i],
                    sub = ifelse(is.null(subtitle),"",subtitle),
                    col = makeTransparent(color,alpha = 0.8)), TRUE)
           try(rug(dat[, i]))
-          # try(rug(jitter(dat[, i],amount = 0)))
+
           ## descriptiu bivariat
         }else{
           boxplot_bw(x = i, y = y, dat = dat, title.plot = namevar[i], cex.lab = cex.lab)
         }
       }
+
+
     }
   }
   if (topdf) {dev.off()}
