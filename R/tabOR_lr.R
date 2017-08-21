@@ -22,7 +22,7 @@ tabOR_lr <- function(mod, xtab = FALSE, title = "title"){
     infORcoef <- ic[,1]
     supORcoef <- ic[,2]
   } 
-  p.val <- summary(mod)$coef[,4]
+  p.val <- summary(mod)$coef[,which(colnames(summary(mod)$coef) == "Pr(>|z|)")]
   tauORcoef <- data.frame(ORcoef, infORcoef,supORcoef,p.val)
   colnames(tauORcoef) <- c("OR", "IC inferior", "IC superior","P.valor")
   if (xtab)   {
