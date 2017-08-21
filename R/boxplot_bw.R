@@ -13,11 +13,9 @@
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' boxplot_bw(dat = mtc_bis, x = "qsec" ,y ="gear")
+#' boxplot_bw(dat = mtc_bis, x = "qsec", y = "gear")
 #' boxplot_bw(dat = mtc_bis, x = "qsec" )
 #' @keywords plots descriptive boxplot
-
-
 
 
 boxplot_bw <- function(x, y = NULL, dat,
@@ -26,26 +24,34 @@ boxplot_bw <- function(x, y = NULL, dat,
                        ylim.plot = NULL,
                        cex.lab = 1){
 
-  if (is.null(title.plot)) title.plot <- x
+
   if (is.null(ylim.plot)) ylim.plot <- c(min(dat[,x], na.rm = T), max(dat[,x] + 0.2, na.rm = T))
   op <- par(cex.axis = cex.lab )
-  
+
+  ## univariant
   if (is.null(y)) {
+    if (is.null(title.plot)) title.plot <- x
     beeswarm(dat[,x] ,ylab = "",
-             main = title.plot, ylim = ylim.plot,
+             main = title.plot,
+             ylim = ylim.plot,
              axes = F,
              pch = 20,
              col = gg_color(1))
 
     boxplot(dat[,x], add = T, col = makeTransparent("grey",alpha = 0.3), las = las)
+
+  ## bivariant
   }else{
+    if (is.null(title.plot)) title.plot <- ""
     beeswarm(dat[,x] ~ dat[, y],ylab = "", xlab = y,
-             main = title.plot, ylim = ylim.plot,
+             main = title.plot,
+             ylim = ylim.plot,
              axes = F,
              pch = 20,
              col = gg_color(length(levels(dat[, y]))))
-    boxplot(dat[,x] ~ dat[, y], add = T, col = makeTransparent("grey",alpha = 0.3), 
-            las = las,cex.lab= cex.lab, ylab = x)
+    boxplot(dat[,x] ~ dat[, y], add = T, col = makeTransparent("grey",alpha = 0.3),
+            las = las,cex.lab = cex.lab, ylab = x)
   }
   par(op)
 }
+
