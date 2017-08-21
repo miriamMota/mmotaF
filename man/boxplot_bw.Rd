@@ -27,7 +27,7 @@ boxplot_bw(x, y = NULL, dat, las = 0, title.plot = NULL,
 Boxplot incluyendo puntos individuales
 }
 \examples{
-boxplot_bw(dat = mtc_bis, x = "qsec" ,y ="gear")
+boxplot_bw(dat = mtc_bis, x = "qsec", y = "gear")
 boxplot_bw(dat = mtc_bis, x = "qsec" )
 }
 \author{

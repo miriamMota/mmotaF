@@ -104,7 +104,7 @@ descPlot <- function(dat, y = NULL,
                  bg = "white",
                  fill = col.lev,
                  cex = cex.lg,
-                 yjust = 0)
+                 yjust = 0.5) ## ajustar llegenda y
           par(op)
         }
 
