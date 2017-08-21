@@ -35,6 +35,7 @@ descPlot <- function(dat, y = NULL,
                      show.freq = TRUE,
                      cex.lab = 1,
                      cex.lg = 0.65,
+                     cex.main = 0.8,
                      las = 0)
 {
 
@@ -97,7 +98,7 @@ descPlot <- function(dat, y = NULL,
                             main = namevar[i],
                             sub = ifelse(is.null(subtitle),"", subtitle),
                             col = col.lev,
-                            las = las), TRUE)
+                            las = las, cex.main = cex.main), TRUE)
 
           legend(length(levels(dat[,y])) + .7,50,inset = c(-0.25,0),
                  legend = levels(dat[,i]),
