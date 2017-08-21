@@ -77,7 +77,8 @@ descPlot <- function(dat, y = NULL,
                             main = namevar[i],
                             sub = ifelse(is.null(subtitle),"", subtitle),
                             col = col.lev ,#legend.text = T,
-                            ylim = c(0, max(tab2bar) + 6.5 ), las = las, cex.names = cex.lab ), TRUE)
+                            ylim = c(0, max(tab2bar) + 6.5 ), las = las, cex.names = cex.lab,
+                            cex.main = cex.main), TRUE)
           if (show.freq) try(text(aa,tab2bar + 4,labels = table(dat[, i]), cex = 0.8))
           if (show.lg) {
             legend(length(levels(dat[,i])) + .7,(max(tab2bar, na.rm = T ) * .4) ,
