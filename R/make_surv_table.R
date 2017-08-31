@@ -15,35 +15,31 @@
 #' @return a data frame with labeled columns
 #' @keywords survival table latex
 
-make_surv_table <- function(fit_surv, 
-                            nround = 2, 
-                            event = FALSE){
-  
-  res <- summary(fit_surv,conf.int = T)
-  
-  if(!event){
-    tab_surv <- data.frame(Time = res$time,
-                           n.risk = res$n.risk,
-                           n.event = res$n.event,
-                           Survival = res$surv,
-                           "Cumulative Events" = cumsum(res$n.event),
-                           "L.Inf95%IC" = res$lower,
-                           "L.Sup95%IC" = res$upper)
-  }else{
-    tab_surv <- data.frame(Time = res$time,
-                           n.risk = res$n.risk,
-                           n.event = res$n.event,
-                           Survival = 1-res$surv,
-                           "Cumulative Events" = cumsum(res$n.event),
-                           "L.Inf95%IC" = 1 - res$upper,
-                           "L.Sup95%IC" = 1 - res$lower)
-  }
-  
-  round(tab_surv,nround)
-  
-  return(tab_surv)
-  
+make_surv_table <- function(fit_surv,
+                            nround = 2,
+                            event = FALSE) {
+
+    res <- summary(fit_surv, conf.int = T)
+
+    if (!event) {
+        tab_surv <- data.frame(Time = res$time,
+                               n.risk = res$n.risk,
+                               n.event = res$n.event,
+                               Survival = res$surv,
+                               `Cumulative Events` = cumsum(res$n.event),
+                               `L.Inf95%IC` = res$lower,
+                               `L.Sup95%IC` = res$upper)
+    } else {
+        tab_surv <- data.frame(Time = res$time,
+                               n.risk = res$n.risk,
+                               n.event = res$n.event,
+                               Survival = 1 - res$surv,
+                               `Cumulative Events` = cumsum(res$n.event),
+                               `L.Inf95%IC` = 1 - res$upper,
+                               `L.Sup95%IC` = 1 - res$lower)
+    }
+
+    round(tab_surv, nround)
+    return(tab_surv)
+
 }
-
-
-
