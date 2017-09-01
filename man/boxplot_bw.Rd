@@ -4,13 +4,13 @@
 \alias{boxplot_bw}
 \title{A boxplot_bw Function}
 \usage{
-boxplot_bw(x, y = NULL, dat, las = 0, title.plot = NULL,
+boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
   ylim.plot = NULL, cex.lab = 1)
 }
 \arguments{
-\item{x}{nombre de la variable numerica}
+\item{y}{nombre de la variable numerica}
 
-\item{y}{nombre de la variable factor. Default value is NULL.}
+\item{group}{nombre de la variable factor. Default value is NULL.}
 
 \item{dat}{data frame que contiene las variables a graficar.}
 
@@ -27,8 +27,8 @@ boxplot_bw(x, y = NULL, dat, las = 0, title.plot = NULL,
 Boxplot incluyendo puntos individuales
 }
 \examples{
-boxplot_bw(dat = mtc_bis, x = "qsec", y = "gear")
-boxplot_bw(dat = mtc_bis, x = "qsec" )
+boxplot_bw(dat = mtc_bis, y = 'qsec' )
+boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear')
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

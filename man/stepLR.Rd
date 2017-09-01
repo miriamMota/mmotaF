@@ -24,17 +24,19 @@ modfin: exporta dos modelos, el final teniendo en cuenta solo aquellos individuo
 }
 \description{
 Construye el mejor modelo de regresion logistica basandose en el AIC y cuyo pvalor
-al comparar los modelos mediante LRT sea inferior a 0.1,  partiendo de "x" variables explicativas.
+al comparar los modelos mediante LRT sea inferior a 0.1,  partiendo de 'x' variables explicativas.
 IMPORTANTE: para la construcción de todos los modelos se tendran en cuenta solo aquellos pacientes que tengan valores para todas las variables indicadas excepto para el final que tendra
 en cuenta las variables finales.
 }
 \examples{
-# data("mtcars")
-# mtcars$vs <- as.factor(mtcars$vs)
-# mtcars$am <- as.factor(mtcars$am)
-# modfin <- stepLR(VR = "vs",varExpl = c("hp", "am", "carb"), data = mtcars, trace = T )
-# summary(modfin[[1]])
-# summary(modfin[[2]])
+\dontrun{
+data('mtcars')
+mtcars$vs <- as.factor(mtcars$vs)
+mtcars$am <- as.factor(mtcars$am)
+modfin <- stepLR(VR = 'vs',varExpl = c('hp', 'am', 'carb'), data = mtcars, trace = T )
+summary(modfin[[1]])
+summary(modfin[[2]])
+}
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

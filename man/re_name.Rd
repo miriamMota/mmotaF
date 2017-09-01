@@ -10,7 +10,7 @@ re_name(data)
 \item{dat}{data frame que contiene las variables a evaluar}
 }
 \description{
-Renombra los identificadores de columna, substituyendo "." por "_", eliminando acentos, ec.
+Renombra los identificadores de columna, substituyendo '.' por '_', eliminando acentos, ec.
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

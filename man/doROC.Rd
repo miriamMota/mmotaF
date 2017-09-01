@@ -38,14 +38,14 @@ misc.test: en el caso de tener datos de validación, la tasa de error de clasifi
 }
 \description{
 Creación de curvas ROC con regresión logística mediante el paquete pROC y validación con datos externos.
-Para realizar las curvas ROC, en primer lugar, se modeliza - para el conjunto de datos “training set”- la variable respuesta grupo 
+Para realizar las curvas ROC, en primer lugar, se modeliza - para el conjunto de datos “training set”- la variable respuesta grupo
 mediante regresión logística teniendo en cuenta la variable explicativa. Una vez ajustado el modelo se realiza las curva
 ROC(representación gráfica de la sensibilidad en frente a la especificidad).
 }
 \examples{
 y <- as.factor(rbinom(50,1,.40))
 x <- rnorm(50,10,1)
-resROC <- doROC (frml = y ~ x, titol = "prova",
+resROC <- doROC (frml = y ~ x, titol = 'prova',
                  validation = TRUE,
                  test = data.frame(x=c(1,2,3)),
                  test_y = as.factor(c(0,1,1)))

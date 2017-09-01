@@ -12,7 +12,7 @@ NAperc(df, maxNA = 80)
 \item{dat}{data frame que contiene las variables a evaluar}
 }
 \description{
-Percentatge de dades faltants per variable (na$perc) i variables amb més de "x" percentatge(na$var).
+Percentatge de dades faltants per variable (na$perc) i variables amb més de 'x' percentatge(na$var).
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

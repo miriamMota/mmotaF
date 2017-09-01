@@ -15,10 +15,12 @@ recode_factor(dict, var, na.char = "NA")
 Crea un diccionario para los niveles de una variable factor
 }
 \examples{
-# dc_fumador <- create_dictionary(factorDat$Fumador)
-# table(factorDat$Fumador)
-# factorDat$Fumador <- recode_factor(dict = dc_fumador, var = factorDat$Fumador)
-# table(factorDat$Fumador)
+\dontrun{
+dc_fumador <- create_dictionary(factorDat$Fumador)
+table(factorDat$Fumador)
+factorDat$Fumador <- recode_factor(dict = dc_fumador, var = factorDat$Fumador)
+table(factorDat$Fumador)
+}
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

@@ -20,7 +20,7 @@ freq_table(var.cat, y, data, margin = NULL, nround = 2, latex = TRUE,
 
 \item{latex}{TRUE o FALSE, para obtener tabla en formato .tex}
 
-\item{sz.tab}{A character vector that is inserted just before the tabular environment starts. This can be used to set the font size and a variety of other table settings. Initial backslashes are automatically prefixed, if not supplied by user. Default value is "footnotesize"}
+\item{sz.tab}{A character vector that is inserted just before the tabular environment starts. This can be used to set the font size and a variety of other table settings. Initial backslashes are automatically prefixed, if not supplied by user. Default value is 'footnotesize'}
 
 \item{title}{titles for the table}
 }
@@ -28,7 +28,7 @@ freq_table(var.cat, y, data, margin = NULL, nround = 2, latex = TRUE,
 Tabla de frecuencias relativas, por fila columnas o global.
 }
 \examples{
-freq_table(var.cat = c("cyl","vs","gear", "carb"), y = "am", data = mtc_bis, latex = TRUE)
+freq_table(var.cat = c('cyl','vs','gear', 'carb'), y = 'am', data = mtc_bis, latex = TRUE)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

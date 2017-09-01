@@ -16,7 +16,7 @@ Creación de colores transparentes
 ROC(representación gráfica de la sensibilidad en frente a la especificidad).
 }
 \examples{
-makeTransparent("mediumorchid4")
+makeTransparent('mediumorchid4')
 }
 \keyword{color}
 \keyword{transparent}

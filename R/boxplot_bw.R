@@ -2,8 +2,8 @@
 #'
 #' Boxplot incluyendo puntos individuales
 #' @param dat data frame que contiene las variables a graficar.
-#' @param x nombre de la variable numerica
-#' @param y nombre de la variable factor. Default value is NULL.
+#' @param y nombre de la variable numerica
+#' @param group nombre de la variable factor. Default value is NULL.
 #' @param ylim.plot is vector which contains lower and upper limits which are to appear on the y axes.
 #' @param title.plot a main title for the plot
 #' @param title titulo del grafico
@@ -13,33 +13,33 @@
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' boxplot_bw(dat = mtc_bis, x = 'qsec', y = 'gear')
-#' boxplot_bw(dat = mtc_bis, x = 'qsec' )
+#' boxplot_bw(dat = mtc_bis, y = 'qsec' )
+#' boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear')
 #' @keywords plots descriptive boxplot
 
 
-boxplot_bw <- function(x, y = NULL, dat,
+boxplot_bw <- function(y, group = NULL, dat,
                        las = 0,
                        title.plot = NULL,
                        ylim.plot = NULL,
                        cex.lab = 1) {
 
     if (is.null(ylim.plot))
-        ylim.plot <- c(min(dat[, x], na.rm = T), max(dat[, x] + 0.2, na.rm = T))
+        ylim.plot <- c(min(dat[, y], na.rm = T), max(dat[, y] + 0.2, na.rm = T))
     op <- par(cex.axis = cex.lab)
 
     ## univariant
-    if (is.null(y)) {
+    if (is.null(group)) {
         if (is.null(title.plot))
-            title.plot <- x
-        beeswarm(dat[, x],
+            title.plot <- y
+        beeswarm(dat[, y],
                  ylab = "", main = title.plot,
                  ylim = ylim.plot,
                  axes = F,
                  pch = 20,
                  col = gg_color(1))
 
-        boxplot(dat[, x],
+        boxplot(dat[, y],
                 add = T,
                 col = makeTransparent("grey", alpha = 0.3),
                 las = las)
@@ -48,17 +48,17 @@ boxplot_bw <- function(x, y = NULL, dat,
     } else {
         if (is.null(title.plot))
             title.plot <- ""
-        beeswarm(dat[, x] ~ dat[, y],
-                 ylab = "", xlab = y, main = title.plot,
+        beeswarm(dat[, y] ~ dat[, group],
+                 ylab = "", xlab = group, main = title.plot,
                  ylim = ylim.plot,
                  axes = F,
-            pch = 20, col = gg_color(length(levels(dat[, y]))))
-        boxplot(dat[, x] ~ dat[, y],
+            pch = 20, col = gg_color(length(levels(dat[, group]))))
+        boxplot(dat[, y] ~ dat[, group],
                 add = T,
                 col = makeTransparent("grey", alpha = 0.3),
                 las = las,
                 cex.lab = cex.lab,
-                ylab = x)
+                ylab = y)
     }
     par(op)
 }

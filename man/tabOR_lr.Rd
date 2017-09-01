@@ -7,7 +7,7 @@
 tabOR_lr(mod, xtab = FALSE, title = "title")
 }
 \arguments{
-\item{mod}{Modelo de regresión logística ("glm")}
+\item{mod}{Modelo de regresión logística ('glm')}
 
 \item{xtab}{TRUE o FALSE, para obtener tabla en formato .tex}
 
@@ -18,7 +18,7 @@ Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un
 }
 \examples{
 #tabOR_lr(glm(rnorm(50,10,1)~ as.factor(rbinom(50,1,.40))),
-#xtab=TRUE,title="OR de los coeficientes")
+#xtab=TRUE,title='OR de los coeficientes')
 }
 \keyword{OR}
 \keyword{logisitica}

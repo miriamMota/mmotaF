@@ -12,7 +12,7 @@ descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
 
-\item{nameFile}{nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto "descriptive_plots.pdf".}
+\item{nameFile}{nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto 'descriptive_plots.pdf'.}
 
 \item{topdf}{valor lógico indicando si se quieren guardar los gráficos en pdf. Por defecto FALSE.}
 
@@ -28,20 +28,20 @@ descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
 
 \item{cex.lab}{expansion factor for axis names (bar labels). (size x labels)}
 
-\item{cex.lg}{character expansion factor relative to current par("cex"). Used for text, and provides the default for pt.cex and title.cex.}
+\item{cex.lg}{character expansion factor relative to current par('cex'). Used for text, and provides the default for pt.cex and title.cex.}
 
 \item{las}{numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.}
 }
 \description{
-Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es "data.frame"
+Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es 'data.frame'
 }
 \examples{
 df <- data.frame(Y=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
-descPlot(dat = df, color = "red", rowcol = c(1,2))
-descPlot(dat = df, y = "Y", color = "red", rowcol = c(1,1))
+descPlot(dat = df, color = 'red', rowcol = c(1,2))
+descPlot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1))
 descPlot(mtc_bis)
-descPlot(dat = mtc_bis, y ="gear", rowcol = c(2,2))
+descPlot(dat = mtc_bis, y ='gear', rowcol = c(2,2))
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

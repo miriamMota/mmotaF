@@ -123,7 +123,7 @@ descPlot <- function(dat, y = NULL,
 
                   ## descriptiu bivariat
                 } else {
-                  boxplot_bw(x = i, y = y, dat = dat,
+                  boxplot_bw(y = i, group = y, dat = dat,
                              title.plot = namevar[i],
                              cex.lab = cex.lab)
                 }

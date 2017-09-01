@@ -15,7 +15,9 @@ create_dictionary(var, name.var = NULL)
 Crea un diccionario para los niveles de una variable factor
 }
 \examples{
-# dc_fumador <- create_dictionary(var = factorDat$Fumador)
+\dontrun{
+dc_fumador <- create_dictionary(var = factorDat$Fumador)
+}
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
