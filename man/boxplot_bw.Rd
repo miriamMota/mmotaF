@@ -27,6 +27,8 @@ boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
 Boxplot incluyendo puntos individuales
 }
 \examples{
+df <- data.frame(runif = c(runif(100, min = -3, max = 3),rep(0,25)), rnorm = c(rnorm(100),rep(0,25)) )
+boxplot_bw(dat = df, y = 'rnorm' )
 boxplot_bw(dat = mtc_bis, y = 'qsec' )
 boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear')
 }

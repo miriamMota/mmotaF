@@ -13,6 +13,8 @@
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
+#' df <- data.frame(runif = c(runif(100, min = -3, max = 3),rep(0,25)), rnorm = c(rnorm(100),rep(0,25)) )
+#' boxplot_bw(dat = df, y = 'rnorm' )
 #' boxplot_bw(dat = mtc_bis, y = 'qsec' )
 #' boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear')
 #' @keywords plots descriptive boxplot
@@ -37,7 +39,7 @@ boxplot_bw <- function(y, group = NULL, dat,
                  ylim = ylim.plot,
                  axes = F,
                  pch = 20,
-                 col = gg_color(1))
+                 col = gg_color(1), corral = "gutter")
 
         boxplot(dat[, y],
                 add = T,

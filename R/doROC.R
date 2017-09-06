@@ -31,7 +31,7 @@
 
 
 doROC <- function(frml, dat,
-                  titol,
+                  titol = NULL,
                   validation = FALSE,
                   test,
                   test_y,
@@ -42,25 +42,30 @@ doROC <- function(frml, dat,
                   show.ci = TRUE,
                   show.thr = TRUE) {
 
+  if(is.null(titol)) titol <- strsplit(as.character(frml), "~", fixed = T)[[2]]
+  
   mod <- glm(frml, data = dat, family = binomial, na.action = "na.omit")
-
   pred <- predict(mod, type = "response")
-
   rocobj <- plot.roc(mod$y, pred, main = titol,
                      ci = TRUE, percent = TRUE,
                      print.thres = ifelse(show.thr, "best", FALSE),
                      legacy.axes = x.axes)
-  if (show.cascon)
+  if (show.cascon) {
     text(10, 20, paste0("cases: ", length(rocobj[6]$cases), "\n controls: ", length(rocobj[7]$controls)))
+    }
   thres <- rocobj$sensitivities - (1 - rocobj$specificities)
   thres.best <- rocobj$thresholds[which(thres == max(thres))]  # threshold  de Youden
-  ciobj <- ci.se(rocobj, boot.n = 100, progress = "none")
-  if (show.ci)
-    plot(ciobj, type = "shape", col = col.ic)  # plot as a blue shape
-  if (show.thr)
+  ciobj <- ci.se(rocobj, boot.n = 200, progress = "none")
+  
+  if (show.ci)    plot(ciobj, type = "s", col = col.ic)  # plot as a blue shape
+  
+  if (show.thr) {  
     plot(ci(rocobj, of = "thresholds", thresholds = "best", progress = "none"),
          col = col.thres,
          lwd = 2)
+    }
+  
+
   ic <- rocobj$ci
   auc_text <- paste(round(ic[2], 2), "% (", round(ic[1], 1), " - ", round(ic[3], 1), "%)", sep = "")
   p.val <- summary(mod)$coef[, 4][2]
