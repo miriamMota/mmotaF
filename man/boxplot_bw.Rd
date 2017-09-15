@@ -5,7 +5,7 @@
 \title{A boxplot_bw Function}
 \usage{
 boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
-  ylim.plot = NULL, cex.lab = 1)
+  ylim.plot = NULL, cex.lab = 1, ylab = "")
 }
 \arguments{
 \item{y}{nombre de la variable numerica}
@@ -20,6 +20,8 @@ boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
 \item{title.plot}{a main title for the plot}
 
 \item{ylim.plot}{is vector which contains lower and upper limits which are to appear on the y axes.}
+
+\item{ylab}{a title for the y axis}
 
 \item{title}{titulo del grafico}
 }

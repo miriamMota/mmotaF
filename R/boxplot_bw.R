@@ -9,6 +9,7 @@
 #' @param title titulo del grafico
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
+#' @param ylab a title for the y axis
 #' @export boxplot_bw
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
@@ -24,7 +25,7 @@ boxplot_bw <- function(y, group = NULL, dat,
                        las = 0,
                        title.plot = NULL,
                        ylim.plot = NULL,
-                       cex.lab = 1) {
+                       cex.lab = 1, ylab = "") {
 
     if (is.null(ylim.plot))
         ylim.plot <- c(min(dat[, y], na.rm = T), max(dat[, y] + 0.2, na.rm = T))
@@ -60,7 +61,7 @@ boxplot_bw <- function(y, group = NULL, dat,
                 col = makeTransparent("grey", alpha = 0.3),
                 las = las,
                 cex.lab = cex.lab,
-                ylab = y)
+                ylab = ylab)
     }
     par(op)
 }
