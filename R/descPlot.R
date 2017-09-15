@@ -84,7 +84,7 @@ descPlot <- function(dat, y = NULL,
                            legend = levels(dat[, i]),
                            bg = "white",
                            fill = col.lev, cex = cex.lg,
-                           yjust = 0)
+                           yjust = 0, title = names(dat)[i])
                     par(op)
                   }
                   par(op)
@@ -105,7 +105,7 @@ descPlot <- function(dat, y = NULL,
                          legend = levels(dat[, i]),
                          bg = "white",
                          fill = col.lev,
-                         cex = cex.lg, yjust = 0.5)  ## ajustar llegenda y
+                         cex = cex.lg, yjust = 0.5, title = names(dat)[i])  ## ajustar llegenda y
                   par(op)
                 }
 
