@@ -4,7 +4,7 @@
 \alias{doROC}
 \title{A doROC Function}
 \usage{
-doROC(frml, dat, titol, validation = FALSE, test, test_y,
+doROC(frml, dat, titol = NULL, validation = FALSE, test, test_y,
   col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE,
   show.cascon = TRUE, show.ci = TRUE, show.thr = TRUE)
 }
