@@ -4,7 +4,7 @@
 \alias{tabOR_lr}
 \title{A tabOR_lr Function}
 \usage{
-tabOR_lr(mod, xtab = FALSE, title = "title")
+tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex")
 }
 \arguments{
 \item{mod}{Modelo de regresión logística ('glm')}
@@ -12,6 +12,8 @@ tabOR_lr(mod, xtab = FALSE, title = "title")
 \item{xtab}{TRUE o FALSE, para obtener tabla en formato .tex}
 
 \item{title}{Solo en el caso de xtab = TRUE. Cabecera de la tabla.}
+
+\item{xtab.type}{Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".}
 }
 \description{
 Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un modelo de regresión logística

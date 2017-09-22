@@ -4,6 +4,7 @@
 #' @param mod Modelo de regresión logística ('glm')
 #' @param xtab TRUE o FALSE, para obtener tabla en formato .tex
 #' @param title Solo en el caso de xtab = TRUE. Cabecera de la tabla.
+#' @param xtab.type Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".
 #' @keywords OR regresion logisitica
 #' @export tabOR_lr
 #' @import xtable
@@ -12,7 +13,7 @@
 #' #xtab=TRUE,title='OR de los coeficientes')
 
 
-tabOR_lr <- function(mod, xtab = FALSE, title = "title") {
+tabOR_lr <- function(mod, xtab = FALSE, title = "title", xtab.type = "latex") {
     ORcoef <- exp(mod$coeff)
     ic <- exp(confint(mod))
     if (length(mod$coefficients) == 1) {
@@ -26,7 +27,7 @@ tabOR_lr <- function(mod, xtab = FALSE, title = "title") {
     tauORcoef <- data.frame(ORcoef, infORcoef, supORcoef, p.val)
     colnames(tauORcoef) <- c("OR", "IC inferior", "IC superior", "P.valor")
     if (xtab) {
-        xtable(tauORcoef, caption = title, digits = 2)
+        print(xtable(tauORcoef, caption = title, digits = 2), type = xtab.type)
     } else {
         return(tauORcoef)
     }
