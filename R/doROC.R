@@ -51,7 +51,9 @@ doROC <- function(frml, dat,
                      print.thres = ifelse(show.thr, "best", FALSE),
                      legacy.axes = x.axes)
   if (show.cascon) {
-    text(10, 20, paste0("cases: ", length(rocobj[6]$cases), "\n controls: ", length(rocobj[7]$controls)))
+    text(15, 20, 
+         paste0("cases: ", length(rocobj[6]$cases), "\n controls: ", length(rocobj[7]$controls)), 
+         cex = 0.8)
     }
   thres <- rocobj$sensitivities - (1 - rocobj$specificities)
   thres.best <- rocobj$thresholds[which(thres == max(thres))]  # threshold  de Youden
