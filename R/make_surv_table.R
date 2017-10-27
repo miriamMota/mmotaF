@@ -3,12 +3,13 @@
 #' @param survobj \code{\link[survival]{survfit}} object
 #' @param surv TRUE/FALSE. Per defecte supervivencia TRUE, decreixent. FALSE indica cumulative events (f(y) = 1-y)
 #' @param nround integer indicating the number of decimal places (round) or significant digits (signif) to be used. Negative values are allowed
+#' @param event antic parametre
 #' @export make_surv_table
 #' @import survival stargazer
 #' @author Miriam Mota  \email{miriam.mota@@vhir.org}
 #' @examples
 #' data(aml)
-#' surv_fit <-survfit(Surv(time = aml$time, event = aml$status) ~ 1)
+#' surv_fit <-survfit(Surv(time = aml$time, event = aml$status) ~ 1, event = F)
 #' stargazer(make_surv_table(surv_fit),
 #'            summary = FALSE, type = c('latex'), title = 'Summary of status survival fit',
 #'           rownames = FALSE)
@@ -17,8 +18,10 @@
 
 make_surv_table <- function(fit_surv,
                             nround = 2,
-                            surv = TRUE) {
+                            surv = TRUE,
+                            event = NULL ) {
 
+  if(!is.null(event))  warning("old event parameter")
     res <- summary(fit_surv, conf.int = T)
 
     if (surv) {
