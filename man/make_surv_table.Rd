@@ -4,12 +4,14 @@
 \alias{make_surv_table}
 \title{Create a nice data frame from a survival model for automatically generating a table.}
 \usage{
-make_surv_table(fit_surv, nround = 2, surv = TRUE)
+make_surv_table(fit_surv, nround = 2, surv = TRUE, event = NULL)
 }
 \arguments{
 \item{nround}{integer indicating the number of decimal places (round) or significant digits (signif) to be used. Negative values are allowed}
 
 \item{surv}{TRUE/FALSE. Per defecte supervivencia TRUE, decreixent. FALSE indica cumulative events (f(y) = 1-y)}
+
+\item{event}{antic parametre}
 
 \item{survobj}{\code{\link[survival]{survfit}} object}
 }

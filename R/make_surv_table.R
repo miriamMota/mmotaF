@@ -9,7 +9,7 @@
 #' @author Miriam Mota  \email{miriam.mota@@vhir.org}
 #' @examples
 #' data(aml)
-#' surv_fit <-survfit(Surv(time = aml$time, event = aml$status) ~ 1, event = F)
+#' surv_fit <-survfit(Surv(time = aml$time, event = aml$status) ~ 1)
 #' stargazer(make_surv_table(surv_fit),
 #'            summary = FALSE, type = c('latex'), title = 'Summary of status survival fit',
 #'           rownames = FALSE)
