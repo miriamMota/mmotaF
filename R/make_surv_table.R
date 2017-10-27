@@ -1,7 +1,7 @@
 #' Create a nice data frame from a survival model for automatically generating a table.
 #'
 #' @param survobj \code{\link[survival]{survfit}} object
-#' @param event cumulative events (f(y) = 1-y)
+#' @param surv TRUE/FALSE. Per defecte supervivencia TRUE, decreixent. FALSE indica cumulative events (f(y) = 1-y)
 #' @param nround integer indicating the number of decimal places (round) or significant digits (signif) to be used. Negative values are allowed
 #' @export make_surv_table
 #' @import survival stargazer
@@ -17,11 +17,11 @@
 
 make_surv_table <- function(fit_surv,
                             nround = 2,
-                            event = FALSE) {
+                            surv = TRUE) {
 
     res <- summary(fit_surv, conf.int = T)
 
-    if (!event) {
+    if (surv) {
         tab_surv <- data.frame(Time = res$time,
                                n.risk = res$n.risk,
                                n.event = res$n.event,
