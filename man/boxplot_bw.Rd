@@ -5,25 +5,28 @@
 \title{A boxplot_bw Function}
 \usage{
 boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
-  ylim.plot = NULL, cex.lab = 1, ylab = "")
+  sub.plot = NULL, ylim.plot = NULL, cex.lab = 1, ylab = "",
+  do.test = FALSE)
 }
 \arguments{
-\item{y}{nombre de la variable numerica}
+\item{y}{name numeric vector of data values.}
 
-\item{group}{nombre de la variable factor. Default value is NULL.}
+\item{group}{name factor vector. Default value is NULL.}
 
-\item{dat}{data frame que contiene las variables a graficar.}
+\item{dat}{matrix or data frame containing the variables in the formula.}
 
 \item{las}{numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.}
 
 \item{title.plot}{a main title for the plot}
 
+\item{sub.plot}{a sub title for the plot}
+
 \item{ylim.plot}{is vector which contains lower and upper limits which are to appear on the y axes.}
 
 \item{ylab}{a title for the y axis}
 
-\item{title}{titulo del grafico}
+\item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
 }
 \description{
 Boxplot incluyendo puntos individuales
@@ -32,7 +35,7 @@ Boxplot incluyendo puntos individuales
 df <- data.frame(runif = c(runif(100, min = -3, max = 3),rep(0,25)), rnorm = c(rnorm(100),rep(0,25)) )
 boxplot_bw(dat = df, y = 'rnorm' )
 boxplot_bw(dat = mtc_bis, y = 'qsec' )
-boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear')
+boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear', title.plot = "Boxplot per grup", do.test = TRUE)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
