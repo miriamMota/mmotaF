@@ -5,6 +5,7 @@
 #' @param xtab TRUE o FALSE, para obtener tabla en formato .tex
 #' @param title Solo en el caso de xtab = TRUE. Cabecera de la tabla.
 #' @param xtab.type Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".
+#' @param sz.latex A character vector that is inserted just before the tabular environment starts. This can be used to set the font size and a variety of other table settings. Initial backslashes are automatically prefixed, if not supplied by user. Default value is "small".
 #' @keywords OR regresion logisitica
 #' @export tabOR_lr
 #' @import xtable
@@ -13,7 +14,7 @@
 #' #xtab=TRUE,title='OR de los coeficientes')
 
 
-tabOR_lr <- function(mod, xtab = FALSE, title = "title", xtab.type = "latex") {
+tabOR_lr <- function(mod, xtab = FALSE, title = "title", xtab.type = "latex", sz.latex = "small") {
     ORcoef <- exp(mod$coeff)
     ic <- exp(confint(mod))
     if (length(mod$coefficients) == 1) {
@@ -27,7 +28,7 @@ tabOR_lr <- function(mod, xtab = FALSE, title = "title", xtab.type = "latex") {
     tauORcoef <- data.frame(ORcoef, infORcoef, supORcoef, p.val)
     colnames(tauORcoef) <- c("OR", "IC inferior", "IC superior", "P.valor")
     if (xtab) {
-        print(xtable(tauORcoef, caption = title, digits = 2), type = xtab.type)
+        print(xtable(tauORcoef, caption = title, digits = 2), type = xtab.type, size = sz.latex)
     } else {
         return(tauORcoef)
     }

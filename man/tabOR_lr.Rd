@@ -4,7 +4,8 @@
 \alias{tabOR_lr}
 \title{A tabOR_lr Function}
 \usage{
-tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex")
+tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex",
+  sz.latex = "small")
 }
 \arguments{
 \item{mod}{Modelo de regresión logística ('glm')}
@@ -14,6 +15,8 @@ tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex")
 \item{title}{Solo en el caso de xtab = TRUE. Cabecera de la tabla.}
 
 \item{xtab.type}{Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".}
+
+\item{sz.latex}{A character vector that is inserted just before the tabular environment starts. This can be used to set the font size and a variety of other table settings. Initial backslashes are automatically prefixed, if not supplied by user. Default value is "small".}
 }
 \description{
 Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un modelo de regresión logística
