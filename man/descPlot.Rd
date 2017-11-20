@@ -7,7 +7,7 @@
 descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
   subtitle = NULL, color = "#8D4ABA", rowcol = c(3, 2), show.lg = FALSE,
   show.freq = TRUE, cex.lab = 1, cex.lg = 0.65, cex.main = 0.8,
-  las = 0)
+  las = 0, do.test = FALSE)
 }
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
@@ -32,6 +32,8 @@ descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
 
 \item{las}{numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.}
+
+\item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
 }
 \description{
 Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es 'data.frame'

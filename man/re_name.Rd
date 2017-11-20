@@ -4,13 +4,22 @@
 \alias{re_name}
 \title{A re_name Function}
 \usage{
-re_name(data)
+re_name(data, char = NULL)
 }
 \arguments{
+\item{char}{simbols o caracters que es vulguin canviar per "_"}
+
 \item{dat}{data frame que contiene las variables a evaluar}
 }
 \description{
 Renombra los identificadores de columna, substituyendo '.' por '_', eliminando acentos, ec.
+}
+\examples{
+df <- data.frame('nombre+a-apellido'=as.factor(rbinom(50,1,.40)), 'dni...NIF' = rnorm(50,10,1),
+'Y/X'=as.factor(rbinom(50,1,.40)),'ibm 2' = rnorm(50,10,1))
+names(df) <- c('nombre+a-apellido',  'dni...NIF', 'Y/X', 'ibm 2') ## modifiquem noms per a que siguin "incorrectes"
+df <- re_name(data = df)
+df <- re_name(data = df, char = "+-")
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

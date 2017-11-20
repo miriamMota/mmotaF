@@ -14,7 +14,8 @@ date.create(dy, mth, yr)
 \item{y}{vector numérico que incluya los años.}
 }
 \description{
-Convierte tres vectores dia, mes, año en un fechas. En el caso de que falte el mes y o el día se indica el 6 y 15 respectivamente.
+Convierte tres vectores dia, mes, año en un fechas. En el caso de que falte el mes y o el
+día se indica el 6 y 15 respectivamente.
 }
 \examples{
 day <- c(NA, NA, NA, 12, 20, NA, NA, NA, 19, NA, 25)

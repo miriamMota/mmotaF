@@ -1,6 +1,7 @@
 #' A date.create Function
 #'
-#' Convierte tres vectores dia, mes, año en un fechas. En el caso de que falte el mes y o el día se indica el 6 y 15 respectivamente.
+#' Convierte tres vectores dia, mes, año en un fechas. En el caso de que falte el mes y o el
+#' día se indica el 6 y 15 respectivamente.
 #' @param d vector numérico que incluya los dias.
 #' @param m vector numérico que incluya los meses.
 #' @param y vector numérico que incluya los años.

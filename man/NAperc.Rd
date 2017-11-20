@@ -7,7 +7,7 @@
 NAperc(df, maxNA = 80)
 }
 \arguments{
-\item{maxNA}{Porcentafe de NA permitido}
+\item{maxNA}{Porcentage de NA permitido}
 
 \item{dat}{data frame que contiene las variables a evaluar}
 }

@@ -13,6 +13,7 @@
 #' @param cex.lg character expansion factor relative to current par('cex'). Used for text, and provides the default for pt.cex and title.cex.
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
+#' @param do.test logical value si se quiere realizar test kruskall Wallis.
 #' @export descPlot
 #' @import beeswarm Hmisc
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
@@ -35,7 +36,9 @@ descPlot <- function(dat, y = NULL,
                      show.freq = TRUE,
                      cex.lab = 1,
                      cex.lg = 0.65,
-    cex.main = 0.8, las = 0) {
+                     cex.main = 0.8,
+                     las = 0,
+                     do.test = FALSE) {
 
     if (is.null(y)) {
         parmar <- c(5.1, 4.1, 4.1, 2.1)
@@ -125,7 +128,7 @@ descPlot <- function(dat, y = NULL,
                 } else {
                   boxplot_bw(y = i, group = y, dat = dat,
                              title.plot = namevar[i],
-                             cex.lab = cex.lab)
+                             cex.lab = cex.lab, do.test = do.test)
                 }
             }
 

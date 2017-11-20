@@ -4,9 +4,9 @@
 #' Para realizar las curvas ROC, en primer lugar, se modeliza - para el conjunto de datos “training set”- la variable respuesta grupo
 #' mediante regresión logística teniendo en cuenta la variable explicativa. Una vez ajustado el modelo se realiza las curva
 #' ROC(representación gráfica de la sensibilidad en frente a la especificidad).
-#' @param frml objeto tipo formula indicando como variable respuesta una variable binaria y como explicativa una contínua
-#' @param dat data.frame donde estan las variables de la formula.
-#' @param titol tipo caracter. Título para el gráfico
+#' @param frml an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted
+#' @param dat data frame containing the variables in the formula.
+#' @param title a main title for the plot
 #' @param validation valor lógico indicando si se entreran datos externos para testar el punto de corte elegido en el grafico
 #' @param test data.frame indicando los nuevos valores de la variable explicativa
 #' @param test_y vector factor indicando grupo de los nuevos individuos
@@ -19,7 +19,7 @@
 #' @examples
 #' y <- as.factor(rbinom(50,1,.40))
 #' x <- rnorm(50,10,1)
-#' resROC <- doROC (frml = y ~ x, titol = 'prova',
+#' resROC <- doROC (frml = y ~ x, title = 'prova',
 #'                  validation = TRUE,
 #'                  test = data.frame(x=c(1,2,3)),
 #'                  test_y = as.factor(c(0,1,1)))
@@ -31,7 +31,7 @@
 
 
 doROC <- function(frml, dat,
-                  titol = NULL,
+                  title = NULL,
                   validation = FALSE,
                   test,
                   test_y,
@@ -42,31 +42,31 @@ doROC <- function(frml, dat,
                   show.ci = TRUE,
                   show.thr = TRUE) {
 
-  if(is.null(titol)) titol <- strsplit(as.character(frml), "~", fixed = T)[[2]]
-  
+  if(is.null(title)) title <- strsplit(as.character(frml), "~", fixed = T)[[2]]
+
   mod <- glm(frml, data = dat, family = binomial, na.action = "na.omit")
   pred <- predict(mod, type = "response")
-  rocobj <- plot.roc(mod$y, pred, main = titol,
+  rocobj <- plot.roc(mod$y, pred, main = title,
                      ci = TRUE, percent = TRUE,
                      print.thres = ifelse(show.thr, "best", FALSE),
                      legacy.axes = x.axes)
   if (show.cascon) {
-    text(15, 20, 
-         paste0("cases: ", length(rocobj[6]$cases), "\n controls: ", length(rocobj[7]$controls)), 
+    text(15, 20,
+         paste0("cases: ", length(rocobj[6]$cases), "\n controls: ", length(rocobj[7]$controls)),
          cex = 0.8)
     }
   thres <- rocobj$sensitivities - (1 - rocobj$specificities)
   thres.best <- rocobj$thresholds[which(thres == max(thres))]  # threshold  de Youden
   ciobj <- ci.se(rocobj, boot.n = 200, progress = "none")
-  
+
   if (show.ci)    plot(ciobj, type = "s", col = col.ic)  # plot as a blue shape
-  
-  if (show.thr) {  
+
+  if (show.thr) {
     plot(ci(rocobj, of = "thresholds", thresholds = "best", progress = "none"),
          col = col.thres,
          lwd = 2)
     }
-  
+
 
   ic <- rocobj$ci
   auc_text <- paste(round(ic[2], 2), "% (", round(ic[1], 1), " - ", round(ic[3], 1), "%)", sep = "")

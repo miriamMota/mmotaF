@@ -4,16 +4,16 @@
 \alias{doROC}
 \title{A doROC Function}
 \usage{
-doROC(frml, dat, titol = NULL, validation = FALSE, test, test_y,
+doROC(frml, dat, title = NULL, validation = FALSE, test, test_y,
   col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE,
   show.cascon = TRUE, show.ci = TRUE, show.thr = TRUE)
 }
 \arguments{
-\item{frml}{objeto tipo formula indicando como variable respuesta una variable binaria y como explicativa una contínua}
+\item{frml}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted}
 
-\item{dat}{data.frame donde estan las variables de la formula.}
+\item{dat}{data frame containing the variables in the formula.}
 
-\item{titol}{tipo caracter. Título para el gráfico}
+\item{title}{a main title for the plot}
 
 \item{validation}{valor lógico indicando si se entreran datos externos para testar el punto de corte elegido en el grafico}
 
@@ -45,7 +45,7 @@ ROC(representación gráfica de la sensibilidad en frente a la especificidad).
 \examples{
 y <- as.factor(rbinom(50,1,.40))
 x <- rnorm(50,10,1)
-resROC <- doROC (frml = y ~ x, titol = 'prova',
+resROC <- doROC (frml = y ~ x, title = 'prova',
                  validation = TRUE,
                  test = data.frame(x=c(1,2,3)),
                  test_y = as.factor(c(0,1,1)))
