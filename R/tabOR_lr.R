@@ -1,12 +1,12 @@
 #' A tabOR_lr Function
 #'
 #' Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un modelo de regresión logística
-#' @param mod Modelo de regresión logística ('glm')
+#' @param mod a fitted object of class inheriting from "glm".
 #' @param xtab TRUE o FALSE, para obtener tabla en formato .tex
-#' @param title Solo en el caso de xtab = TRUE. Cabecera de la tabla.
+#' @param title if xtab = T, Character vector containing the table's caption or title.
 #' @param xtab.type Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".
 #' @param sz.latex A character vector that is inserted just before the tabular environment starts. This can be used to set the font size and a variety of other table settings. Initial backslashes are automatically prefixed, if not supplied by user. Default value is "small".
-#' @keywords OR regresion logisitica
+#' @keywords OR regresion logistica
 #' @export tabOR_lr
 #' @import xtable
 #' @examples

@@ -8,11 +8,11 @@ tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex",
   sz.latex = "small")
 }
 \arguments{
-\item{mod}{Modelo de regresión logística ('glm')}
+\item{mod}{a fitted object of class inheriting from "glm".}
 
 \item{xtab}{TRUE o FALSE, para obtener tabla en formato .tex}
 
-\item{title}{Solo en el caso de xtab = TRUE. Cabecera de la tabla.}
+\item{title}{if xtab = T, Character vector containing the table's caption or title.}
 
 \item{xtab.type}{Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".}
 
@@ -26,5 +26,5 @@ Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un
 #xtab=TRUE,title='OR de los coeficientes')
 }
 \keyword{OR}
-\keyword{logisitica}
+\keyword{logistica}
 \keyword{regresion}
