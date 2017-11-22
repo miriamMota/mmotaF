@@ -5,7 +5,7 @@
 \title{A tabOR_lr Function}
 \usage{
 tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex",
-  sz.latex = "small")
+  sz.latex = "small", label = NULL)
 }
 \arguments{
 \item{mod}{a fitted object of class inheriting from "glm".}
@@ -17,6 +17,8 @@ tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex",
 \item{xtab.type}{Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".}
 
 \item{sz.latex}{A character vector that is inserted just before the tabular environment starts. This can be used to set the font size and a variety of other table settings. Initial backslashes are automatically prefixed, if not supplied by user. Default value is "small".}
+
+\item{label}{Character vector of length 1 containing the LaTeX label. Default value is NULL.}
 }
 \description{
 Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un modelo de regresión logística
