@@ -133,7 +133,8 @@ descPlot <- function(dat, y = NULL,
                               cex.main = cex.main,
                               show.freq = show.freq,
                               show.lg = show.lg,
-                              cex.lg = cex.lg)
+                              cex.lg = cex.lg,
+                              do.test = do.test)
                 }
 
 
