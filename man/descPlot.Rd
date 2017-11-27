@@ -43,7 +43,7 @@ df <- data.frame(Y=as.factor(rbinom(50,1,.40)),Y1=as.factor(rbinom(50,1,.40)),X 
 descPlot(dat = df, color = 'red', rowcol = c(1,2))
 descPlot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1))
 descPlot(mtc_bis)
-descPlot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = T )
+descPlot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = TRUE )
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

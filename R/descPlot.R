@@ -22,7 +22,7 @@
 #' descPlot(dat = df, color = 'red', rowcol = c(1,2))
 #' descPlot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1))
 #' descPlot(mtc_bis)
-#' descPlot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = T )
+#' descPlot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = TRUE )
 #' @keywords plots descriptive
 
 
