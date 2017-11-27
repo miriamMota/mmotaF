@@ -18,7 +18,8 @@
 #' df <- data.frame(runif = c(runif(100, min = -3, max = 3),rep(0,25)), rnorm = c(rnorm(100),rep(0,25)) )
 #' boxplot_bw(dat = df, y = 'rnorm' )
 #' boxplot_bw(dat = mtc_bis, y = 'qsec' )
-#' boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear', title.plot = "Boxplot per grup", do.test = TRUE)
+#' boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',
+#' title.plot = "Boxplot per grup", do.test = TRUE)
 #' @keywords plots descriptive boxplot
 
 
@@ -73,7 +74,7 @@ boxplot_bw <- function(y, group = NULL, dat,
                 ylab = ylab)
         if(do.test){
           KWpval <- kruskal.test(dat[, y] ~ dat[, group])$p.val
-          mtext(paste("KW p-value: ", round(KWpval,3)) , at = 1, side = 3,cex = 0.6)
+          mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) , at = 1, side = 3,cex = 0.6)
         }
 
     }
