@@ -1,6 +1,8 @@
 #' A barplot_ueb Function
 #'
-#' Boxplot incluyendo puntos individuales
+#' Barplot univariante o bivariante mostrando frecuencias relativas. En el caso
+#' del univariante es posible añadir las frecuencias absolutas. Para el análisis
+#' bivariante es posible realizar test Chi cuadrado.
 #' @param y name factor vector of data values.
 #' @param group name factor vector. Default value is NULL.
 #' @param dat matrix or data frame containing the variables in the formula.
@@ -16,7 +18,6 @@
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @param ylab a title for the y axis
 #' @export barplot_ueb
-#' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' df <- data.frame(sex = c(sample(c('Male', 'Female'), 500, replace = TRUE, prob = c(.2,.8) ),

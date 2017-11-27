@@ -37,7 +37,9 @@ barplot_ueb(y, group = NULL, dat, las = 0, title.plot = NULL,
 \item{show.freq}{TRUE o FALSE indica si se muestran las frecuencias. Por defecto TRUE}
 }
 \description{
-Boxplot incluyendo puntos individuales
+Barplot univariante o bivariante mostrando frecuencias relativas. En el caso
+del univariante es posible añadir las frecuencias absolutas. Para el análisis
+bivariante es posible realizar test Chi cuadrado.
 }
 \examples{
 df <- data.frame(sex = c(sample(c('Male', 'Female'), 500, replace = TRUE, prob = c(.2,.8) ),
