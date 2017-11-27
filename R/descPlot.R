@@ -134,7 +134,8 @@ descPlot <- function(dat, y = NULL,
                               show.freq = show.freq,
                               show.lg = show.lg,
                               cex.lg = cex.lg,
-                              do.test = do.test)
+                              do.test = do.test,
+                              title.plot = names(dat)[i] )
                 }
 
 
