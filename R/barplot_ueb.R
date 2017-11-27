@@ -23,7 +23,7 @@
 #' sample(c('Male', 'Female'), 500, replace = TRUE, prob = c(.4,.6) )),
 #' grup =  c( rep('Casos', 500),rep('Control', 500)  ))
 #' barplot_ueb(y = "sex", dat = df)
-#' barplot_ueb(y = "sex",group = "grup", dat = df, cex.lab = 0.8, do.test = T)
+#' barplot_ueb(y = "sex",group = "grup", dat = df, cex.lab = 0.8, do.test = TRUE)
 #' @keywords plots descriptive barplot
 
 
