@@ -47,7 +47,7 @@ descPlot <- function(dat, y = NULL,
     #
     # }
     #
-    # par(mar = parmar, mfrow = rowcol)
+     par(mfrow = rowcol)
 
     if (topdf) {
         pdf(nameFile)
