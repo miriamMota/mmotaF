@@ -153,7 +153,7 @@ descPlot <- function(dat, y = NULL,
                 } else {
                   boxplot_bw(y = i, group = y, dat = dat,
                              title.plot = namevar[i],
-                             cex.lab = cex.lab, do.test = do.test)
+                             cex.lab = cex.lab, do.test = do.test, las = las)
                 }
             }
 
