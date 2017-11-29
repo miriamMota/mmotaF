@@ -57,6 +57,7 @@ boxplot_bw <- function(y, group = NULL, dat,
         ## bivariant
     } else {
         if (is.null(title.plot))  {title.plot <- ""}
+      dat[,group] <- as.factor(as.character(dat[,group]))
 
         beeswarm(dat[, y] ~ dat[, group],
                  ylab = "", xlab = group,

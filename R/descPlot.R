@@ -40,14 +40,14 @@ descPlot <- function(dat, y = NULL,
                      las = 0,
                      do.test = FALSE) {
 
-    if (is.null(y)) {
-        parmar <- c(5.1, 4.1, 4.1, 2.1)
-    } else {
-        parmar <- c(5.1, 4.1, 4.1, 7.1)
-        dat[, y] <- as.factor(as.character(dat[, y]))
-    }
-
-    par(mar = parmar, mfrow = rowcol)
+    # if (is.null(y)) {
+    #     parmar <- c(5.1, 4.1, 4.1, 2.1)
+    # } else {
+    #     parmar <- c(5.1, 4.1, 4.1, 7.1)
+    #
+    # }
+    #
+    # par(mar = parmar, mfrow = rowcol)
 
     if (topdf) {
         pdf(nameFile)
@@ -62,7 +62,7 @@ descPlot <- function(dat, y = NULL,
     for (i in 1:dim(dat)[2]) {
 
         ##### variables factor
-        if (ifelse(!is.null(y), names(dat)[i] != y, TRUE)) {
+        if (ifelse(!is.null(y), names(dat)[i] != y, TRUE)) { ## comprovem que la variable que testem no es la resposta
             if (class(dat[, i])[length(class(dat[, i]))] == "factor") {
 
                 ## descriptiu univariat
@@ -100,7 +100,6 @@ descPlot <- function(dat, y = NULL,
                                 show.freq = show.freq,
                                 show.lg = show.lg,
                                 cex.lg = cex.lg)
-
 
                   #   par(op)
                   # }
