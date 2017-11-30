@@ -14,15 +14,16 @@
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @param do.test logical value si se quiere realizar test kruskall Wallis.
+#' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
 #' @export descPlot
 #' @import beeswarm Hmisc
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' df <- data.frame(Y=as.factor(rbinom(50,1,.40)),Y1=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
 #' descPlot(dat = df, color = 'red', rowcol = c(1,2))
-#' descPlot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1))
+#' descPlot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1), las = 2)
 #' descPlot(mtc_bis)
-#' descPlot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = TRUE )
+#' descPlot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = TRUE, las = 2 )
 #' @keywords plots descriptive
 
 
@@ -38,7 +39,8 @@ descPlot <- function(dat, y = NULL,
                      cex.lg = 0.65,
                      cex.main = 0.8,
                      las = 0,
-                     do.test = FALSE) {
+                     do.test = FALSE,
+                     at.text = 1) {
 
     # if (is.null(y)) {
     #     parmar <- c(5.1, 4.1, 4.1, 2.1)
@@ -47,6 +49,7 @@ descPlot <- function(dat, y = NULL,
     #
     # }
     #
+
      par(mfrow = rowcol)
 
     if (topdf) {
@@ -134,7 +137,8 @@ descPlot <- function(dat, y = NULL,
                               show.lg = show.lg,
                               cex.lg = cex.lg,
                               do.test = do.test,
-                              title.plot = names(dat)[i] )
+                              title.plot = names(dat)[i],
+                              at.text = at.text)
                 }
 
 
@@ -151,9 +155,10 @@ descPlot <- function(dat, y = NULL,
 
                   ## descriptiu bivariat
                 } else {
-                  boxplot_bw(y = i, group = y, dat = dat,
+                  boxplot_bw(y = i, group = y, dat = dat, las = las,
                              title.plot = namevar[i],
-                             cex.lab = cex.lab, do.test = do.test, las = las)
+                             cex.lab = cex.lab, do.test = do.test,
+                             at.text = at.text)
                 }
             }
 

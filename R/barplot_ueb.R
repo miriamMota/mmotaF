@@ -16,6 +16,7 @@
 #' @param do.test logical value si se quiere realizar test kruskall Wallis.
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
+#' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
 #' @param ylab a title for the y axis
 #' @export barplot_ueb
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
@@ -38,7 +39,8 @@ barplot_ueb <- function(y, group = NULL, dat,
                        ylab = "",
                        do.test = FALSE,
                        show.lg = FALSE,
-                       show.freq = TRUE ) {
+                       show.freq = TRUE,
+                       at.text = 1)  {
   ## descriptiu univariat
   if (is.null(group)) {
     parmar <- c(5.1, 4.1, 4.1, 2.1)
@@ -92,7 +94,8 @@ barplot_ueb <- function(y, group = NULL, dat,
            cex = cex.lg, yjust = 0.5, title = y)  ## ajustar llegenda y
     if (do.test) {
       Chipval <- chisq.test(dat[, y], dat[, group])$p.val
-      mtext(paste("Chi p-value: ", ifelse( round(Chipval,3) < 0.001, "<0.001", round(Chipval,3) ) ) , at = 1, side = 3,cex = 0.6)
+      mtext(paste("Chi p-value: ", ifelse( round(Chipval,3) < 0.001, "<0.001", round(Chipval,3) ) ) ,
+            at = at.text, side = 3,cex = 0.6)
     }
 
 

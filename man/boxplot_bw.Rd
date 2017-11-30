@@ -6,7 +6,7 @@
 \usage{
 boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
   sub.plot = NULL, ylim.plot = NULL, cex.lab = 1, ylab = "",
-  do.test = FALSE)
+  do.test = FALSE, at.text = 1)
 }
 \arguments{
 \item{y}{name numeric vector of data values.}
@@ -27,6 +27,8 @@ boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
 \item{ylab}{a title for the y axis}
 
 \item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
+
+\item{at.text}{if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.}
 }
 \description{
 Boxplot incluyendo puntos individuales
@@ -36,7 +38,7 @@ df <- data.frame(runif = c(runif(100, min = -3, max = 3),rep(0,25)), rnorm = c(r
 boxplot_bw(dat = df, y = 'rnorm' )
 boxplot_bw(dat = mtc_bis, y = 'qsec' )
 boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',
-title.plot = "Boxplot per grup", do.test = TRUE)
+title.plot = "Boxplot per grup", do.test = TRUE, las = 2)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

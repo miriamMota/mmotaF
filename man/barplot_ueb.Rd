@@ -6,7 +6,7 @@
 \usage{
 barplot_ueb(y, group = NULL, dat, las = 0, title.plot = NULL,
   sub.plot = NULL, cex.lab = 1, cex.main = 1, cex.lg = 1, ylab = "",
-  do.test = FALSE, show.lg = FALSE, show.freq = TRUE)
+  do.test = FALSE, show.lg = FALSE, show.freq = TRUE, at.text = 1)
 }
 \arguments{
 \item{y}{name factor vector of data values.}
@@ -35,6 +35,8 @@ barplot_ueb(y, group = NULL, dat, las = 0, title.plot = NULL,
 \item{show.lg}{TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.}
 
 \item{show.freq}{TRUE o FALSE indica si se muestran las frecuencias. Por defecto TRUE}
+
+\item{at.text}{if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.}
 }
 \description{
 Barplot univariante o bivariante mostrando frecuencias relativas. En el caso

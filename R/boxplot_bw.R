@@ -10,6 +10,7 @@
 #' @param do.test logical value si se quiere realizar test kruskall Wallis.
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
+#' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
 #' @param ylab a title for the y axis
 #' @export boxplot_bw
 #' @import beeswarm
@@ -19,7 +20,7 @@
 #' boxplot_bw(dat = df, y = 'rnorm' )
 #' boxplot_bw(dat = mtc_bis, y = 'qsec' )
 #' boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',
-#' title.plot = "Boxplot per grup", do.test = TRUE)
+#' title.plot = "Boxplot per grup", do.test = TRUE, las = 2)
 #' @keywords plots descriptive boxplot
 
 
@@ -29,7 +30,7 @@ boxplot_bw <- function(y, group = NULL, dat,
                        sub.plot = NULL,
                        ylim.plot = NULL,
                        cex.lab = 1, ylab = "",
-                       do.test = FALSE) {
+                       do.test = FALSE, at.text = 1) {
 
     if (is.null(ylim.plot))
         ylim.plot <- c(min(dat[, y], na.rm = T), max(dat[, y] + 0.2, na.rm = T))
@@ -75,7 +76,8 @@ boxplot_bw <- function(y, group = NULL, dat,
                 ylab = ylab)
         if(do.test){
           KWpval <- kruskal.test(dat[, y] ~ dat[, group])$p.val
-          mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) , at = 1, side = 3,cex = 0.6)
+          mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) ,
+                at = at.text, side = 3,cex = 0.6)
         }
 
     }

@@ -7,7 +7,7 @@
 descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
   subtitle = NULL, color = "#8D4ABA", rowcol = c(3, 2), show.lg = FALSE,
   show.freq = TRUE, cex.lab = 1, cex.lg = 0.65, cex.main = 0.8,
-  las = 0, do.test = FALSE)
+  las = 0, do.test = FALSE, at.text = 1)
 }
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
@@ -34,6 +34,8 @@ descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.}
 
 \item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
+
+\item{at.text}{if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.}
 }
 \description{
 Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es 'data.frame'
@@ -41,9 +43,9 @@ Genera graficos univariantes para todas las variables que se indiquen, el format
 \examples{
 df <- data.frame(Y=as.factor(rbinom(50,1,.40)),Y1=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
 descPlot(dat = df, color = 'red', rowcol = c(1,2))
-descPlot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1))
+descPlot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1), las = 2)
 descPlot(mtc_bis)
-descPlot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = TRUE )
+descPlot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = TRUE, las = 2 )
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
