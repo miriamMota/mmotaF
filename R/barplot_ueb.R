@@ -13,7 +13,7 @@
 #' @param cex.main expansion factor for main names (size main)
 #' @param show.lg TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.
 #' @param show.freq TRUE o FALSE indica si se muestran las frecuencias. Por defecto TRUE
-#' @param do.test logical value si se quiere realizar test kruskall Wallis.
+#' @param do.test logical value si se quiere realizar test Chi cuadrado SIN corrección de yates.
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
@@ -93,7 +93,7 @@ barplot_ueb <- function(y, group = NULL, dat,
            fill = col.lev,
            cex = cex.lg, yjust = 0.5, title = y)  ## ajustar llegenda y
     if (do.test) {
-      Chipval <- chisq.test(dat[, y], dat[, group])$p.val
+      Chipval <- chisq.test(dat[, y], dat[, group], correct = F)$p.val
       mtext(paste("Chi p-value: ", ifelse( round(Chipval,3) < 0.001, "<0.001", round(Chipval,3) ) ) ,
             at = at.text, side = 3,cex = 0.6)
     }
