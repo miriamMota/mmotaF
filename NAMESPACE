@@ -3,6 +3,7 @@
 export(NAperc)
 export(barplot_ueb)
 export(boxplot_bw)
+export(chisq.test2)
 export(create_dictionary)
 export(date.create)
 export(descPlot)
