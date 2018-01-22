@@ -4,10 +4,12 @@
 \alias{re_name}
 \title{A re_name Function}
 \usage{
-re_name(data, char = NULL)
+re_name(data, char = NULL, newchar = NULL)
 }
 \arguments{
-\item{char}{simbols o caracters que es vulguin canviar per "_"}
+\item{char}{a character string specifying the characters to be translated. If a character vector of length 2 or more is supplied, the first element is used with a warning.}
+
+\item{newchar}{a character string specifying the translations. If a character vector of length 2 or more is supplied, the first element is used with a warning.}
 
 \item{dat}{data frame que contiene las variables a evaluar}
 }
@@ -19,7 +21,7 @@ df <- data.frame('nombre+a-apellido'=as.factor(rbinom(50,1,.40)), 'dni...NIF' = 
 'Y/X'=as.factor(rbinom(50,1,.40)),'ibm 2' = rnorm(50,10,1))
 names(df) <- c('nombre+a-apellido',  'dni...NIF', 'Y/X', 'ibm 2') ## modifiquem noms per a que siguin "incorrectes"
 df <- re_name(data = df)
-df <- re_name(data = df, char = "+-")
+df <- re_name(data = df, char = "+-", newchar = "__")
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

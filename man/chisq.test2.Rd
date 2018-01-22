@@ -4,7 +4,7 @@
 \alias{chisq.test2}
 \title{A chisq.test2 Function}
 \usage{
-chisq.test2(obj, chisq.test.perm)
+chisq.test2(obj, chisq.test.perm, correct = FALSE)
 }
 \description{
 chisq.test2 para no aplicar corrección de Yates en el paquete compareGroups.

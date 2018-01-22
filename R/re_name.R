@@ -27,7 +27,7 @@ re_name <- function(data,char = NULL, newchar = NULL) {
     names(data) <- gsub("_$", "", names(data))
     names(data) <- gsub("^X_", "", names(data))
     names(data) <- chartr("áéóíúÁÉÍÓÚ", "aeoiuAEIOU", names(data))
-    if(!is.null(char))
-    names(data) <-  chartr(char, newchar, collapse = ""), names(data))
+    if (!is.null(char))
+    names(data) <-  chartr(char, newchar, names(data))
     return(data)
 }
