@@ -4,8 +4,7 @@
 #' @export chisq.test2
 #' @keywords chisquare test comparegroups yates correction
 
-chisq.test2 <-
-  function(obj, chisq.test.perm){
+chisq.test2 <- function(obj, chisq.test.perm, correct = FALSE ){
     if (any(dim(obj) < 2) || is.null(dim(obj)) || sum(rowSums(obj) > 0) < 2 ||
         sum(colSums(obj) > 0) < 2)
       return(NaN)
@@ -13,14 +12,14 @@ chisq.test2 <-
     expect <- outer(rowSums(obj),colSums(obj))/sum(obj)
     if (any(expect < 5)) {
       if (chisq.test.perm)
-        test <- try(chisq.test(obj, simulate.p.value = TRUE, correct = F), silent = TRUE)
+        test <- try(chisq.test(obj, simulate.p.value = TRUE, correct = correct), silent = TRUE)
       else
         test <- try(fisher.test(obj),silent = TRUE)
     } else {
-      test <- try(chisq.test(obj, correct = F),silent = TRUE)
+      test <- try(chisq.test(obj, correct = correct),silent = TRUE)
     }
     if (inherits(test,"try-error")) {
-      test <- try(chisq.test(obj, simulate.p.value = TRUE, correct = F),silent = TRUE)
+      test <- try(chisq.test(obj, simulate.p.value = TRUE, correct = correct),silent = TRUE)
     }
     if (inherits(test,"try-error"))
       return(NaN)
