@@ -56,10 +56,10 @@ descPlot <- function(dat, y = NULL,
         pdf(nameFile)
         par(mfrow = rowcol)
     }
-    if (sum(label(dat[!names(dat) %in% y]) == "") != 0) {
+    if (sum(Hmisc::label(dat[!names(dat) %in% y]) == "") != 0) {
         namevar <- names(dat)
     } else {
-        namevar <- label(dat)
+        namevar <- Hmisc::label(dat)
     }
 
     for (i in 1:dim(dat)[2]) {
