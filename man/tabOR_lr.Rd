@@ -5,7 +5,7 @@
 \title{A tabOR_lr Function}
 \usage{
 tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex",
-  sz.latex = "small", label = NULL)
+  sz.latex = "small", label = NULL, show.intcp = FALSE, show.n = TRUE)
 }
 \arguments{
 \item{mod}{a fitted object of class inheriting from "glm".}
@@ -19,13 +19,18 @@ tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex",
 \item{sz.latex}{A character vector that is inserted just before the tabular environment starts. This can be used to set the font size and a variety of other table settings. Initial backslashes are automatically prefixed, if not supplied by user. Default value is "small".}
 
 \item{label}{Character vector of length 1 containing the LaTeX label. Default value is NULL.}
+
+\item{show.intcp}{TRUE o FALSE, indica si se muestra o no el intercept del modelo. En ambos casos el modelo se ha calcula con intercept. Default value is "FALSE".}
+
+\item{show.n}{TRUE o FALSE muestra el total de individuos usados para el ajuste del modelo. Default value is "TRUE".}
 }
 \description{
 Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un modelo de regresión logística
 }
 \examples{
-#tabOR_lr(glm(rnorm(50,10,1)~ as.factor(rbinom(50,1,.40))),
-#xtab=TRUE,title='OR de los coeficientes')
+df <- data.frame( x = rnorm(50,10,1), y = as.factor(rbinom(50,1,.40)) )
+mod <- glm(y ~ x, data = df, family = binomial)
+tabOR_lr(mod, xtab = FALSE,title='OR de los coeficientes')
 }
 \keyword{OR}
 \keyword{logistica}

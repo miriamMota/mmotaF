@@ -7,15 +7,26 @@
 #' @param xtab.type Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".
 #' @param sz.latex A character vector that is inserted just before the tabular environment starts. This can be used to set the font size and a variety of other table settings. Initial backslashes are automatically prefixed, if not supplied by user. Default value is "small".
 #' @param label Character vector of length 1 containing the LaTeX label. Default value is NULL.
+#' @param show.intcp TRUE o FALSE, indica si se muestra o no el intercept del modelo. En ambos casos el modelo se ha calcula con intercept. Default value is "FALSE".
+#' @param show.n TRUE o FALSE muestra el total de individuos usados para el ajuste del modelo. Default value is "TRUE".
 #' @keywords OR regresion logistica
 #' @export tabOR_lr
 #' @import xtable
 #' @examples
-#' #tabOR_lr(glm(rnorm(50,10,1)~ as.factor(rbinom(50,1,.40))),
-#' #xtab=TRUE,title='OR de los coeficientes')
+#' df <- data.frame( x = rnorm(50,10,1), y = as.factor(rbinom(50,1,.40)) )
+#' mod <- glm(y ~ x, data = df, family = binomial)
+#' tabOR_lr(mod, xtab = FALSE,title='OR de los coeficientes')
 
 
-tabOR_lr <- function(mod, xtab = FALSE, title = "title", xtab.type = "latex", sz.latex = "small", label = NULL) {
+tabOR_lr <- function(mod,
+                     xtab = FALSE,
+                     title = "title",
+                     xtab.type = "latex",
+                     sz.latex = "small",
+                     label = NULL,
+                     show.intcp = FALSE,
+                     show.n = TRUE) {
+
     ORcoef <- exp(mod$coeff)
     ic <- exp(confint(mod))
     if (length(mod$coefficients) == 1) {
@@ -26,8 +37,29 @@ tabOR_lr <- function(mod, xtab = FALSE, title = "title", xtab.type = "latex", sz
         supORcoef <- ic[, 2]
     }
     p.val <- summary(mod)$coef[, which(colnames(summary(mod)$coef) == "Pr(>|z|)")]
-    tauORcoef <- data.frame(ORcoef, infORcoef, supORcoef, p.val)
-    colnames(tauORcoef) <- c("OR", "IC inferior", "IC superior", "P.valor")
+
+    if(show.intcp){
+      pval_glob <- as.numeric(c(anova(mod,test = "Chisq")$'Pr(>Chi)'[2], rep("", length(p.val)-1)))
+      # pval_glob <- ifelse(pval_glob == 0, "$<$ 0.01", pval_glob )
+      n_mod <- as.numeric(c(length(mod$y) , rep("", length(p.val)-1)))
+      tauORcoef <- data.frame(ORcoef, infORcoef, supORcoef, p.val, pval_glob, n_mod)
+      colnames(tauORcoef) <- c("OR", "LowerIC", "UpperIC", "P-value", "Global P-value", "N")
+    }else{
+      pval_glob <- as.numeric(rep("", length(p.val)))
+      pval_glob[2] <- anova(mod,test = "Chisq")$'Pr(>Chi)'[2]
+      # pval_glob <- ifelse(pval_glob == 0, "$<$ 0.01", pval_glob )
+      n_mod <- as.numeric(rep("", length(p.val)))
+      n_mod[2] <- length(mod$y)
+      tauORcoef <- data.frame(ORcoef, infORcoef, supORcoef, p.val, pval_glob, n_mod)
+      tauORcoef <- tauORcoef[!rownames(tauORcoef) %in% "(Intercept)", ]
+      colnames(tauORcoef) <- c("OR", "LowerIC", "UpperIC", "P-value", "P-value (Global)", "N")
+    }
+
+    if(!show.n){
+      tauORcoef <- tauORcoef[,!names(tauORcoef)%in%("N")]
+    }
+
+
     if (xtab) {
         print(xtable(tauORcoef, caption = title, digits = 2, label = label), type = xtab.type, size = sz.latex)
     } else {
