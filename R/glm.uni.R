@@ -63,7 +63,7 @@ glm.uni <- function(y, var2test, data,
 
   }else{
     xtab <- kable(unimod_df, format = format, booktabs = T,caption = caption) %>%
-    kable_styling(latex_options = c("striped"), font_size = size) %>%
+    kable_styling(latex_options = c("striped","hold_position"), font_size = size) %>%
     column_spec(which(names(unimod_df) == "P-value (Global)") + 1, bold = T)
   }
 
