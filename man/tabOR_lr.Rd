@@ -5,7 +5,8 @@
 \title{A tabOR_lr Function}
 \usage{
 tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex",
-  sz.latex = "small", label = NULL, show.intcp = FALSE, show.n = TRUE)
+  sz.latex = "small", label = NULL, show.intcp = FALSE, show.n = TRUE,
+  show.aov.pval = TRUE)
 }
 \arguments{
 \item{mod}{a fitted object of class inheriting from "glm".}
@@ -23,6 +24,8 @@ tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex",
 \item{show.intcp}{TRUE o FALSE, indica si se muestra o no el intercept del modelo. En ambos casos el modelo se ha calcula con intercept. Default value is "FALSE".}
 
 \item{show.n}{TRUE o FALSE muestra el total de individuos usados para el ajuste del modelo. Default value is "TRUE".}
+
+\item{show.aov.pval}{TRUE o FALSE muestra el p-valor del modelo global. Default value is "TRUE".}
 }
 \description{
 Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un modelo de regresión logística

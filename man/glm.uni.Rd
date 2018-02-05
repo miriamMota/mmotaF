@@ -4,8 +4,9 @@
 \alias{glm.uni}
 \title{A glm.uni Function}
 \usage{
-glm.uni(y, var2test, data, size = 8.5, format = "latex",
-  caption = "Univariate logistic regression", show.n = TRUE, group = TRUE)
+glm.uni(y, var2test, var2match = NULL, data, size = 8.5, format = "latex",
+  caption = "Univariate logistic regression", show.n = TRUE,
+  show.aov.pval = TRUE, group = TRUE)
 }
 \arguments{
 \item{y}{response variable. Variable factor con 2 categorias}
@@ -19,6 +20,8 @@ glm.uni(y, var2test, data, size = 8.5, format = "latex",
 \item{caption}{Character vector containing the table's caption or title. Default value is "Univariate logistic regression"}
 
 \item{show.n}{TRUE o FALSE muestra el total de individuos usados para el ajuste del modelo. Default value is "TRUE".}
+
+\item{show.aov.pval}{TRUE o FALSE muestra el p-valor del modelo global. Default value is "TRUE".}
 
 \item{group}{TRUE o FALSE mostrar variables agrupadas en la tabla}
 }

@@ -7,10 +7,11 @@
 #' @param size A numeric input for table font size
 #' @param caption Character vector containing the table's caption or title. Default value is "Univariate logistic regression"
 #' @param show.n TRUE o FALSE muestra el total de individuos usados para el ajuste del modelo. Default value is "TRUE".
+#' @param show.aov.pval TRUE o FALSE muestra el p-valor del modelo global. Default value is "TRUE".
 #' @param group TRUE o FALSE mostrar variables agrupadas en la tabla
 #' @keywords OR summary regresion logistic
 #' @export glm.uni
-#' @import kableExtra knitr magrittr
+#' @import kableExtra knitr magrittr survival
 #' @examples
 #' df <- data.frame( score = rnorm(50,10,1), hores = rnorm(50,10,1), mort = as.factor(rbinom(50,1,.40)) )
 #' glm.uni(y = "mort", var2test = c("score", "hores"), data = df, format = "latex", size = 10)
@@ -27,11 +28,12 @@
 
 
 
-glm.uni <- function(y, var2test, data,
+glm.uni <- function(y, var2test, var2match = NULL, data,
                     size = 8.5,
                     format = "latex",
                     caption= "Univariate logistic regression",
                     show.n = TRUE,
+                    show.aov.pval = TRUE,
                     group = TRUE){
 
   if (class(data[,y]) != "factor") stop("variable 'y' must be factor")
@@ -39,9 +41,15 @@ glm.uni <- function(y, var2test, data,
 
   unimod <- lapply(var2test,
                    function(var) {
-                     formula <- as.formula(paste(y," ~", var))
-                     res.logist <- glm(formula, data = data[complete.cases(data[,y]),], family = binomial)
-                     res_lm <- round(tabOR_lr(res.logist,xtab = FALSE, title = var, show.intcp = FALSE, show.n = show.n),2)
+
+                     if(is.null(var2match)){
+                       formula <- as.formula(paste(y," ~", var))
+                       res.logist <- glm(formula, data = data[complete.cases(data[,y]),], family = binomial)
+                     }else{
+                       formula <- as.formula(paste( "as.numeric(",y,")~", var," + strata(",var2match,")"))
+                       res.logist <-  survival::clogit(formula,  data[complete.cases(data[,y]),])
+                     }
+                     res_lm <- round(tabOR_lr(mod = res.logist,xtab = FALSE, title = var, show.intcp = FALSE, show.n = show.n, show.aov.pval = show.aov.pval),2)
                      rownames(res_lm) <- gsub(var,"", rownames(res_lm))
                      res_lm[is.na(res_lm)] <- ""
                      res_lm
