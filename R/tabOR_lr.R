@@ -48,7 +48,7 @@ tabOR_lr <- function(mod,
     # pval_glob <- ifelse(pval_glob == 0, "$<$ 0.01", pval_glob )
     if(class(mod)[1] == "clogit")
     {
-      n_mod <- as.numeric(c(length(mod$n) , rep("", length(p.val) - 1)))
+      n_mod <- as.numeric(c(mod$n , rep("", length(p.val) - 1)))
     }else{
       n_mod <- as.numeric(c(length(mod$y) , rep("", length(p.val) - 1)))
     }
