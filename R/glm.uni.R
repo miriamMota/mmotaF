@@ -71,7 +71,7 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
     # row_spec(which(unimod_df$`P-value (Global)` < 0.05), bold = T, color = "black", background = "#C0B2CF") %>%
 
   }else{
-    xtab <- kable(unimod_df, format = format, booktabs = T,caption = caption, longtable = TRUE) %>%
+    xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption, longtable = TRUE) %>%
       kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size) %>%
       column_spec(which(names(unimod_df) == "P-value (Global)") + 1, bold = T)
   }
