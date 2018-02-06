@@ -52,16 +52,17 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
                      res_lm <- round(tabOR_lr(mod = res.logist,xtab = FALSE, title = var, show.intcp = FALSE, show.n = show.n, show.aov.pval = show.aov.pval),2)
                      rownames(res_lm) <- gsub(var,"", rownames(res_lm))
                      res_lm[is.na(res_lm)] <- ""
-                     res_lm
+                     res_lm <- cbind(varlev = paste0(var,".",rownames(res_lm)), res_lm)
                    })
   names(unimod) <- var2test
   unimod_df <- do.call(rbind, unimod)
-  rownames(unimod_df) <- gsub("^.*\\.","",rownames(unimod_df))
-  # unimod_df$`P-value (Global)` <- as.numeric(unimod_df$`P-value (Global)`)
-  # unimod_df$`P-value (Global)` <- ifelse(unimod_df$`P-value (Global)` < 0.0001,"0.0001", unimod_df$`P-value (Global)`)
+  unimod_df <- cbind(Variable  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
+  # rownames(unimod_df) <- gsub("^.*\\.","",rownames(unimod_df))
+  ## unimod_df$`P-value (Global)` <- as.numeric(unimod_df$`P-value (Global)`)
+  ## unimod_df$`P-value (Global)` <- ifelse(unimod_df$`P-value (Global)` < 0.0001,"0.0001", unimod_df$`P-value (Global)`)
 
   if (group) {
-    xtab <- kable(unimod_df, format = format, booktabs = T,caption = caption) %>%
+    xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption,  row.names = FALSE) %>%
       kable_styling(latex_options = c("striped"), font_size = size) %>%
       column_spec(which(names(unimod_df) == "P-value (Global)") + 1, bold = T)  %>%
       group_rows(index = eval(parse(text =   paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)), collapse = ", " ), ")")   )),
