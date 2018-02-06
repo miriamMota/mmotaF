@@ -14,9 +14,12 @@
 #' @export tabOR_lr
 #' @import xtable
 #' @examples
-#' df <- data.frame( x = rnorm(50,10,1), y = as.factor(rbinom(50,1,.40)) )
+#' df <- data.frame( x = rnorm(48,10,1), y = as.factor(c(rep("1",16), rep("0",32) ) ), match = c(rep(1:16,3) ) )
 #' mod <- glm(y ~ x, data = df, family = binomial)
+#' tabOR_lr(mod, xtab = FALSE,title='OR de los coeficientes', show.intcp = TRUE)
+#' mod <- survival::clogit(as.numeric(y) ~ x + strata(match), data = df)
 #' tabOR_lr(mod, xtab = FALSE,title='OR de los coeficientes')
+
 
 
 tabOR_lr <- function(mod,
@@ -29,44 +32,49 @@ tabOR_lr <- function(mod,
                      show.n = TRUE,
                      show.aov.pval = TRUE) {
 
-    ORcoef <- exp(mod$coeff)
-    ic <- exp(confint(mod))
-    if (length(mod$coefficients) == 1) {
-        infORcoef <- ic[1]
-        supORcoef <- ic[2]
-    } else {
-        infORcoef <- ic[, 1]
-        supORcoef <- ic[, 2]
-    }
-    p.val <- summary(mod)$coef[, which(colnames(summary(mod)$coef) == "Pr(>|z|)")]
+  ORcoef <- exp(mod$coeff)
+  ic <- exp(confint(mod))
+  if (length(mod$coefficients) == 1) {
+    infORcoef <- ic[1]
+    supORcoef <- ic[2]
+  } else {
+    infORcoef <- ic[, 1]
+    supORcoef <- ic[, 2]
+  }
+  p.val <- summary(mod)$coef[, which(colnames(summary(mod)$coef) == "Pr(>|z|)")]
 
-    if(show.intcp){
-      pval_glob <- as.numeric(c(anova(mod,test = "Chisq")$Pr[2], rep("", length(p.val)-1)))
-      # pval_glob <- ifelse(pval_glob == 0, "$<$ 0.01", pval_glob )
-      n_mod <- as.numeric(c(length(mod$y) , rep("", length(p.val)-1)))
-      tauORcoef <- data.frame(ORcoef, infORcoef, supORcoef, p.val, pval_glob, n_mod)
-      colnames(tauORcoef) <- c("OR", "LowerIC", "UpperIC", "P-value", "Global P-value", "N")
-    }else{
-      pval_glob <- as.numeric(c(anova(mod,test = "Chisq")$Pr[2], rep("", length(p.val)-1)))
-      # pval_glob <- ifelse(pval_glob == 0, "$<$ 0.01", pval_glob )
-      n_mod <- as.numeric(c(length(mod$y) , rep("", length(p.val)-1)))
-      tauORcoef <- data.frame(ORcoef, infORcoef, supORcoef, p.val, pval_glob, n_mod)
-      tauORcoef <- tauORcoef[!rownames(tauORcoef) %in% "(Intercept)", ]
-      colnames(tauORcoef) <- c("OR", "LowerIC", "UpperIC", "P-value", "P-value (Global)", "N")
-    }
+  if (show.intcp | class(mod)[1] == "clogit") {
+    pval_glob <- as.numeric(c(anova(mod,test = "Chisq")$Pr[2], rep("", length(p.val) - 1)))
+    # pval_glob <- ifelse(pval_glob == 0, "$<$ 0.01", pval_glob )
+    n_mod <- as.numeric(c(length(mod$y) , rep("", length(p.val) - 1)))
+    tauORcoef <- data.frame(ORcoef, infORcoef, supORcoef, p.val, pval_glob, n_mod)
+    colnames(tauORcoef) <- c("OR", "LowerIC", "UpperIC", "P-value", "Global P-value", "N")
+  }else{
+    # pval_glob <- as.numeric(c(anova(mod,test = "Chisq")$Pr[2], rep("", length(p.val)-1)))
+    pval_glob <- as.numeric(rep("", length(p.val)))
+    pval_glob[2] <- anova(mod,test = "Chisq")$Pr[2]
 
-    if(!show.n){
-      tauORcoef <- tauORcoef[,!names(tauORcoef)%in%("N")]
-    }
+    # n_mod <- as.numeric(c(length(mod$y) , rep("", length(p.val)-1)))
+    n_mod <- as.numeric(rep("", length(p.val)))
+    n_mod[2] <- length(mod$y)
 
-    if(!show.aov.pval){
-      tauORcoef <- tauORcoef[,!names(tauORcoef)%in%("P-value (Global)")]
-    }
+    tauORcoef <- data.frame(ORcoef, infORcoef, supORcoef, p.val, pval_glob, n_mod)
+    tauORcoef <- tauORcoef[!rownames(tauORcoef) %in% "(Intercept)", ]
+    colnames(tauORcoef) <- c("OR", "LowerIC", "UpperIC", "P-value", "P-value (Global)", "N")
+  }
+
+  if (!show.n) {
+    tauORcoef <- tauORcoef[,!names(tauORcoef) %in% ("N")]
+  }
+
+  if (!show.aov.pval) {
+    tauORcoef <- tauORcoef[,!names(tauORcoef) %in% ("P-value (Global)")]
+  }
 
 
-    if (xtab) {
-        print(xtable(tauORcoef, caption = title, digits = 2, label = label), type = xtab.type, size = sz.latex)
-    } else {
-        return(tauORcoef)
-    }
+  if (xtab) {
+    print(xtable(tauORcoef, caption = title, digits = 2, label = label), type = xtab.type, size = sz.latex)
+  } else {
+    return(tauORcoef)
+  }
 }
