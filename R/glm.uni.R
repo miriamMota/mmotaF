@@ -64,7 +64,7 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   if (group) {
     xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption,  row.names = FALSE, longtable = TRUE) %>%
       kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size) %>%
-      column_spec(which(names(unimod_df) == "P-value (Global)") + 1, bold = T)  %>%
+      column_spec(which(names(unimod_df) == "P-value (Global)"), bold = T)  %>%
       group_rows(index = eval(parse(text =   paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)), collapse = ", " ), ")")   )),
                  latex_gap_space = '1em')
     # group_rows(index = c('TEMPSVIU' = 1, 'Edata' = 1, 'BMI' = 1, 'EdataDIAG' = 1, 'TABAC' = 2, 'SBP' = 1, 'DBP' = 1, 'ECG' = 2, 'CHD' = 1))
@@ -73,7 +73,7 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   }else{
     xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption, longtable = TRUE) %>%
       kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size) %>%
-      column_spec(which(names(unimod_df) == "P-value (Global)") + 1, bold = T)
+      column_spec(which(names(unimod_df) == "P-value (Global)") , bold = T)
   }
 
   return(list(unimod_list = unimod, xtab = xtab))
