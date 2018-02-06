@@ -46,7 +46,12 @@ tabOR_lr <- function(mod,
   if (show.intcp | class(mod)[1] == "clogit") {
     pval_glob <- as.numeric(c(anova(mod,test = "Chisq")$Pr[2], rep("", length(p.val) - 1)))
     # pval_glob <- ifelse(pval_glob == 0, "$<$ 0.01", pval_glob )
-    n_mod <- as.numeric(c(length(mod$y) , rep("", length(p.val) - 1)))
+    if(class(mod)[1] == "clogit")
+    {
+      n_mod <- as.numeric(c(length(mod$n) , rep("", length(p.val) - 1)))
+    }else{
+      n_mod <- as.numeric(c(length(mod$y) , rep("", length(p.val) - 1)))
+    }
     tauORcoef <- data.frame(ORcoef, infORcoef, supORcoef, p.val, pval_glob, n_mod)
     colnames(tauORcoef) <- c("OR", "LowerIC", "UpperIC", "P-value", "Global P-value", "N")
   }else{
