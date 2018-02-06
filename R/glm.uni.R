@@ -39,6 +39,11 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   if (class(data[,y]) != "factor") stop("variable 'y' must be factor")
   if (length(levels(data[,y])) != 2) stop("variable 'y' must have two levels")
 
+  for (i in seq_along(var2test)){
+    if(class(data[,var2test[i]])[1] == "factor" ) data[,var2test[i]] <- factor(data[,var2test[i]])
+  }
+
+
   unimod <- lapply(var2test,
                    function(var) {
 
