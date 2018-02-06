@@ -42,7 +42,7 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   unimod <- lapply(var2test,
                    function(var) {
 
-                     if(is.null(var2match)){
+                     if (is.null(var2match)) {
                        formula <- as.formula(paste(y," ~", var))
                        res.logist <- glm(formula, data = data[complete.cases(data[,y]),], family = binomial)
                      }else{
@@ -62,8 +62,8 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   ## unimod_df$`P-value (Global)` <- ifelse(unimod_df$`P-value (Global)` < 0.0001,"0.0001", unimod_df$`P-value (Global)`)
 
   if (group) {
-    xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption,  row.names = FALSE) %>%
-      kable_styling(latex_options = c("striped"), font_size = size) %>%
+    xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption,  row.names = FALSE, longtable = TRUE) %>%
+      kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size) %>%
       column_spec(which(names(unimod_df) == "P-value (Global)") + 1, bold = T)  %>%
       group_rows(index = eval(parse(text =   paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)), collapse = ", " ), ")")   )),
                  latex_gap_space = '1em')
@@ -71,9 +71,9 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
     # row_spec(which(unimod_df$`P-value (Global)` < 0.05), bold = T, color = "black", background = "#C0B2CF") %>%
 
   }else{
-    xtab <- kable(unimod_df, format = format, booktabs = T,caption = caption) %>%
-    kable_styling(latex_options = c("striped","hold_position"), font_size = size) %>%
-    column_spec(which(names(unimod_df) == "P-value (Global)") + 1, bold = T)
+    xtab <- kable(unimod_df, format = format, booktabs = T,caption = caption, longtable = TRUE) %>%
+      kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size) %>%
+      column_spec(which(names(unimod_df) == "P-value (Global)") + 1, bold = T)
   }
 
   return(list(unimod_list = unimod, xtab = xtab))
