@@ -4,9 +4,10 @@
 \alias{doROC}
 \title{A doROC Function}
 \usage{
-doROC(frml, dat, title = NULL, validation = FALSE, test, test_y,
-  col.thres = "blue", col.ic = "#aaddddAA", x.axes = FALSE,
-  show.cascon = TRUE, show.ci = TRUE, show.thr = TRUE)
+doROC(frml, dat, title = NULL, validation = FALSE, test = NULL,
+  test_y = NULL, col.thres = "blue", col.ic = "#aaddddAA",
+  x.axes = FALSE, show.cascon = TRUE, show.ci = TRUE, show.thr = TRUE,
+  cex.main = 0.8)
 }
 \arguments{
 \item{frml}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted}
@@ -26,6 +27,8 @@ doROC(frml, dat, title = NULL, validation = FALSE, test, test_y,
 \item{col.ic}{color para el intervalo de confianza. Debe ser translucido, por lo que se puede usar la función makeTransparent para cualquier color R.}
 
 \item{x.axes}{a logical indicating if the specificity axis (x axis) must be plotted as as decreasing “specificity” (FALSE, the default) or increasing “1 - specificity” (TRUE) as in most legacy software. This affects only the axis, not the plot coordinates.}
+
+\item{cex.main}{expansion factor for main names (size main)}
 }
 \value{
 auc: Area bajo la curva y correspondiente intervalo de confianza
@@ -45,6 +48,7 @@ ROC(representación gráfica de la sensibilidad en frente a la especificidad).
 \examples{
 y <- as.factor(rbinom(50,1,.40))
 x <- rnorm(50,10,1)
+resROC <- doROC (frml = y ~ x, title = 'prova1', cex.main = 0.6)
 resROC <- doROC (frml = y ~ x, title = 'prova',
                  validation = TRUE,
                  test = data.frame(x=c(1,2,3)),

@@ -13,12 +13,14 @@
 #' @param col.thres color de la cruz que indica el punto de corte óptimo en el gráfico
 #' @param col.ic color para el intervalo de confianza. Debe ser translucido, por lo que se puede usar la función makeTransparent para cualquier color R.
 #' @param x.axes a logical indicating if the specificity axis (x axis) must be plotted as as decreasing “specificity” (FALSE, the default) or increasing “1 - specificity” (TRUE) as in most legacy software. This affects only the axis, not the plot coordinates.
+#' @param cex.main expansion factor for main names (size main)
 #' @export doROC
 #' @import pROC
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' y <- as.factor(rbinom(50,1,.40))
 #' x <- rnorm(50,10,1)
+#' resROC <- doROC (frml = y ~ x, title = 'prova1', cex.main = 0.6)
 #' resROC <- doROC (frml = y ~ x, title = 'prova',
 #'                  validation = TRUE,
 #'                  test = data.frame(x=c(1,2,3)),
@@ -33,23 +35,24 @@
 doROC <- function(frml, dat,
                   title = NULL,
                   validation = FALSE,
-                  test,
-                  test_y,
+                  test = NULL,
+                  test_y = NULL,
                   col.thres = "blue",
                   col.ic = "#aaddddAA",
                   x.axes = FALSE,
                   show.cascon = TRUE,
                   show.ci = TRUE,
-                  show.thr = TRUE) {
+                  show.thr = TRUE,
+                  cex.main = 0.8) {
 
-  if(is.null(title)) title <- strsplit(as.character(frml), "~", fixed = T)[[2]]
+  if (is.null(title)) title <- strsplit(as.character(frml), "~", fixed = T)[[2]]
 
   mod <- glm(frml, data = dat, family = binomial, na.action = "na.omit")
   pred <- predict(mod, type = "response")
   rocobj <- plot.roc(mod$y, pred, main = title,
                      ci = TRUE, percent = TRUE,
                      print.thres = ifelse(show.thr, "best", FALSE),
-                     legacy.axes = x.axes)
+                     legacy.axes = x.axes, cex.main = cex.main)
   if (show.cascon) {
     text(15, 20,
          paste0("cases: ", length(rocobj[6]$cases), "\n controls: ", length(rocobj[7]$controls)),
@@ -59,12 +62,12 @@ doROC <- function(frml, dat,
   thres.best <- rocobj$thresholds[which(thres == max(thres))]  # threshold  de Youden
   ciobj <- ci.se(rocobj, boot.n = 200, progress = "none")
 
-  if (show.ci)    plot(ciobj, type = "s", col = col.ic)  # plot as a blue shape
+  if (show.ci)    plot(ciobj, type = "s", col = col.ic, cex.main = cex.main)  # plot as a blue shape
 
   if (show.thr) {
     plot(ci(rocobj, of = "thresholds", thresholds = "best", progress = "none"),
          col = col.thres,
-         lwd = 2)
+         lwd = 2, cex.main = cex.main)
     }
 
 
