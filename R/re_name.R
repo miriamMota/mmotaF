@@ -16,18 +16,19 @@
 #' @keywords names dataframe correct
 
 re_name <- function(data,char = NULL, newchar = NULL) {
-    names(data) <- gsub(".", "_",
-                        gsub("..", ".",
-                             gsub("..", ".",
-                                  gsub("..", ".", names(data), fixed = T),
-        fixed = T), fixed = T), fixed = T)
-    names(data) <- gsub(" ", "_", names(data), fixed = T)
-    names(data) <- gsub("/", "_", names(data), fixed = T)
-    names(data) <- gsub("__", "_", names(data), fixed = T)
-    names(data) <- gsub("_$", "", names(data))
-    names(data) <- gsub("^X_", "", names(data))
-    names(data) <- chartr("áéóíúÁÉÍÓÚ", "aeoiuAEIOU", names(data))
-    if (!is.null(char))
+  if (!is.null(char))
     names(data) <-  chartr(char, newchar, names(data))
-    return(data)
+  names(data) <- gsub(".", "_",
+                      gsub("..", ".",
+                           gsub("..", ".",
+                                gsub("..", ".", names(data), fixed = T),
+                                fixed = T), fixed = T), fixed = T)
+  names(data) <- gsub(" ", "_", names(data), fixed = T)
+  names(data) <- gsub("/", "_", names(data), fixed = T)
+  names(data) <- gsub("__", "_", names(data), fixed = T)
+  names(data) <- gsub("_$", "", names(data))
+  names(data) <- gsub("^X_", "", names(data))
+  names(data) <- chartr("áéóíúÁÉÍÓÚ", "aeoiuAEIOU", names(data))
+
+  return(data)
 }
