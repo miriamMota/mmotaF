@@ -15,6 +15,7 @@
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @param do.test logical value si se quiere realizar test kruskall Wallis.
 #' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
+#' @param breaks.units a vector of cut points or number giving the number of intervals which x is to be cut into or an interval specification, one of "days", "weeks", "months", "quarters" or "years", plus "secs", "mins", "hours" for date-time objects.
 #' @export descPlot
 #' @import beeswarm Hmisc
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
@@ -40,7 +41,8 @@ descPlot <- function(dat, y = NULL,
                      cex.main = 0.8,
                      las = 0,
                      do.test = FALSE,
-                     at.text = 1) {
+                     at.text = 1,
+                     breaks.units = "years") {
 
 
      par(mfrow = rowcol)
@@ -97,12 +99,19 @@ descPlot <- function(dat, y = NULL,
 
                 ## descriptiu univariat
                 if (is.null(y)) {
+                  if (class(dat[,i]) == "Date" | class(dat[,i]) == "POSIXt") {
+                    try(hist(dat[, i], xlab = "", breaks = breaks.units,
+                             main = namevar[i], freq = T, las = las, cex.axis = cex.lab,
+                             sub = ifelse(is.null(subtitle), "", subtitle),
+                             col = makeTransparent("#57ADC2", alpha = 0.8)), TRUE)
+
+                  }else{
                   try(hist(dat[, i], xlab = "",
                            main = namevar[i],
                            sub = ifelse(is.null(subtitle), "", subtitle),
                            col = makeTransparent(color, alpha = 0.8)), TRUE)
                   try(rug(dat[, i]))
-
+                  }
                   ## descriptiu bivariat
                 } else {
                   boxplot_bw(y = i, group = y, dat = dat, las = las,

@@ -7,7 +7,7 @@
 descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
   subtitle = NULL, color = "#8D4ABA", rowcol = c(3, 2), show.lg = FALSE,
   show.freq = TRUE, cex.lab = 1, cex.lg = 0.65, cex.main = 0.8,
-  las = 0, do.test = FALSE, at.text = 1)
+  las = 0, do.test = FALSE, at.text = 1, breaks.units = "years")
 }
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
@@ -36,6 +36,8 @@ descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
 \item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
 
 \item{at.text}{if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.}
+
+\item{breaks.units}{a vector of cut points or number giving the number of intervals which x is to be cut into or an interval specification, one of "days", "weeks", "months", "quarters" or "years", plus "secs", "mins", "hours" for date-time objects.}
 }
 \description{
 Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es 'data.frame'
