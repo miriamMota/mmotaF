@@ -12,6 +12,7 @@
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
 #' @param ylab a title for the y axis
+#' @param xlab a title for the x axis
 #' @export boxplot_bw
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
@@ -29,7 +30,9 @@ boxplot_bw <- function(y, group = NULL, dat,
                        title.plot = NULL,
                        sub.plot = NULL,
                        ylim.plot = NULL,
-                       cex.lab = 1, ylab = "",
+                       cex.lab = 1,
+                       ylab = "",
+                       xlab = NULL,
                        do.test = FALSE, at.text = 1) {
 
     if (is.null(ylim.plot))
@@ -57,11 +60,13 @@ boxplot_bw <- function(y, group = NULL, dat,
 
         ## bivariant
     } else {
-        if (is.null(title.plot))  {title.plot <- ""}
+      if (is.null(title.plot))  {title.plot <- ""}
+      if (is.null(xlab))  {xlab <- group}
+
       dat[,group] <- as.factor(as.character(dat[,group]))
 
         beeswarm(dat[, y] ~ dat[, group],
-                 ylab = "", xlab = group,
+                 ylab = "", xlab = xlab,
                  main = title.plot,
                  ylim = ylim.plot,
                  axes = F,

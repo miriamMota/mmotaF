@@ -6,7 +6,7 @@
 \usage{
 boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
   sub.plot = NULL, ylim.plot = NULL, cex.lab = 1, ylab = "",
-  do.test = FALSE, at.text = 1)
+  xlab = NULL, do.test = FALSE, at.text = 1)
 }
 \arguments{
 \item{y}{name numeric vector of data values.}
@@ -25,6 +25,8 @@ boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
 \item{ylim.plot}{is vector which contains lower and upper limits which are to appear on the y axes.}
 
 \item{ylab}{a title for the y axis}
+
+\item{xlab}{a title for the x axis}
 
 \item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
 
