@@ -4,31 +4,37 @@
 \alias{doROC}
 \title{A doROC Function}
 \usage{
-doROC(frml, dat, title = NULL, validation = FALSE, test = NULL,
-  test_y = NULL, col.thres = "blue", col.ic = "#aaddddAA",
-  x.axes = FALSE, show.cascon = TRUE, show.ci = TRUE, show.thr = TRUE,
-  cex.main = 0.8)
+doROC(x, group, frml, dat, tag.healthy = NULL, title = NULL,
+  doPlot = TRUE, cex.main = 0.9, show.lg = TRUE, show.cascon = TRUE,
+  show.detail = TRUE, xtab = TRUE, modGLM = NULL, direction = c("<",
+  ">"), ...)
 }
 \arguments{
-\item{frml}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted}
+\item{x}{either a character string with the name of the diagnostic test variable. (Potser una variable numerica o per exemple, una probabilitat de un model de regressio logistica)}
+
+\item{frml}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.}
 
 \item{dat}{data frame containing the variables in the formula.}
 
 \item{title}{a main title for the plot}
 
-\item{validation}{valor lógico indicando si se entreran datos externos para testar el punto de corte elegido en el grafico}
-
-\item{test}{data.frame indicando los nuevos valores de la variable explicativa}
-
-\item{test_y}{vector factor indicando grupo de los nuevos individuos}
-
-\item{col.thres}{color de la cruz que indica el punto de corte óptimo en el gráfico}
-
-\item{col.ic}{color para el intervalo de confianza. Debe ser translucido, por lo que se puede usar la función makeTransparent para cualquier color R.}
-
-\item{x.axes}{a logical indicating if the specificity axis (x axis) must be plotted as as decreasing “specificity” (FALSE, the default) or increasing “1 - specificity” (TRUE) as in most legacy software. This affects only the axis, not the plot coordinates.}
-
 \item{cex.main}{expansion factor for main names (size main)}
+
+\item{show.lg}{A logical value indicating whether show a legend Default value is TRUE}
+
+\item{show.cascon}{A logical value indicating whether show number cases/controls. Default value is TRUE}
+
+\item{show.detail}{A logical value indicating whether show detail output. Default value is TRUE}
+
+\item{xtab}{A logical value indicating whether the output is a xtable. Default value is FALSE.}
+
+\item{modGLM}{Valor logico que indica si se realiza regresion logistica. En el caso de indicar TRUE, el 'thres.best' indicara el punto de corte como probabilidad de predicción. En el caso de indicar FALSE, 'cutoff' nos indicara el punto de corte real en la variable. Es necesario indicar TRUE cuando querramos evaluar mas de una variable.}
+
+\item{direction}{character string specifying the direction to compute the ROC curve. By default individuals with a test value lower than the cutoff are classified as healthy (negative test), whereas patients with a test value greater than (or equal to) the cutoff are classified as diseased (positive test). If this is not the case, however, and the high values are related to health, this argument should be established at ">".}
+
+\item{y}{a  character string with the name of the variable that distinguishes healthy from diseased individuals}
+
+\item{doPlotA}{logical value indicating whether show a plot. Default value is TRUE}
 }
 \value{
 auc: Area bajo la curva y correspondiente intervalo de confianza
@@ -46,13 +52,18 @@ mediante regresión logística teniendo en cuenta la variable explicativa. Una v
 ROC(representación gráfica de la sensibilidad en frente a la especificidad).
 }
 \examples{
-y <- as.factor(rbinom(50,1,.40))
-x <- rnorm(50,10,1)
-resROC <- doROC (frml = y ~ x, title = 'prova1', cex.main = 0.6)
-resROC <- doROC (frml = y ~ x, title = 'prova',
-                 validation = TRUE,
-                 test = data.frame(x=c(1,2,3)),
-                 test_y = as.factor(c(0,1,1)))
+set.seed(12)
+df <- data.frame(y = as.factor(rbinom(50,1,.40)),x = rnorm(50,10,1))
+resROC <- doROC (frml = y ~ x, title = 'prova1', cex.main = 0.6, dat = df, modGLM = FALSE, direction = ">")
+resROC$cutoff
+resROC <- doROC (frml = y ~ x, title = 'prova1', cex.main = 0.6, dat = df, modGLM = TRUE)
+# si usamos el parametro modGLM = TRUE y queremos obtener el punto de corte real en la variable.
+# Esto SOLO funciona si tenemos unicamente UNA variable explicativa.
+prob.thr <- resROC$thres.best
+b0 <- resROC$mod$coefficients[["(Intercept)"]]
+b1 <- resROC$mod$coefficients[["x"]]
+(pt <- (log(prob.thr/(1 - prob.thr)) - b0)/b1)
+
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
