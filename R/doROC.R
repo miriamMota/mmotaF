@@ -122,7 +122,7 @@ doROC <- function(x , group , frml , dat,
   if (modGLM) {
     results$cutoff.probability <- clasRes$Youden$Global$optimal.cutoff$cutoff # threshold  de Youden probability
     if(length(strsplit(as.character(frml), "+", fixed = T)[[3]]) == 1)
-      results$cutoff.variable  <- results$dat$x[which(results$dat$pred == results$thres.best)]
+      results$cutoff.variable  <- results$dat$x[which(results$dat$pred == results$cutoff.probability)]
   }else{
     results$cutoff.variable <- clasRes$Youden$Global$optimal.cutoff$cutoff # punto de corte optimo, segun Youden para variable numerica
   }
