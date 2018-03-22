@@ -1,9 +1,7 @@
 #' A doROC Function
 #'
-#' Creación de curvas ROC con regresión logística mediante el paquete pROC y validación con datos externos.
-#' Para realizar las curvas ROC, en primer lugar, se modeliza - para el conjunto de datos “training set”- la variable respuesta grupo
-#' mediante regresión logística teniendo en cuenta la variable explicativa. Una vez ajustado el modelo se realiza las curva
-#' ROC(representación gráfica de la sensibilidad en frente a la especificidad).
+#' Creación de curvas ROC (representación gráfica de la sensibilidad en frente a la especificidad) con o sin regresión logística mediante el paquete pROC y optimalCutpoints.
+#' Se calcula el punto de corte optimo mediante youden y se obtienen las medidas de clasificacion.
 #' @param x either a character string with the name of the diagnostic test variable. (Potser una variable numerica o per exemple, una probabilitat de un model de regressio logistica)
 #' @param y a  character string with the name of the variable that distinguishes healthy from diseased individuals
 #' @param frml an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.
