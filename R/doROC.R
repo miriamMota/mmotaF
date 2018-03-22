@@ -114,8 +114,8 @@ doROC <- function(x , group , frml , dat,
 
   ## es mostren els resultats general com xtable per a latex
   if (xtab) {
-    xtable(results$res_sum$p.table$Global$Youden[[1]],
-           caption = paste(title,". AUC ", results$res_sum$p.table$Global$AUC_CI ))
+    print(xtable(results$res_sum$p.table$Global$Youden[[1]],
+           caption = paste(title,". AUC ", results$res_sum$p.table$Global$AUC_CI )))
   }
 
   ## punts de talls
