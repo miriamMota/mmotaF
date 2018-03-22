@@ -16,6 +16,8 @@ doROC(x, group, frml, dat, tag.healthy = NULL, title = NULL,
 
 \item{dat}{data frame containing the variables in the formula.}
 
+\item{tag.healthy}{the value codifying healthy individuals in the status variable. Por defecto nivel de referencia levels(dat[,group])[1]}
+
 \item{title}{a main title for the plot}
 
 \item{cex.main}{expansion factor for main names (size main)}
@@ -39,11 +41,15 @@ doROC(x, group, frml, dat, tag.healthy = NULL, title = NULL,
 \value{
 auc: Area bajo la curva y correspondiente intervalo de confianza
 
-pvalue: p-valor de la variable explicativa en el modelo de regresion logística
+cutoff.probability: en el caso de haber realizado modGLM, punto de corte óptimo de la probabilidad de predicción calculado con el indice de Youden
 
-thres.best: punto de corte  óptimo calculado con el estad ́ıstico de Youden
+cutoff: punto de corte de la variable cuantitativa. SOLO CUANDO EVALUAMOS UNA UNICA VARIABLE CUANTITATIVA.
 
-misc.test: en el caso de tener datos de validación, la tasa de error de clasificacion utilizando como punto de corte el thres.best.
+youden: the optimal value of the method considered for selecting the optimal cutpoint, i.e., the value of the criterion at the optimal cutpoint.
+
+res_detail: taula detallada amb totes les sensibilitats i especificitats
+
+res_sum:  the optimal cutpoint(s) obtained with the method(s) selected; its/their accuracy measures and the area under ROC curve (AUC)
 }
 \description{
 Creación de curvas ROC con regresión logística mediante el paquete pROC y validación con datos externos.
@@ -59,10 +65,8 @@ resROC$cutoff
 resROC <- doROC (frml = y ~ x, title = 'prova1', cex.main = 0.6, dat = df, modGLM = TRUE)
 # si usamos el parametro modGLM = TRUE y queremos obtener el punto de corte real en la variable.
 # Esto SOLO funciona si tenemos unicamente UNA variable explicativa.
-prob.thr <- resROC$thres.best
-b0 <- resROC$mod$coefficients[["(Intercept)"]]
-b1 <- resROC$mod$coefficients[["x"]]
-(pt <- (log(prob.thr/(1 - prob.thr)) - b0)/b1)
+resROC$cutoff
+pt <- resROC$dat$x[which(resROC$dat$pred == resROC$thres.best)]
 
 }
 \author{
@@ -71,4 +75,3 @@ Miriam Mota \email{mmota.foix@gmail.com}
 \keyword{glm}
 \keyword{roc}
 \keyword{test}
-\keyword{validation}

@@ -7,6 +7,7 @@
 #' @param x either a character string with the name of the diagnostic test variable. (Potser una variable numerica o per exemple, una probabilitat de un model de regressio logistica)
 #' @param y a  character string with the name of the variable that distinguishes healthy from diseased individuals
 #' @param frml an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.
+#' @param tag.healthy the value codifying healthy individuals in the status variable. Por defecto nivel de referencia levels(dat[,group])[1]
 #' @param dat data frame containing the variables in the formula.
 #' @param title a main title for the plot
 #' @param doPlotA logical value indicating whether show a plot. Default value is TRUE
@@ -28,16 +29,16 @@
 #' resROC <- doROC (frml = y ~ x, title = 'prova1', cex.main = 0.6, dat = df, modGLM = TRUE)
 #' # si usamos el parametro modGLM = TRUE y queremos obtener el punto de corte real en la variable.
 #' # Esto SOLO funciona si tenemos unicamente UNA variable explicativa.
-#' prob.thr <- resROC$thres.best
-#' b0 <- resROC$mod$coefficients[["(Intercept)"]]
-#' b1 <- resROC$mod$coefficients[["x"]]
-#' (pt <- (log(prob.thr/(1 - prob.thr)) - b0)/b1)
+#' resROC$cutoff
+#' pt <- resROC$dat$x[which(resROC$dat$pred == resROC$thres.best)]
 #'
 #' @return auc: Area bajo la curva y correspondiente intervalo de confianza
-#' @return pvalue: p-valor de la variable explicativa en el modelo de regresion logística
-#' @return thres.best: punto de corte  óptimo calculado con el estad ́ıstico de Youden
-#' @return misc.test: en el caso de tener datos de validación, la tasa de error de clasificacion utilizando como punto de corte el thres.best.
-#' @keywords roc glm test validation
+#' @return cutoff.probability: en el caso de haber realizado modGLM, punto de corte óptimo de la probabilidad de predicción calculado con el indice de Youden
+#' @return cutoff: punto de corte de la variable cuantitativa. SOLO CUANDO EVALUAMOS UNA UNICA VARIABLE CUANTITATIVA.
+#' @return youden: the optimal value of the method considered for selecting the optimal cutpoint, i.e., the value of the criterion at the optimal cutpoint.
+#' @return res_detail: taula detallada amb totes les sensibilitats i especificitats
+#' @return res_sum:  the optimal cutpoint(s) obtained with the method(s) selected; its/their accuracy measures and the area under ROC curve (AUC)
+#' @keywords roc glm test
 
 
 
@@ -52,18 +53,21 @@ doROC <- function(x , group , frml , dat,
                   xtab = TRUE,
                   modGLM = NULL,
                   direction = c("<", ">"), ...)
-# show.ci = NULL
-# validation = FALSE,
-# test = NULL,
-# test_y = NULL,
-# col.thres = "blue",
-# col.ic = "#aaddddAA",
-# x.axes = FALSE,
-# show.thr = TRUE,
 {
-  message("Arguments 'show.ci', 'validation', 'test', 'test_y',
-          'col.thres', 'col.ic', 'x.axes' and 'show.thr' are deprecated")
+  ## comprovacions varies, warnings i errors
+  if(exists(deparse(substitute(show.ci)))) message("\n UEBmessage: Argument 'show.ci' is deprecated \n")
+  if(exists(deparse(substitute(validation)))) message("\n UEBmessage: Argument 'validation' is deprecated \n")
+  if(exists(deparse(substitute(test_y)))) message("\n UEBmessage: Arguments 'test' and 'test_y' are deprecated \n")
+  if(exists(deparse(substitute(col.thres)))) message("\n UEBmessage: Argument 'col.thres' is deprecated \n")
+  if(exists(deparse(substitute(col.ic)))) message("\n UEBmessage: Argument 'col.ic' is deprecated \n")
+  if(exists(deparse(substitute(x.axes)))) message("\n UEBmessage: Argument 'x.axes' is deprecated \n")
+  if(exists(deparse(substitute(show.thr)))) message("\n UEBmessage: Argument 'show.thr' is deprecated \n")
+  if (is.null(modGLM)) stop("Es necesario indicar, TRUE o FALSE para el parametro modGLM.")
+  if ((missing(x) | missing(group)) & missing(frml))  stop("'x' and 'group' argument required, or 'frml' argument required", call. = FALSE)
+
   results <- list()
+
+  ## assignació variable resposta (group) i variable cuantitativa (x) o formula (frml). També titol y nivell de referencia (tag.healthy)
   if (modGLM) {
     mod <- glm(frml, data = dat, family = binomial, na.action = "na.omit")
     results$mod <- mod
@@ -71,19 +75,18 @@ doROC <- function(x , group , frml , dat,
     dat <- dat[names(pred),]
     dat$pred <- pred
     x <- "pred"
+    results$dat <- dat
   }else{
     if (!missing(frml)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
   }
 
   if (missing(x)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
-  if ((missing(x) | missing(group)) & missing(frml))  stop("'x' and 'group' argument required, or 'frml' argument required", call. = FALSE)
-
   if (missing(group)) group <- strsplit(as.character(frml), "~", fixed = T)[[2]]
-
   if (is.null(title)) title <- paste(group, "-",x)
   if (is.null(tag.healthy)) tag.healthy <- levels(dat[,group])[1]
-  if (is.null(modGLM)) stop("Es necesario indicar, TRUE o FALSE para el parametro modGLM.")
 
+
+  # calcul corba ROC, punt optim amb index de youden i mesures de clasificacio
   meth.cutoff <- "Youden"
   clasRes <- optimal.cutpoints(X = x, status = group, methods = meth.cutoff,
                                data = dat,tag.healthy = tag.healthy, ci.fit = TRUE,
@@ -111,18 +114,25 @@ doROC <- function(x , group , frml , dat,
     colnames(results$res_detail) <- c("Cutpoint", "Sensitivity", "Specificity", "LR+", "LR-")
   }
 
+  ## es mostren els resultats general com xtable per a latex
   if (xtab) {
     xtable(results$res_sum$p.table$Global$Youden[[1]],
            caption = paste(title,". AUC ", results$res_sum$p.table$Global$AUC_CI ))
   }
 
+  ## punts de talls
   if (modGLM) {
-    results$thres.best  <- clasRes$Youden$Global$optimal.cutoff$cutoff # threshold  de Youden probability
+    results$cutoff.probability <- clasRes$Youden$Global$optimal.cutoff$cutoff # threshold  de Youden probability
+    if(length(strsplit(as.character(frml), "+", fixed = T)[[3]]) == 1)
+      results$cutoff  <- results$dat$x[which(results$dat$pred == results$thres.best)]
   }else{
     results$cutoff <- clasRes$Youden$Global$optimal.cutoff$cutoff # punto de corte optimo, segun Youden para variable numerica
   }
   results$youden <- clasRes$Youden$Global$optimal.criterion
+  results$auc <- results$res_sum$Youden$Global$measures.acc$AUC
 
+  # missatge canvi de nom a output
+  message(" !!!!!!!!! \n UEBmessage: Output 'thres.best' are deprecated, new same output is 'cutoff.probability' \n !!!!!!!!!")
   return(results)
 }
 
