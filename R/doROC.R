@@ -32,7 +32,7 @@
 #'
 #' @return auc: Area bajo la curva y correspondiente intervalo de confianza
 #' @return cutoff.probability: en el caso de haber realizado modGLM, punto de corte óptimo de la probabilidad de predicción calculado con el indice de Youden
-#' @return cutoff: punto de corte de la variable cuantitativa. SOLO CUANDO EVALUAMOS UNA UNICA VARIABLE CUANTITATIVA.
+#' @return cutoff.variable: punto de corte de la variable cuantitativa. SOLO CUANDO EVALUAMOS UNA UNICA VARIABLE CUANTITATIVA.
 #' @return youden: the optimal value of the method considered for selecting the optimal cutpoint, i.e., the value of the criterion at the optimal cutpoint.
 #' @return res_detail: taula detallada amb totes les sensibilitats i especificitats
 #' @return res_sum:  the optimal cutpoint(s) obtained with the method(s) selected; its/their accuracy measures and the area under ROC curve (AUC)
@@ -122,9 +122,9 @@ doROC <- function(x , group , frml , dat,
   if (modGLM) {
     results$cutoff.probability <- clasRes$Youden$Global$optimal.cutoff$cutoff # threshold  de Youden probability
     if(length(strsplit(as.character(frml), "+", fixed = T)[[3]]) == 1)
-      results$cutoff  <- results$dat$x[which(results$dat$pred == results$thres.best)]
+      results$cutoff.variable  <- results$dat$x[which(results$dat$pred == results$thres.best)]
   }else{
-    results$cutoff <- clasRes$Youden$Global$optimal.cutoff$cutoff # punto de corte optimo, segun Youden para variable numerica
+    results$cutoff.variable <- clasRes$Youden$Global$optimal.cutoff$cutoff # punto de corte optimo, segun Youden para variable numerica
   }
   results$youden <- clasRes$Youden$Global$optimal.criterion
   results$auc <- results$res_sum$Youden$Global$measures.acc$AUC
