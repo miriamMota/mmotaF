@@ -6,7 +6,7 @@
 \usage{
 doROC(x, group, frml, dat, tag.healthy = NULL, title = NULL,
   doPlot = TRUE, cex.main = 0.9, show.lg = TRUE, show.cascon = TRUE,
-  show.detail = TRUE, xtab = TRUE, modGLM = NULL, direction = c("<",
+  show.detail = TRUE, xtab = FALSE, modGLM = NULL, direction = c("<",
   ">"), ...)
 }
 \arguments{
@@ -64,7 +64,7 @@ resROC <- doROC (frml = y ~ x, title = 'prova1', cex.main = 0.6, dat = df, modGL
 # si usamos el parametro modGLM = TRUE y queremos obtener el punto de corte real en la variable.
 # Esto SOLO funciona si tenemos unicamente UNA variable explicativa.
 resROC$cutoff.variable
-pt <- resROC$dat$x[which(resROC$dat$pred == resROC$cutoff.probability)]
+(pt <- resROC$dat$x[which(resROC$dat$pred == resROC$cutoff.probability)])
 
 }
 \author{

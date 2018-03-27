@@ -28,7 +28,7 @@
 #' # si usamos el parametro modGLM = TRUE y queremos obtener el punto de corte real en la variable.
 #' # Esto SOLO funciona si tenemos unicamente UNA variable explicativa.
 #' resROC$cutoff.variable
-#' pt <- resROC$dat$x[which(resROC$dat$pred == resROC$cutoff.probability)]
+#' (pt <- resROC$dat$x[which(resROC$dat$pred == resROC$cutoff.probability)])
 #'
 #' @return auc: Area bajo la curva y correspondiente intervalo de confianza
 #' @return cutoff.probability: en el caso de haber realizado modGLM, punto de corte óptimo de la probabilidad de predicción calculado con el indice de Youden
@@ -48,7 +48,7 @@ doROC <- function(x , group , frml , dat,
                   show.lg = TRUE,
                   show.cascon = TRUE,
                   show.detail = TRUE,
-                  xtab = TRUE,
+                  xtab = FALSE,
                   modGLM = NULL,
                   direction = c("<", ">"), ...)
 {
@@ -121,8 +121,8 @@ doROC <- function(x , group , frml , dat,
   ## punts de talls
   if (modGLM) {
     results$cutoff.probability <- clasRes$Youden$Global$optimal.cutoff$cutoff # threshold  de Youden probability
-
-      # results$cutoff.variable  <- results$dat[,x][which(results$dat$pred == results$cutoff.probability)]
+    name_var_cuanti <-  strsplit(as.character(frml), "~", fixed = T)[[3]]
+    results$cutoff.variable  <- results$dat[,name_var_cuanti][which(results$dat$pred == results$cutoff.probability)]
 
   }else{
     results$cutoff.variable <- clasRes$Youden$Global$optimal.cutoff$cutoff # punto de corte optimo, segun Youden para variable numerica
