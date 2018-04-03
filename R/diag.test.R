@@ -27,6 +27,7 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
 
   sum_ac_l <- list()
   classification <- list()
+  pos.class <- NA
 
   for (i in 1:n_var) {
 
@@ -40,27 +41,37 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
     classification[["variable"]][[name_var]] <- list()
 
 
-    if (! all(levels(pred_i) %in% levels(y)) ) stop("\n ERROR: los niveles de las variables",name_var," e 'y' deben ser los mismos \n ")
-    # tag.positive <- levels(y)[levels(y) != tag.healthy]
-    # y <- factor(y,c(tag.healthy,tag.positive))
-    # pred_i <- factor(y,c(tag.healthy, tag.positive))
+    if (!all(levels(pred_i) %in% levels(y)) ) stop("\n ERROR: los niveles de las variables",name_var," e 'y' deben ser los mismos \n ")
 
-    if(rownames(table(pred_i,y))[1] == colnames(table(pred_i,y))[1])  {
-      classification[["variable"]][[name_var]][["reference.class"]] <- rownames(table(pred_i,y))[1]
+
+    pred_i <- factor(pred_i, c(levels(pred_i)[levels(pred_i) != tag.healthy], tag.healthy  ))
+    y <- factor(y, c(levels(y)[levels(y) != tag.healthy], tag.healthy  ))
+
+    tab2test <- table(pred_i,y)
+    classification[["variable"]][[name_var]][["table"]] <- tab2test
+
+    epiRes <- epi.tests(tab2test)
+
+    if (epiRes$elements$se == confusionMatrix(table(pred_i,y))$byClass[["Sensitivity"]] ) {
+      positive <- confusionMatrix(table(pred_i,y))$positive
+      classification[["variable"]][[name_var]][["positive.class"]] <- positive
+      pos.class[i] <- positive
     }else{
-      stop ("Error en l'ordre de les variables")
+      stop("Error: Problemas calculo diag test! ")
     }
-    epiRes <- epi.tests(table(pred_i,y))
+
+    if (!identical(rownames(tab2test), colnames(tab2test))) stop("Error en l'ordre de les variables")
+
 
     ll <- list()
-    ll[["Accuracy"]] <- unlist(c(epiRes$elements$diag.acc))
-    ll[["Sensitivity"]] <- unlist(c(epiRes$elements$sensitivity))
-    ll[["Specificity"]] <- unlist(c(epiRes$elements$specificity))
-    ll[["PPV"]] <-  c(epiRes$elements$ppv, epiRes$elements$ppv.low, epiRes$elements$ppv.up)
-    ll[["NPV"]] <-  c(epiRes$elements$npv, epiRes$elements$npv.low, epiRes$elements$npv.up)
+    ll[["Accuracy"]] <- unlist(c(epiRes$elements$diag.acc)) * 100
+    ll[["Sensitivity"]] <- unlist(c(epiRes$elements$sensitivity)) * 100
+    ll[["Specificity"]] <- unlist(c(epiRes$elements$specificity)) * 100
+    ll[["PPV"]] <-  c(epiRes$elements$ppv, epiRes$elements$ppv.low, epiRes$elements$ppv.up) * 100
+    ll[["NPV"]] <-  c(epiRes$elements$npv, epiRes$elements$npv.low, epiRes$elements$npv.up) * 100
     ll[["LRpositive"]] <-  unlist(c(epiRes$elements$lr.positive))
     ll[["LRnegative"]] <-  unlist(c(epiRes$elements$lr.negative))
-    ll[["Prevalence"]] <-  unlist(c(epiRes$elements$tprev))
+    ll[["Prevalence"]] <-  unlist(c(epiRes$elements$tprev)) * 100
 
 
     res <- data.frame(matrix(unlist(ll), nrow = length(ll), byrow = T),stringsAsFactors = FALSE)
@@ -70,14 +81,22 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
 
 
     classification[["variable"]][[name_var]][[name_var]] <- res
-    sum_ac_l[[name_var]] <- apply(res, 1, function(x) paste0(round(x[1],nround), "(", round(x[2],nround), "-", round(x[3],nround),")"))
+    sum_ac_l[[name_var]] <- apply(res, 1, function(x) paste0(round(x[1],nround), " (", round(x[2],nround), "; ", round(x[3],nround),")"))
+  }
+
+  classification[["summary"]] <- list()
+  ## comprovem que per a totes les variables la positive.class (es a dir, els 'casos') sigui sempre el mateix
+  if (length(unique(pos.class)) == 1) {
+    classification[["summary"]][["positive.class.all"]] <- unique(pos.class)
+  }else{
+      stop("Existen distintas 'positive.class'")
   }
 
   sum_ac <- data.frame(matrix(unlist(sum_ac_l), nrow = length(sum_ac_l), byrow = T),stringsAsFactors = FALSE)
   rownames(sum_ac) <- names(sum_ac_l)
   colnames(sum_ac) <- names(sum_ac_l[[1]])
   sum_ac <- t(sum_ac)
-  classification[["summary"]] <- sum_ac
+  classification[["summary"]][["table"]] <- sum_ac
 
 
   # print("Reference class is:" )
