@@ -36,6 +36,9 @@
 #' @return youden: the optimal value of the method considered for selecting the optimal cutpoint, i.e., the value of the criterion at the optimal cutpoint.
 #' @return res_detail: taula detallada amb totes les sensibilitats i especificitats
 #' @return res_sum:  the optimal cutpoint(s) obtained with the method(s) selected; its/their accuracy measures and the area under ROC curve (AUC)
+#' @return dat: base de datos original incluyendo predicción de la variable respuesta teniendo en cuenta como punto de corte indice de Youden y predicción en forma de probabilidad en el caso de modGLM = TRUE.
+#' @return table: the results of table on data and reference
+#' @return positive.class: the positive result level
 #' @keywords roc glm test
 
 
@@ -52,6 +55,7 @@ doROC <- function(x , group , frml , dat,
                   modGLM = NULL,
                   direction = c("<", ">"), ...)
 {
+
   ## comprovacions varies, warnings i errors
   if(exists(deparse(substitute(show.ci)))) message("\n UEBmessage: Argument 'show.ci' is deprecated \n")
   if(exists(deparse(substitute(validation)))) message("\n UEBmessage: Argument 'validation' is deprecated \n")
@@ -70,13 +74,13 @@ doROC <- function(x , group , frml , dat,
     mod <- glm(frml, data = dat, family = binomial, na.action = "na.omit")
     results$mod <- mod
     pred <- predict(mod, type = "response")
-    dat <- dat[names(pred),]
-    dat$pred <- pred
+    dat$pred <- NA
+    dat[names(pred),]$pred <- pred
     x <- "pred"
-    results$dat <- dat
   }else{
     if (!missing(frml)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
   }
+  results$dat <- dat
 
   if (missing(x)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
   if (missing(group)) group <- strsplit(as.character(frml), "~", fixed = T)[[2]]
@@ -86,6 +90,7 @@ doROC <- function(x , group , frml , dat,
 
   # calcul corba ROC, punt optim amb index de youden i mesures de clasificacio
   meth.cutoff <- "Youden"
+  positive.class <- levels(dat[,group])[levels(dat[,group]) != tag.healthy]
   clasRes <- optimal.cutpoints(X = x, status = group, methods = meth.cutoff,
                                data = dat,tag.healthy = tag.healthy, ci.fit = TRUE,
                                direction = direction)
@@ -122,13 +127,26 @@ doROC <- function(x , group , frml , dat,
   if (modGLM) {
     results$cutoff.probability <- clasRes$Youden$Global$optimal.cutoff$cutoff # threshold  de Youden probability
     name_var_cuanti <-  strsplit(as.character(frml), "~", fixed = T)[[3]]
-    results$cutoff.variable  <- results$dat[,name_var_cuanti][which(results$dat$pred == results$cutoff.probability)]
+    results$cutoff.variable <- results$dat[,name_var_cuanti][which(results$dat$pred == results$cutoff.probability)]
+    if(identical(direction, ">") ){
+      results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.probability, tag.healthy, positive.class ))
+    }else{
+      results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.probability, positive.class, tag.healthy ))
+    }
 
   }else{
     results$cutoff.variable <- clasRes$Youden$Global$optimal.cutoff$cutoff # punto de corte optimo, segun Youden para variable numerica
+
+    if(identical(direction, ">") ){
+      results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.variable, tag.healthy, positive.class ))
+    }else{
+      results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.variable, positive.class, tag.healthy ))
+    }
   }
   results$youden <- clasRes$Youden$Global$optimal.criterion
   results$auc <- results$res_sum$Youden$Global$measures.acc$AUC
+  results$table <- table(results$dat$outcome,results$dat$outcome.predict)
+
 
   # missatge canvi de nom a output
   message(" !!!!!!!!! \n UEBmessage: Output 'thres.best' are deprecated, new same output is 'cutoff.probability' \n !!!!!!!!!")
