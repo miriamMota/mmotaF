@@ -5,7 +5,7 @@
 #' @param y a  character string with the name of the variable that distinguishes healthy from diseased individuals
 #' @param frml an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.
 #' @export diag.test
-#' @import epiR
+#' @import epiR caret
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' data(aSAH)
