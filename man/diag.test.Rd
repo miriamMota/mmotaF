@@ -7,14 +7,18 @@
 diag.test(pred, y, tag.healthy = levels(y)[1], nround = 2)
 }
 \arguments{
-\item{y}{a  character string with the name of the variable that distinguishes healthy from diseased individuals}
+\item{pred}{variable factor outcome predit.}
 
-\item{x}{either a character string with the name of the diagnostic test variable. (Potser una variable numerica o per exemple, una probabilitat de un model de regressio logistica)}
+\item{y}{variable factor outcome original}
 
-\item{frml}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.}
+\item{tag.healthy}{the value codifying healthy individuals in the status variable. Por defecto nivel de referencia levels(dat[,group])[1]}
+
+\item{nround}{integer indicating the number of decimal places (round) or significant digits (signif) to be used. Negative values are allowed}
 }
 \value{
-variable:  taula detallada amb totes les mesures de classificació
+variable$table:  tabla 2x2 de la predicción y referencia.
+
+variable$positive.class:  factor level that corresponds to a "positive" result (if that makes sense for your data)
 
 summary: taula detallada amb totes les mesures de classificació per a cada una de les variables
 }
@@ -23,13 +27,12 @@ mesures de clasificació
 }
 \examples{
 data(aSAH)
-y <- aSAH$outcome
-p1 <- factor(ifelse(aSAH$s100b >= 0.22, levels(aSAH$outcome)[2], levels(aSAH$outcome)[1]  ))
-diag.test(y = y, pred = p1)
+res_roc <- doROC (frml = outcome ~ s100b, title = 'prova1', cex.main = 0.6, dat = aSAH, modGLM = TRUE)
+diag.test(y = aSAH$outcome, pred = res_roc$dat$outcome.predict, tag.healthy = "Good"  )
 
-df_pred <- data.frame(p1 = factor(ifelse(aSAH$s100b >= 0.22, levels(aSAH$outcome)[2], levels(aSAH$outcome)[1]  )),
+df_pred <- data.frame(p1 = res_roc$dat$outcome.predict,
 p2 = factor(ifelse(aSAH$s100b >= 0.3, levels(aSAH$outcome)[2], levels(aSAH$outcome)[1]  )))
-diag.test(y = y, pred = df_pred)
+diag.test(y = aSAH$outcome, pred = df_pred)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
