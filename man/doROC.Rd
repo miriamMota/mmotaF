@@ -50,6 +50,12 @@ youden: the optimal value of the method considered for selecting the optimal cut
 res_detail: taula detallada amb totes les sensibilitats i especificitats
 
 res_sum:  the optimal cutpoint(s) obtained with the method(s) selected; its/their accuracy measures and the area under ROC curve (AUC)
+
+dat: base de datos original incluyendo predicción de la variable respuesta teniendo en cuenta como punto de corte indice de Youden y predicción en forma de probabilidad en el caso de modGLM = TRUE.
+
+table: the results of table on data and reference
+
+positive.class: the positive result level
 }
 \description{
 Creación de curvas ROC (representación gráfica de la sensibilidad en frente a la especificidad) con o sin regresión logística mediante el paquete pROC y optimalCutpoints.
