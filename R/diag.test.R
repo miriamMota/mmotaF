@@ -24,6 +24,8 @@
 
 diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
 
+  if (class(y)[length(class(y))] != "factor") stop("La variable 'y' debe ser factor")
+
   n_var <- ifelse(is.null(ncol(pred)), 1, ncol(pred))
 
   sum_ac_l <- list()
