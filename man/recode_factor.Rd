@@ -10,6 +10,8 @@ recode_factor(dict, var, na.char = "NA")
 \item{dict}{data.frame con dos columnas, columna 1,rawtext, niveles posibles; columna 2,recoded, niveles correctos(an object of type create_dictionary.)}
 
 \item{var}{object to be coerced or tested. (factor)}
+
+\item{na.char}{caracter que sera interpretado como NA}
 }
 \description{
 Crea un diccionario para los niveles de una variable factor

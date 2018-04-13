@@ -7,9 +7,9 @@
 NAperc(df, maxNA = 80)
 }
 \arguments{
-\item{maxNA}{Porcentage de NA permitido}
+\item{df}{data frame que contiene las variables a evaluar}
 
-\item{dat}{data frame que contiene las variables a evaluar}
+\item{maxNA}{Porcentage de NA permitido}
 }
 \description{
 Percentatge de dades faltants per variable (na$perc) i variables amb més de 'x' percentatge(na$var).

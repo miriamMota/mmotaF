@@ -24,6 +24,8 @@ boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
 
 \item{ylim.plot}{is vector which contains lower and upper limits which are to appear on the y axes.}
 
+\item{cex.lab}{size of the axis label text with a numeric value.}
+
 \item{ylab}{a title for the y axis}
 
 \item{xlab}{a title for the x axis}
@@ -36,7 +38,8 @@ boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
 Boxplot incluyendo puntos individuales
 }
 \examples{
-df <- data.frame(runif = c(runif(100, min = -3, max = 3),rep(0,25)), rnorm = c(rnorm(100),rep(0,25)) )
+df <- data.frame(runif = c(runif(100, min = -3, max = 3),
+rep(0,25)), rnorm = c(rnorm(100),rep(0,25)) )
 boxplot_bw(dat = df, y = 'rnorm' )
 boxplot_bw(dat = mtc_bis, y = 'qsec' )
 boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',

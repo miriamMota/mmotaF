@@ -1,7 +1,7 @@
 #' A NAperc Function
 #'
 #' Percentatge de dades faltants per variable (na$perc) i variables amb més de 'x' percentatge(na$var).
-#' @param dat data frame que contiene las variables a evaluar
+#' @param df data frame que contiene las variables a evaluar
 #' @param maxNA Porcentage de NA permitido
 #' @export NAperc
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}

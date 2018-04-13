@@ -3,6 +3,7 @@
 #' Crea un diccionario para los niveles de una variable factor
 #' @param dict data.frame con dos columnas, columna 1,rawtext, niveles posibles; columna 2,recoded, niveles correctos(an object of type create_dictionary.)
 #' @param var object to be coerced or tested. (factor)
+#' @param na.char caracter que sera interpretado como NA
 #' @export recode_factor
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples

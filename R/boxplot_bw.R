@@ -13,11 +13,13 @@
 #' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
 #' @param ylab a title for the y axis
 #' @param xlab a title for the x axis
+#' @param cex.lab size of the axis label text with a numeric value.
 #' @export boxplot_bw
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' df <- data.frame(runif = c(runif(100, min = -3, max = 3),rep(0,25)), rnorm = c(rnorm(100),rep(0,25)) )
+#' df <- data.frame(runif = c(runif(100, min = -3, max = 3),
+#' rep(0,25)), rnorm = c(rnorm(100),rep(0,25)) )
 #' boxplot_bw(dat = df, y = 'rnorm' )
 #' boxplot_bw(dat = mtc_bis, y = 'qsec' )
 #' boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',

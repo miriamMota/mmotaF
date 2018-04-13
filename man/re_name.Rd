@@ -17,9 +17,11 @@ re_name(data, char = NULL, newchar = NULL)
 Renombra los identificadores de columna, substituyendo '.' por '_', eliminando acentos, ec.
 }
 \examples{
-df <- data.frame('nombre+a-apellido'=as.factor(rbinom(50,1,.40)), 'dni...NIF' = rnorm(50,10,1),
+df <- data.frame('nombre+a-apellido' = as.factor(rbinom(50,1,.40))
+, 'dni...NIF' = rnorm(50,10,1),
 'Y/X'=as.factor(rbinom(50,1,.40)),'ibm 2' = rnorm(50,10,1))
-names(df) <- c('nombre+a-apellido',  'dni...NIF', 'Y/X', 'ibm 2') ## modifiquem noms per a que siguin "incorrectes"
+names(df) <- c('nombre+a-apellido',
+'dni...NIF', 'Y/X', 'ibm 2') ## modifiquem noms per a que siguin "incorrectes"
 df <- re_name(data = df)
 df <- re_name(data = df, char = "+-", newchar = "__")
 }

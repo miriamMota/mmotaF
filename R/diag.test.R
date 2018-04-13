@@ -10,7 +10,8 @@
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' data(aSAH)
-#' res_roc <- doROC (frml = outcome ~ s100b, title = 'prova1', cex.main = 0.6, dat = aSAH, modGLM = TRUE)
+#' res_roc <- doROC (frml = outcome ~ s100b, title = 'prova1',
+#' cex.main = 0.6, dat = aSAH, modGLM = TRUE)
 #' diag.test(y = aSAH$outcome, pred = res_roc$dat$outcome.predict, tag.healthy = "Good"  )
 #'
 #' df_pred <- data.frame(p1 = res_roc$dat$outcome.predict,
