@@ -97,7 +97,7 @@ doROC <- function(x , group , frml , dat,
   results$res_sum <- summary(clasRes)
 
   if (doPlot) {
-    plot(clasRes, which = 1, legend = show.lg, cex.main = cex.main)
+    plot(clasRes, which = 1, legend = show.lg, cex.main = cex.main, ylim = c(0,1))
     mtext(title, side = 3)
     if (show.cascon) {
       text(.85, .25,
