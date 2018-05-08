@@ -99,7 +99,8 @@ descPlot <- function(dat, y = NULL,
 
                 ## descriptiu univariat
                 if (is.null(y)) {
-                  if (class(dat[,i]) == "Date" | class(dat[,i]) == "POSIXt") {
+                  if (class(dat[,i])[length(class(dat[,i]))] == "Date" |
+                      class(dat[,i])[length(class(dat[,i]))] == "POSIXt"){
                     try(hist(dat[, i], xlab = "", breaks = breaks.units,
                              main = namevar[i], freq = T, las = las, cex.axis = cex.lab,
                              sub = ifelse(is.null(subtitle), "", subtitle),
