@@ -95,7 +95,9 @@ descPlot <- function(dat, y = NULL,
 
 
                 ##### variables numeriques
-            } else {
+            } else if (class(dat[, i])[length(class(dat[, i]))] == "character"){
+              message(paste("La variable",names(dat)[i], "es tipo caracter y no se ha realizado gráfico"))
+              }else {
 
                 ## descriptiu univariat
                 if (is.null(y)) {
