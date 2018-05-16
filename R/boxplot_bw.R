@@ -12,7 +12,7 @@
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
 #' @param ylab a title for the y axis
-#' @param xlab a title for the x axis
+#' @param xlab a title for the x axis.
 #' @param cex.lab size of the axis label text with a numeric value.
 #' @export boxplot_bw
 #' @import beeswarm
