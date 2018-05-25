@@ -28,7 +28,7 @@ boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
 
 \item{ylab}{a title for the y axis}
 
-\item{xlab}{a title for the x axis}
+\item{xlab}{a title for the x axis.}
 
 \item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
 
