@@ -41,8 +41,7 @@ descPlot <- function(dat, y = NULL,
                      cex.main = 0.8,
                      las = 0,
                      do.test = FALSE,
-                     at.text = 1,
-                     breaks.units = "years") {
+                     at.text = 1) {
 
 
      par(mfrow = rowcol)
@@ -103,6 +102,7 @@ descPlot <- function(dat, y = NULL,
                 if (is.null(y)) {
                   if (class(dat[,i])[length(class(dat[,i]))] == "Date" |
                       class(dat[,i])[length(class(dat[,i]))] == "POSIXt"){
+                    breaks.units <- ifelse(length(unique(format(dat[,i],"%Y"))) >= 4 , "years", "months"  )
                     try(hist(dat[, i], xlab = "", breaks = breaks.units,
                              main = namevar[i], freq = T, las = las, cex.axis = cex.lab,
                              sub = ifelse(is.null(subtitle), "", subtitle),
