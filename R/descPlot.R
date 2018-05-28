@@ -15,7 +15,6 @@
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @param do.test logical value si se quiere realizar test kruskall Wallis.
 #' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
-#' @param breaks.units a vector of cut points or number giving the number of intervals which x is to be cut into or an interval specification, one of "days", "weeks", "months", "quarters" or "years", plus "secs", "mins", "hours" for date-time objects.
 #' @export descPlot
 #' @import beeswarm Hmisc
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
