@@ -94,14 +94,14 @@ descPlot <- function(dat, y = NULL,
 
 
                 ##### variables numeriques
-            } else if (class(dat[, i])[length(class(dat[, i]))] == "character"){
+            } else if (class(dat[, i])[length(class(dat[, i]))] == "character") {
               message(paste("La variable",names(dat)[i], "es tipo caracter y no se ha realizado gráfico"))
               }else {
 
                 ## descriptiu univariat
                 if (is.null(y)) {
                   if (class(dat[,i])[length(class(dat[,i]))] == "Date" |
-                      class(dat[,i])[length(class(dat[,i]))] == "POSIXt"){
+                      class(dat[,i])[length(class(dat[,i]))] == "POSIXt") {
                     breaks.units <- ifelse(length(unique(format(dat[,i],"%Y"))) >= 4 , "years", "months"  )
                     try(hist(dat[, i], xlab = "", breaks = breaks.units,
                              main = namevar[i], freq = T, las = las, cex.axis = cex.lab,
