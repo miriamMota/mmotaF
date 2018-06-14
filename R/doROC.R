@@ -22,10 +22,13 @@
 #' @examples
 #' set.seed(12)
 #' df <- data.frame(y = as.factor(rbinom(50,1,.40)),x = rnorm(50,10,1))
-#' resROC <- doROC (frml = y ~ x, title = 'prova1', cex.main = 0.6, dat = df, modGLM = FALSE, direction = ">")
+#' resROC <- doROC (frml = y ~ x, title = 'prova1',
+#' cex.main = 0.6, dat = df, modGLM = FALSE, direction = ">")
 #' resROC$cutoff.variable
-#' resROC <- doROC (frml = y ~ x, title = 'prova1', cex.main = 0.6, dat = df, modGLM = TRUE)
-#' # si usamos el parametro modGLM = TRUE y queremos obtener el punto de corte real en la variable.
+#' resROC <- doROC (frml = y ~ x, title = 'prova1',
+#' cex.main = 0.6, dat = df, modGLM = TRUE)
+#' # si usamos el parametro modGLM = TRUE y queremos obtener el punto
+#' #de corte real en la variable.
 #' # Esto SOLO funciona si tenemos unicamente UNA variable explicativa.
 #' resROC$cutoff.variable
 #' (pt <- resROC$dat$x[which(resROC$dat$pred == resROC$cutoff.probability)])

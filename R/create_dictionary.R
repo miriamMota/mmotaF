@@ -3,6 +3,7 @@
 #' Crea un diccionario para los niveles de una variable factor
 #' @param var object to be coerced or tested. (factor)
 #' @param na.char a character vector of strings which are to be interpreted as NA values. Blank fields are also considered to be missing values in logical, integer, numeric and complex fields. Note that the test happens after white space is stripped from the input, so na.strings values may need their own white space stripped in advance.
+#' @param name.var name of variable
 #' @export create_dictionary
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples

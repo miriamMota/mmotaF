@@ -13,8 +13,10 @@
 #' @export glm.uni
 #' @import kableExtra knitr magrittr survival
 #' @examples
-#' df <- data.frame( score = rnorm(50,10,1), hores = rnorm(50,10,1), mort = as.factor(rbinom(50,1,.40)) )
-#' glm.uni(y = "mort", var2test = c("score", "hores"), data = df, format = "latex", size = 10)
+#' df <- data.frame( score = rnorm(50,10,1), hores = rnorm(50,10,1),
+#' mort = as.factor(rbinom(50,1,.40)) )
+#' glm.uni(y = "mort", var2test = c("score", "hores"),
+#'  data = df, format = "latex", size = 10)
 
 
 # y = "MORT"

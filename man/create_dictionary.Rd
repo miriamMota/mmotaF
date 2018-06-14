@@ -9,6 +9,8 @@ create_dictionary(var, name.var = NULL)
 \arguments{
 \item{var}{object to be coerced or tested. (factor)}
 
+\item{name.var}{name of variable}
+
 \item{na.char}{a character vector of strings which are to be interpreted as NA values. Blank fields are also considered to be missing values in logical, integer, numeric and complex fields. Note that the test happens after white space is stripped from the input, so na.strings values may need their own white space stripped in advance.}
 }
 \description{
