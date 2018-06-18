@@ -130,7 +130,12 @@ doROC <- function(x , group , frml , dat,
   if (modGLM) {
     results$cutoff.probability <- clasRes$Youden$Global$optimal.cutoff$cutoff # threshold  de Youden probability
     name_var_cuanti <-  strsplit(as.character(frml), "~", fixed = T)[[3]]
-    results$cutoff.variable <- results$dat[,name_var_cuanti][which(results$dat$pred == results$cutoff.probability)]
+
+    if(length(unlist(strsplit(name_var_cuanti, "+", fixed = T))) == 1){
+      results$cutoff.variable <- results$dat[,name_var_cuanti][which(results$dat$pred == results$cutoff.probability)]
+    }else{
+      results$cutoff.variable <- "No se puede calcular debido a que existe más de una variable explicativa."
+    }
     if(identical(direction, ">") ){
       results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.probability, tag.healthy, positive.class ))
     }else{
