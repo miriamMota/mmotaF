@@ -87,7 +87,7 @@ doROC <- function(x , group , frml , dat,
   if (missing(x)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
   if (missing(frml)) frml <- as.formula(paste(group, "~", paste0(x, collapse = " + ")))
   if (missing(group)) group <- strsplit(as.character(frml), "~", fixed = T)[[2]]
-  if (is.null(title)) title <- paste(group, "-",x)
+  if (is.null(title)) title <- paste(group, "-",paste0(x, collapse = "+"))
   if (is.null(tag.healthy)) tag.healthy <- levels(dat[,group])[1]
 
   results <- list()
