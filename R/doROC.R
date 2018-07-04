@@ -5,15 +5,15 @@
 #' @param x either a character string with the name of the diagnostic test variable. (Potser una variable numerica o per exemple, una probabilitat de un model de regressio logistica)
 #' @param group a  character string with the name of the variable that distinguishes healthy from diseased individuals
 #' @param frml an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.
-#' @param tag.healthy the value codifying healthy individuals in the status variable. Por defecto nivel de referencia levels(dat[,group])[1]
+#' @param tag.healthy IMPORTANTE! the value codifying healthy individuals in the status variable. Por defecto nivel de referencia levels(dat[,group])[1]
 #' @param dat data frame containing the variables in the formula.
 #' @param title a main title for the plot
-#' @param doPlotA logical value indicating whether show a plot. Default value is TRUE
+#' @param doPlot A logical value indicating whether show a plot. Default value is TRUE
 #' @param show.lg A logical value indicating whether show a legend Default value is TRUE
 #' @param show.cascon A logical value indicating whether show number cases/controls. Default value is TRUE
 #' @param show.detail A logical value indicating whether show detail output. Default value is TRUE
 #' @param xtab A logical value indicating whether the output is a xtable. Default value is FALSE.
-#' @param modGLM Valor logico que indica si se realiza regresion logistica. En el caso de indicar TRUE, el 'thres.best' indicara el punto de corte como probabilidad de predicción. En el caso de indicar FALSE, 'cutoff' nos indicara el punto de corte real en la variable. Es necesario indicar TRUE cuando querramos evaluar mas de una variable.
+#' @param modGLM OBLIGATORIO! Valor logico que indica si se realiza regresion logistica. En el caso de indicar TRUE, el 'thres.best' indicara el punto de corte como probabilidad de predicción. En el caso de indicar FALSE, 'cutoff' nos indicara el punto de corte real en la variable. Es necesario indicar TRUE cuando querramos evaluar mas de una variable.
 #' @param direction character string specifying the direction to compute the ROC curve. By default individuals with a test value lower than the cutoff are classified as healthy (negative test), whereas patients with a test value greater than (or equal to) the cutoff are classified as diseased (positive test). If this is not the case, however, and the high values are related to health, this argument should be established at ">".
 #' @param cex.main expansion factor for main names (size main)
 #' @export doROC
@@ -156,10 +156,12 @@ doROC <- function(x , group , frml , dat,
   results$youden <- clasRes$Youden$Global$optimal.criterion
   results$auc <- results$res_sum$Youden$Global$measures.acc$AUC
   results$table <- table(Group = results$dat[,group], predict = results$dat$outcome.predict)
-
+  results$tag.healthy <- tag.healthy
 
   # missatge canvi de nom a output
   message(" !!!!!!!!! \n UEBmessage: Output 'thres.best' are deprecated, new same output is 'cutoff.probability' \n !!!!!!!!!")
+
+  message(" !!!!!!!!! \n UEBmessage: tag.healthy: ", tag.healthy , " \n !!!!!!!!!")
   return(results)
 }
 
