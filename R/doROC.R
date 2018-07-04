@@ -33,6 +33,20 @@
 #' resROC$cutoff.variable
 #' (pt <- resROC$dat$x[which(resROC$dat$pred == resROC$cutoff.probability)])
 #'
+#' # univariate
+#' doROC(x = "mpg", group = "am", dat = mtc_bis, modGLM = FALSE)
+#' doROC(frml = am~mpg, dat = mtc_bis, modGLM = FALSE)
+#'
+#' #univariate model (mateix resultat que univariate)
+#' doROC(x = "mpg", group = "am", dat = mtc_bis, modGLM = TRUE)
+#' doROC(frml = am~mpg, dat = mtc_bis, modGLM = TRUE)
+#'
+#' #multivariate model
+#' doROC(x = c("mpg", "drat"), group = "am", dat = mtc_bis, modGLM = TRUE)
+#' doROC(frml = am~mpg+drat, dat = mtc_bis, modGLM = TRUE)
+#'
+
+#'
 #' @return auc: Area bajo la curva y correspondiente intervalo de confianza
 #' @return cutoff.probability: en el caso de haber realizado modGLM, punto de corte óptimo de la probabilidad de predicción calculado con el indice de Youden
 #' @return cutoff.variable: punto de corte de la variable cuantitativa. SOLO CUANDO EVALUAMOS UNA UNICA VARIABLE CUANTITATIVA.
