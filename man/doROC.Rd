@@ -12,13 +12,17 @@ doROC(x, group, frml, dat, tag.healthy = NULL, title = NULL,
 \arguments{
 \item{x}{either a character string with the name of the diagnostic test variable. (Potser una variable numerica o per exemple, una probabilitat de un model de regressio logistica)}
 
+\item{group}{a  character string with the name of the variable that distinguishes healthy from diseased individuals}
+
 \item{frml}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.}
 
 \item{dat}{data frame containing the variables in the formula.}
 
-\item{tag.healthy}{the value codifying healthy individuals in the status variable. Por defecto nivel de referencia levels(dat[,group])[1]}
+\item{tag.healthy}{IMPORTANTE! the value codifying healthy individuals in the status variable. Por defecto nivel de referencia levels(dat[,group])[1]}
 
 \item{title}{a main title for the plot}
+
+\item{doPlot}{A logical value indicating whether show a plot. Default value is TRUE}
 
 \item{cex.main}{expansion factor for main names (size main)}
 
@@ -30,13 +34,9 @@ doROC(x, group, frml, dat, tag.healthy = NULL, title = NULL,
 
 \item{xtab}{A logical value indicating whether the output is a xtable. Default value is FALSE.}
 
-\item{modGLM}{Valor logico que indica si se realiza regresion logistica. En el caso de indicar TRUE, el 'thres.best' indicara el punto de corte como probabilidad de predicción. En el caso de indicar FALSE, 'cutoff' nos indicara el punto de corte real en la variable. Es necesario indicar TRUE cuando querramos evaluar mas de una variable.}
+\item{modGLM}{OBLIGATORIO! Valor logico que indica si se realiza regresion logistica. En el caso de indicar TRUE, el 'thres.best' indicara el punto de corte como probabilidad de predicción. En el caso de indicar FALSE, 'cutoff' nos indicara el punto de corte real en la variable. Es necesario indicar TRUE cuando querramos evaluar mas de una variable.}
 
 \item{direction}{character string specifying the direction to compute the ROC curve. By default individuals with a test value lower than the cutoff are classified as healthy (negative test), whereas patients with a test value greater than (or equal to) the cutoff are classified as diseased (positive test). If this is not the case, however, and the high values are related to health, this argument should be established at ">".}
-
-\item{y}{a  character string with the name of the variable that distinguishes healthy from diseased individuals}
-
-\item{doPlotA}{logical value indicating whether show a plot. Default value is TRUE}
 }
 \value{
 auc: Area bajo la curva y correspondiente intervalo de confianza

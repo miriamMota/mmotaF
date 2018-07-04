@@ -3,7 +3,7 @@
 #' Creación de curvas ROC (representación gráfica de la sensibilidad en frente a la especificidad) con o sin regresión logística mediante el paquete pROC y optimalCutpoints.
 #' Se calcula el punto de corte optimo mediante youden y se obtienen las medidas de clasificacion.
 #' @param x either a character string with the name of the diagnostic test variable. (Potser una variable numerica o per exemple, una probabilitat de un model de regressio logistica)
-#' @param y a  character string with the name of the variable that distinguishes healthy from diseased individuals
+#' @param group a  character string with the name of the variable that distinguishes healthy from diseased individuals
 #' @param frml an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.
 #' @param tag.healthy the value codifying healthy individuals in the status variable. Por defecto nivel de referencia levels(dat[,group])[1]
 #' @param dat data frame containing the variables in the formula.
@@ -60,15 +60,21 @@ doROC <- function(x , group , frml , dat,
 {
 
   ## comprovacions varies, warnings i errors
-  if(exists(deparse(substitute(show.ci)))) message("\n UEBmessage: Argument 'show.ci' is deprecated \n")
-  if(exists(deparse(substitute(validation)))) message("\n UEBmessage: Argument 'validation' is deprecated \n")
-  if(exists(deparse(substitute(test_y)))) message("\n UEBmessage: Arguments 'test' and 'test_y' are deprecated \n")
-  if(exists(deparse(substitute(col.thres)))) message("\n UEBmessage: Argument 'col.thres' is deprecated \n")
-  if(exists(deparse(substitute(col.ic)))) message("\n UEBmessage: Argument 'col.ic' is deprecated \n")
-  if(exists(deparse(substitute(x.axes)))) message("\n UEBmessage: Argument 'x.axes' is deprecated \n")
-  if(exists(deparse(substitute(show.thr)))) message("\n UEBmessage: Argument 'show.thr' is deprecated \n")
+  if (exists(deparse(substitute(show.ci)))) message("\n UEBmessage: Argument 'show.ci' is deprecated \n")
+  if (exists(deparse(substitute(validation)))) message("\n UEBmessage: Argument 'validation' is deprecated \n")
+  if (exists(deparse(substitute(test_y)))) message("\n UEBmessage: Arguments 'test' and 'test_y' are deprecated \n")
+  if (exists(deparse(substitute(col.thres)))) message("\n UEBmessage: Argument 'col.thres' is deprecated \n")
+  if (exists(deparse(substitute(col.ic)))) message("\n UEBmessage: Argument 'col.ic' is deprecated \n")
+  if (exists(deparse(substitute(x.axes)))) message("\n UEBmessage: Argument 'x.axes' is deprecated \n")
+  if (exists(deparse(substitute(show.thr)))) message("\n UEBmessage: Argument 'show.thr' is deprecated \n")
   if (is.null(modGLM)) stop("Es necesario indicar, TRUE o FALSE para el parametro modGLM.")
   if ((missing(x) | missing(group)) & missing(frml))  stop("'x' and 'group' argument required, or 'frml' argument required", call. = FALSE)
+
+  if (missing(x)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
+  if (missing(frml)) frml <- as.formula(paste(group, "~", paste0(x, collapse = " + ")))
+  if (missing(group)) group <- strsplit(as.character(frml), "~", fixed = T)[[2]]
+  if (is.null(title)) title <- paste(group, "-",x)
+  if (is.null(tag.healthy)) tag.healthy <- levels(dat[,group])[1]
 
   results <- list()
 
@@ -80,15 +86,11 @@ doROC <- function(x , group , frml , dat,
     dat$pred <- NA
     dat[names(pred),]$pred <- pred
     x <- "pred"
-  }else{
-    if (!missing(frml)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
+  # }else{
+  #   if (!missing(frml)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
   }
   results$dat <- dat
 
-  if (missing(x)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
-  if (missing(group)) group <- strsplit(as.character(frml), "~", fixed = T)[[2]]
-  if (is.null(title)) title <- paste(group, "-",x)
-  if (is.null(tag.healthy)) tag.healthy <- levels(dat[,group])[1]
 
 
   # calcul corba ROC, punt optim amb index de youden i mesures de clasificacio
@@ -131,12 +133,12 @@ doROC <- function(x , group , frml , dat,
     results$cutoff.probability <- clasRes$Youden$Global$optimal.cutoff$cutoff # threshold  de Youden probability
     name_var_cuanti <-  strsplit(as.character(frml), "~", fixed = T)[[3]]
 
-    if(length(unlist(strsplit(name_var_cuanti, "+", fixed = T))) == 1){
+    if (length(unlist(strsplit(name_var_cuanti, "+", fixed = T))) == 1) {
       results$cutoff.variable <- results$dat[,name_var_cuanti][which(results$dat$pred == results$cutoff.probability)]
     }else{
       results$cutoff.variable <- "No se puede calcular debido a que existe más de una variable explicativa."
     }
-    if(identical(direction, ">") ){
+    if (identical(direction, ">") ) {
       results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.probability, tag.healthy, positive.class ))
     }else{
       results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.probability, positive.class, tag.healthy ))
@@ -145,7 +147,7 @@ doROC <- function(x , group , frml , dat,
   }else{
     results$cutoff.variable <- clasRes$Youden$Global$optimal.cutoff$cutoff # punto de corte optimo, segun Youden para variable numerica
 
-    if(identical(direction, ">") ){
+    if (identical(direction, ">") ) {
       results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.variable, tag.healthy, positive.class ))
     }else{
       results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.variable, positive.class, tag.healthy ))
@@ -153,7 +155,7 @@ doROC <- function(x , group , frml , dat,
   }
   results$youden <- clasRes$Youden$Global$optimal.criterion
   results$auc <- results$res_sum$Youden$Global$measures.acc$AUC
-  results$table <- table(results$dat$outcome,results$dat$outcome.predict)
+  results$table <- table(Group = results$dat[,group], predict = results$dat$outcome.predict)
 
 
   # missatge canvi de nom a output
