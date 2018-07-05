@@ -2,9 +2,9 @@
 #'
 #' Creación de curvas ROC (representación gráfica de la sensibilidad en frente a la especificidad) con o sin regresión logística mediante el paquete pROC y optimalCutpoints.
 #' Se calcula el punto de corte optimo mediante youden y se obtienen las medidas de clasificacion.
+#' @param frml an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.
 #' @param x either a character string with the name of the diagnostic test variable. (Potser una variable numerica o per exemple, una probabilitat de un model de regressio logistica)
 #' @param group a  character string with the name of the variable that distinguishes healthy from diseased individuals
-#' @param frml an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.
 #' @param tag.healthy IMPORTANTE! the value codifying healthy individuals in the status variable. Por defecto nivel de referencia levels(dat[,group])[1]
 #' @param dat data frame containing the variables in the formula.
 #' @param modGLM OBLIGATORIO! Valor logico que indica si se realiza regresion logistica. En el caso de indicar TRUE, el 'thres.best' indicara el punto de corte como probabilidad de predicción. En el caso de indicar FALSE, 'cutoff' nos indicara el punto de corte real en la variable. Es necesario indicar TRUE cuando querramos evaluar mas de una variable.
@@ -60,16 +60,17 @@
 
 
 
-doROC <- function(x , group , frml , dat,
+doROC <- function(frml, x , group  , dat,
                   tag.healthy = NULL,
                   title = NULL,
+                  modGLM = NULL,
                   doPlot = TRUE,
                   cex.main = 0.9,
                   show.lg = TRUE,
                   show.cascon = TRUE,
                   show.detail = TRUE,
                   xtab = FALSE,
-                  modGLM = NULL,
+
                   direction = c("<", ">"), ...)
 {
 
