@@ -20,18 +20,6 @@
 #' @import pROC OptimalCutpoints xtable
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' set.seed(12)
-#' df <- data.frame(y = as.factor(rbinom(50,1,.40)),x = rnorm(50,10,1))
-#' resROC <- doROC (frml = y ~ x, title = 'prova1',
-#' cex.main = 0.6, dat = df, modGLM = FALSE, direction = ">")
-#' resROC$cutoff.variable
-#' resROC <- doROC (frml = y ~ x, title = 'prova1',
-#' cex.main = 0.6, dat = df, modGLM = TRUE)
-#' # si usamos el parametro modGLM = TRUE y queremos obtener el punto
-#' #de corte real en la variable.
-#' # Esto SOLO funciona si tenemos unicamente UNA variable explicativa.
-#' resROC$cutoff.variable
-#' (pt <- resROC$dat$x[which(resROC$dat$pred == resROC$cutoff.probability)])
 #'
 #' # univariate
 #' doROC(x = "mpg", group = "am", dat = mtc_bis, modGLM = FALSE)
@@ -90,6 +78,8 @@ doROC <- function(frml, x , group  , dat,
   if (missing(group)) group <- strsplit(as.character(frml), "~", fixed = T)[[2]]
   if (is.null(title)) title <- paste(group, "-",paste0(x, collapse = "+"))
   if (is.null(tag.healthy)) tag.healthy <- levels(dat[,group])[1]
+
+  dat[,group] <- relevel(dat[,group], ref = tag.healthy)
 
   results <- list()
 
@@ -168,8 +158,7 @@ doROC <- function(frml, x , group  , dat,
       results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.variable, positive.class, tag.healthy ))
     }
   }
-  results$dat$outcome.predict <- factor(results$dat$outcome.predict,
-                                        c(tag.healthy, levels(results$dat$outcome.predict)[!levels(results$dat$outcome.predict) %in% tag.healthy]))
+  results$dat$outcome.predict <- factor(results$dat$outcome.predict, c(tag.healthy,positive.class))
 
   results$youden <- clasRes$Youden$Global$optimal.criterion
   results$auc <- results$res_sum$Youden$Global$measures.acc$AUC
@@ -183,4 +172,15 @@ doROC <- function(frml, x , group  , dat,
   return(results)
 }
 
-
+# set.seed(81)
+# df <- data.frame(y = as.factor(rbinom(50,1,.40)),x = rnorm(50,10,1))
+# resROC <- doROC (frml = y ~ x, title = 'prova1', tag.healthy= "1",
+# cex.main = 0.6, dat = df, modGLM = FALSE, direction = ">")
+# resROC$cutoff.variable
+# resROC <- doROC (frml = y ~ x, title = 'prova1',
+# cex.main = 0.6, dat = df, modGLM = TRUE)
+# # si usamos el parametro modGLM = TRUE y queremos obtener el punto
+# #de corte real en la variable.
+# # Esto SOLO funciona si tenemos unicamente UNA variable explicativa.
+# resROC$cutoff.variable
+# (pt <- resROC$dat$x[which(resROC$dat$pred == resROC$cutoff.probability)])
