@@ -168,6 +168,9 @@ doROC <- function(frml, x , group  , dat,
       results$dat$outcome.predict <- factor(ifelse(dat[,x] >= results$cutoff.variable, positive.class, tag.healthy ))
     }
   }
+  results$dat$outcome.predict <- factor(results$dat$outcome.predict,
+                                        c(tag.healthy, levels(results$dat$outcome.predict)[!levels(results$dat$outcome.predict) %in% tag.healthy]))
+
   results$youden <- clasRes$Youden$Global$optimal.criterion
   results$auc <- results$res_sum$Youden$Global$measures.acc$AUC
   results$table <- table(Group = results$dat[,group], predict = results$dat$outcome.predict)
