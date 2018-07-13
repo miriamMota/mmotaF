@@ -17,8 +17,9 @@
 #' var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
 #' data = mtc_bis, format = "latex", size = 10)
 #'
-#' ## plots
-#'
+
+
+
 # # coef one variable
 # cp <- coefplot(resglm$unimod_list$wt, intercept = F)
 # cp
@@ -33,17 +34,6 @@
 #
 # # coef all variables
 # mp + scale_x_continuous(breaks = bk, labels = round(exp(bk),2), name = "OR") +
-
-
-coefplot.data.frame(model = modelCI, title = title,
-                    xlab = xlab, ylab = ylab, lwdInner = lwdInner, lwdOuter = lwdOuter,
-                    pointSize = pointSize, color = color, cex = cex, textAngle = textAngle,
-                    numberAngle = numberAngle, zeroColor = zeroColor, zeroLWD = zeroLWD,
-                    outerCI = outerCI, innerCI = innerCI, multi = FALSE,
-                    zeroType = zeroType, numeric = numeric, fillColor = fillColor,
-                    alpha = alpha, horizontal = horizontal, facet = facet,
-                    scales = scales)
-
 
 
 glm.uni <- function(y, var2test, var2match = NULL, data,
