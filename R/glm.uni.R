@@ -13,20 +13,36 @@
 #' @export glm.uni
 #' @import kableExtra knitr magrittr survival
 #' @examples
-#' df <- data.frame( score = rnorm(50,10,1), hores = rnorm(50,10,1),
-#' mort = as.factor(rbinom(50,1,.40)) )
-#' glm.uni(y = "mort", var2test = c("score", "hores"),
-#'  data = df, format = "latex", size = 10)
-
-
-# y = "MORT"
-# var2test <- names(dat)[!names(dat) %in% c("MORT", "NUMPACIE")]
-# data <- dat
-# require(kableExtra)
-# require(knitr)
+#' resglm <- glm.uni(y = "am",
+#' var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
+#' data = mtc_bis, format = "latex", size = 10)
+#'
+#' ## plots
+#'
+# # coef one variable
+# cp <- coefplot(resglm$unimod_list$wt, intercept = F)
+# cp
 #
-# aa <- glm.uni(y = "MORT", var2test = c("TABAC", "EDAT", "SBP"), data = dat, format = "latex", size = 10)
+# # OR one variable
+# bk <- seq(-10,10, by = 2)
+# cp + scale_x_continuous(breaks = bk, labels = round(exp(bk),2), name = "OR")
+#'
+# # coef all variables
+# mp <- multiplot(resglm$unimod_list, intercept = F, innerCI = 1, outerCI = 1)
+# mp
+#
+# # coef all variables
+# mp + scale_x_continuous(breaks = bk, labels = round(exp(bk),2), name = "OR") +
 
+
+coefplot.data.frame(model = modelCI, title = title,
+                    xlab = xlab, ylab = ylab, lwdInner = lwdInner, lwdOuter = lwdOuter,
+                    pointSize = pointSize, color = color, cex = cex, textAngle = textAngle,
+                    numberAngle = numberAngle, zeroColor = zeroColor, zeroLWD = zeroLWD,
+                    outerCI = outerCI, innerCI = innerCI, multi = FALSE,
+                    zeroType = zeroType, numeric = numeric, fillColor = fillColor,
+                    alpha = alpha, horizontal = horizontal, facet = facet,
+                    scales = scales)
 
 
 
@@ -41,12 +57,12 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   if (class(data[,y]) != "factor") stop("variable 'y' must be factor")
   if (length(levels(data[,y])) != 2) stop("variable 'y' must have two levels")
 
-  for (i in seq_along(var2test)){
-    if(class(data[,var2test[i]])[length(class(data[,var2test[i]]))] == "factor" ) data[,var2test[i]] <- factor(data[,var2test[i]])
+  for (i in seq_along(var2test)) {
+    if (class(data[,var2test[i]])[length(class(data[,var2test[i]]))] == "factor" ) data[,var2test[i]] <- factor(data[,var2test[i]])
   }
 
 
-  unimod <- lapply(var2test,
+  mods <- lapply(var2test,
                    function(var) {
 
                      if (is.null(var2match)) {
@@ -60,8 +76,14 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
                      rownames(res_lm) <- gsub(var,"", rownames(res_lm))
                      res_lm[is.na(res_lm)] <- ""
                      res_lm <- cbind(varlev = paste0(var,".",rownames(res_lm)), res_lm)
+                     return(list(mod = res.logist, mod.res = res_lm))
                    })
+  unimod <- lapply(mods,function(x)x[[2]])
   names(unimod) <- var2test
+
+  glmmod <- lapply(mods,function(x)x[[1]])
+  names(glmmod) <- var2test
+
   unimod_df <- do.call(rbind, unimod)
   unimod_df <- cbind(Variable  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
   # rownames(unimod_df) <- gsub("^.*\\.","",rownames(unimod_df))
@@ -83,5 +105,5 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
       column_spec(which(names(unimod_df) == "P-value (Global)") , bold = T)
   }
 
-  return(list(unimod_list = unimod, xtab = xtab))
+  return(list(unimod_list = glmmod, unimod_ci_list = unimod, unimod_ci_df = unimod_df, xtab = xtab))
 }

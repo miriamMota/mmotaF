@@ -29,10 +29,11 @@ glm.uni(y, var2test, var2match = NULL, data, size = 8.5, format = "latex",
 Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un modelo de regresión logística
 }
 \examples{
-df <- data.frame( score = rnorm(50,10,1), hores = rnorm(50,10,1),
-mort = as.factor(rbinom(50,1,.40)) )
-glm.uni(y = "mort", var2test = c("score", "hores"),
- data = df, format = "latex", size = 10)
+resglm <- glm.uni(y = "am",
+var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
+data = mtc_bis, format = "latex", size = 10)
+
+
 }
 \keyword{OR}
 \keyword{logistic}

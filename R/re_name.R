@@ -31,6 +31,7 @@ re_name <- function(data,char = NULL, newchar = NULL) {
   names(data) <- gsub("_$", "", names(data))
   names(data) <- gsub("^X_", "", names(data))
   names(data) <- chartr("áéóíúÁÉÍÓÚ", "aeoiuAEIOU", names(data))
-
+  # words <- words[-grep("http|@|#|ü|ä|ö|'", words)] # remove urls, usernames, hashtags and umlauts (the latter can not be displayed by all fonts)
+  # clean_words <- words[-grep("[^A-Za-z0-9]", words)]
   return(data)
 }
