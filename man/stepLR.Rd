@@ -29,14 +29,9 @@ IMPORTANTE: para la construcción de todos los modelos se tendran en cuenta solo
 en cuenta las variables finales.
 }
 \examples{
-\dontrun{
-data('mtcars')
-mtcars$vs <- as.factor(mtcars$vs)
-mtcars$am <- as.factor(mtcars$am)
-modfin <- stepLR(VR = 'vs',varExpl = c('hp', 'am', 'carb'), data = mtcars, trace = T )
+modfin <- stepLR(VR = 'vs',varExpl = c('hp', 'am', 'carb'), data = mtc_bis, trace = T )
 summary(modfin[[1]])
 summary(modfin[[2]])
-}
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

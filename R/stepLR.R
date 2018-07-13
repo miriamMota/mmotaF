@@ -14,14 +14,9 @@
 #' @export stepLR
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' \dontrun{
-#' data('mtcars')
-#' mtcars$vs <- as.factor(mtcars$vs)
-#' mtcars$am <- as.factor(mtcars$am)
-#' modfin <- stepLR(VR = 'vs',varExpl = c('hp', 'am', 'carb'), data = mtcars, trace = T )
+#' modfin <- stepLR(VR = 'vs',varExpl = c('hp', 'am', 'carb'), data = mtc_bis, trace = T )
 #' summary(modfin[[1]])
 #' summary(modfin[[2]])
-#' }
 #' @return modfin: exporta dos modelos, el final teniendo en cuenta solo aquellos individuos que tienen todos los valores para todas las variables y un segundo modelo que tiene en cuenta todos aquellos individuos que tienen valores para las variables finales.
 stepLR <- function(VR,
                    varExpl,
