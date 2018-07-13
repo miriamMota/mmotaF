@@ -29,7 +29,7 @@ IMPORTANTE: para la construcción de todos los modelos se tendran en cuenta solo
 en cuenta las variables finales.
 }
 \examples{
-modfin <- stepLR(VR = 'vs',varExpl = c('hp', 'am', 'carb'), data = mtc_bis, trace = T )
+modfin <- stepLR(VR = 'vs',varExpl = c('hp', 'am', 'carb'), data = mtc_bis, trace = TRUE )
 summary(modfin[[1]])
 summary(modfin[[2]])
 }
