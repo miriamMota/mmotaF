@@ -39,13 +39,14 @@
 glm.uni <- function(y, var2test, var2match = NULL, data,
                     size = 8.5,
                     format = "latex",
-                    caption= "Univariate logistic regression",
+                    caption = NULL,
                     show.n = TRUE,
                     show.aov.pval = TRUE,
                     group = TRUE){
 
   if (class(data[,y]) != "factor") stop("variable 'y' must be factor")
   if (length(levels(data[,y])) != 2) stop("variable 'y' must have two levels")
+  if(is.null(caption)) caption <- paste("Univariate logistic regression (", y, ")")
 
   for (i in seq_along(var2test)) {
     if (class(data[,var2test[i]])[length(class(data[,var2test[i]]))] == "factor" ) data[,var2test[i]] <- factor(data[,var2test[i]])
