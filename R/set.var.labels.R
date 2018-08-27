@@ -17,6 +17,6 @@
 set.var.labels <- function(dataframe, label.vector) {
   .Deprecated("labels" , old = "set.var.labels", msg = "'set.var.labels' is deprecated. \n Use 'papeR::labels' instead")
     column.names <- names(dataframe)
-    dataframe <- mapply(label, column.names, label.vector)
+    dataframe <- mapply(Hmisc::label, column.names, label.vector)
     return(dataframe)
 }
