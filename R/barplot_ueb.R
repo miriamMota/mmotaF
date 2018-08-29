@@ -46,6 +46,7 @@ barplot_ueb <- function(y, group = NULL, dat,
     parmar <- c(5.1, 4.1, 4.1, 2.1)
     } else {
       parmar <- c(5.1, 4.1, 4.1, 7.1)
+      label_group <- Hmisc::label(dat[,group])
       dat[, group] <- as.factor(as.character(dat[, group]))
     }
 
@@ -57,7 +58,9 @@ barplot_ueb <- function(y, group = NULL, dat,
     col.lev <- gg_color(length(levels(dat[, y])))
     tab2bar <- prop.table(table(dat[, y])) * 100
     aa <- barplot(tab2bar, xlab = "", ylab = "%",
-                  main = ifelse(is.null(title.plot), y, title.plot) ,
+                  main = ifelse(is.null(title.plot),
+                                ifelse(Hmisc::label(dat[,y]) == "", y, Hmisc::label(dat[,y])) ,
+                                title.plot) ,
                   sub = ifelse(is.null(sub.plot), "", sub.plot),
                   col = col.lev, ylim = c(0, max(tab2bar) + 6.5),
                   las = las, cex.names = cex.lab,
@@ -82,7 +85,8 @@ barplot_ueb <- function(y, group = NULL, dat,
     col.lev <- gg_color(length(levels(dat[, y])))
     tab2bar <- prop.table(table(dat[, y], dat[, group]), 2) * 100
     aa <- barplot(tab2bar,
-                  xlab = group, ylab = "%", main = ifelse(is.null(title.plot), "", title.plot),
+                  xlab = ifelse(label_group == "", group, label_group),
+                  ylab = "%", main = ifelse(is.null(title.plot), "", title.plot),
                   sub = ifelse(is.null(sub.plot), "", sub.plot),
                   col = col.lev, las = las,
                   cex.names = cex.lab, cex.main = cex.main)
