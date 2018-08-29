@@ -98,9 +98,16 @@ barplot_ueb <- function(y, group = NULL, dat,
            fill = col.lev,
            cex = cex.lg, yjust = 0.5, title = y)  ## ajustar llegenda y
     if (do.test) {
-      Chipval <- chisq.test(dat[, y], dat[, group], correct = F)$p.val
-      mtext(paste("Chi p-value: ", ifelse( round(Chipval,3) < 0.001, "<0.001", round(Chipval,3) ) ) ,
-            at = at.text, side = 3,cex = 0.6)
+      if (any(table(dat[, y], dat[, group]) < 5)) {
+        fishpval <- fisher.test(dat[, y], dat[, group])$p.val
+        mtext(paste("Fisher p-value: ", ifelse( round(fishpval,3) < 0.001, "<0.001", round(fishpval,3) ) ) ,
+              at = at.text, side = 3,cex = 0.6)
+      }else{
+        Chipval <- chisq.test(dat[, y], dat[, group], correct = F)$p.val
+        mtext(paste("Chi p-value: ", ifelse( round(Chipval,3) < 0.001, "<0.001", round(Chipval,3) ) ) ,
+              at = at.text, side = 3,cex = 0.6)
+      }
+
     }
 
 
