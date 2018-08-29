@@ -63,7 +63,8 @@ boxplot_bw <- function(y, group = NULL, dat,
         ## bivariant
     } else {
       if (is.null(title.plot))  {title.plot <- ""}
-      if (is.null(xlab))  {xlab <- group}
+      label_group <- Hmisc::label(dat[,group])
+      xlab <- ifelse(is.null(xlab), ifelse(label_group == "", group, label_group), xlab)
 
       dat[,group] <- as.factor(as.character(dat[,group]))
 
@@ -81,7 +82,7 @@ boxplot_bw <- function(y, group = NULL, dat,
                 sub = sub.plot,
                 cex.sub = .7,
                 ylab = ylab)
-        if(do.test){
+        if (do.test) {
           KWpval <- kruskal.test(dat[, y] ~ dat[, group])$p.val
           mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) ,
                 at = at.text, side = 3,cex = 0.6)
