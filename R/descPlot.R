@@ -118,7 +118,7 @@ descPlot <- function(dat, y = NULL,
                   boxplot_bw(y = i, group = y, dat = dat, las = las,
                              title.plot = namevar[i],
                              cex.lab = cex.lab, do.test = do.test,
-                             at.text = at.text)
+                             at.text = at.text, cex.main = cex.main)
                 }
             }
 
