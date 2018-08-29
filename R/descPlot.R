@@ -87,7 +87,6 @@ descPlot <- function(dat, y = NULL,
                               show.lg = show.lg,
                               cex.lg = cex.lg,
                               do.test = do.test,
-                              title.plot = names(dat)[i],
                               at.text = at.text)
                 }
 
