@@ -86,7 +86,8 @@ barplot_ueb <- function(y, group = NULL, dat,
     tab2bar <- prop.table(table(dat[, y], dat[, group]), 2) * 100
     aa <- barplot(tab2bar,
                   xlab = ifelse(label_group == "", group, label_group),
-                  ylab = "%", main = ifelse(is.null(title.plot), "", title.plot),
+                  ylab = "%", main = ifelse(is.null(title.plot),
+                                            ifelse(Hmisc::label(dat[,y]) == "", "", Hmisc::label(dat[,y])) , title.plot),
                   sub = ifelse(is.null(sub.plot), "", sub.plot),
                   col = col.lev, las = las,
                   cex.names = cex.lab, cex.main = cex.main)
