@@ -37,6 +37,7 @@ barplot_ueb <- function(y, group = NULL, dat,
                        cex.main = 1,
                        cex.lg = 1,
                        ylab = "",
+                       title.lg = FALSE,
                        do.test = FALSE,
                        show.lg = FALSE,
                        show.freq = TRUE,
@@ -96,7 +97,8 @@ barplot_ueb <- function(y, group = NULL, dat,
            legend = levels(dat[, y]),
            bg = "white",
            fill = col.lev,
-           cex = cex.lg, yjust = 0.5, title = ifelse(Hmisc::label(dat[,y]) == "", "", Hmisc::label(dat[,y])))  ## ajustar llegenda y
+           cex = cex.lg, yjust = 0.5,
+           title = if.else(title.lg,ifelse(Hmisc::label(dat[,y]) == "", "", Hmisc::label(dat[,y]))), "")  ## ajustar llegenda y
     if (do.test) {
       if (any(table(dat[, y], dat[, group]) < 5)) {
         fishpval <- fisher.test(dat[, y], dat[, group])$p.val
