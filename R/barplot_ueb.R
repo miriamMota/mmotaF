@@ -99,7 +99,7 @@ barplot_ueb <- function(y, group = NULL, dat,
            bg = "white",
            fill = col.lev,
            cex = cex.lg, yjust = 0.5,
-           title = if.else(title.lg,ifelse(Hmisc::label(dat[,y]) == "", "", Hmisc::label(dat[,y]))), "")  ## ajustar llegenda y
+           title = ifelse(title.lg,ifelse(Hmisc::label(dat[,y]) == "", "", Hmisc::label(dat[,y]))), "")  ## ajustar llegenda y
     if (do.test) {
       if (any(table(dat[, y], dat[, group]) < 5)) {
         fishpval <- fisher.test(dat[, y], dat[, group])$p.val
