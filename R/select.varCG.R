@@ -12,8 +12,7 @@
 #' }
 
 select.varCG <- function(restab, p.value = 0.05){
-  pval <- as.numeric(gsub("<","",restab$descr[,"p.overall"]))
-  names(pval) <- names(restab$descr[,"p.overall"])
+  pval <- getResults(restab, "p.overall")
   varSel <- names(which(pval < p.value))
   nameVarSel <- NULL
   for (i in 1:length(varSel)) nameVarSel[i] <- unlist(strsplit(varSel[i], ":"))[1]
