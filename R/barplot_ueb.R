@@ -12,6 +12,7 @@
 #' @param cex.lg expansion factor for legend names (size legend)
 #' @param cex.main expansion factor for main names (size main)
 #' @param show.lg TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.
+#' @param title.leg TRUE o FALSE indica si se muestra el titulo de la leyenda. Por defecto FALSE.
 #' @param show.freq TRUE o FALSE indica si se muestran las frecuencias. Por defecto TRUE
 #' @param do.test logical value si se quiere realizar test Chi cuadrado SIN corrección de yates.
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
