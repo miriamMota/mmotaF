@@ -5,8 +5,8 @@
 \title{A boxplot_bw Function}
 \usage{
 boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
-  sub.plot = NULL, ylim.plot = NULL, cex.lab = 1, ylab = "",
-  xlab = NULL, do.test = FALSE, at.text = 1)
+  sub.plot = NULL, ylim.plot = NULL, cex.lab = 1, cex.main = 1,
+  ylab = "", xlab = NULL, do.test = FALSE, at.text = 1)
 }
 \arguments{
 \item{y}{name numeric vector of data values.}
@@ -25,6 +25,8 @@ boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
 \item{ylim.plot}{is vector which contains lower and upper limits which are to appear on the y axes.}
 
 \item{cex.lab}{size of the axis label text with a numeric value.}
+
+\item{cex.main}{expansion factor for main names (size main)}
 
 \item{ylab}{a title for the y axis}
 

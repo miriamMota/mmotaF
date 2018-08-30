@@ -6,7 +6,7 @@
 \usage{
 descPlot(dat, y = NULL, nameFile = "descriptive_plots.pdf", topdf = FALSE,
   subtitle = NULL, color = "#8D4ABA", rowcol = c(3, 2), show.lg = FALSE,
-  show.freq = TRUE, cex.lab = 1, cex.lg = 0.65, cex.main = 0.8,
+  show.freq = TRUE, cex.lab = 1, cex.lg = 0.65, cex.main = 0.9,
   las = 0, do.test = FALSE, at.text = 1)
 }
 \arguments{

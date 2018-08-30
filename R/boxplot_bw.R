@@ -14,6 +14,7 @@
 #' @param ylab a title for the y axis
 #' @param xlab a title for the x axis.
 #' @param cex.lab size of the axis label text with a numeric value.
+#' @param cex.main expansion factor for main names (size main)
 #' @export boxplot_bw
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
