@@ -46,7 +46,7 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
 
   if (class(data[,y]) != "factor") stop("variable 'y' must be factor")
   if (length(levels(data[,y])) != 2) stop("variable 'y' must have two levels")
-  if(is.null(caption)) caption <- paste("Univariate logistic regression (", y, ")")
+  if (is.null(caption)) caption <- paste("Univariate logistic regression (", y, ")")
 
   for (i in seq_along(var2test)) {
     if (class(data[,var2test[i]])[length(class(data[,var2test[i]]))] == "factor" ) data[,var2test[i]] <- factor(data[,var2test[i]])
@@ -76,7 +76,8 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   names(glmmod) <- var2test
 
   unimod_df <- do.call(rbind, unimod)
-  unimod_df <- cbind(Variable  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
+  unimod_df <- cbind(Variable  = gsub("\\.*.$","",unimod_df$varlev), unimod_df)
+  # unimod_df <- cbind(Variable  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
   # rownames(unimod_df) <- gsub("^.*\\.","",rownames(unimod_df))
   ## unimod_df$`P-value (Global)` <- as.numeric(unimod_df$`P-value (Global)`)
   ## unimod_df$`P-value (Global)` <- ifelse(unimod_df$`P-value (Global)` < 0.0001,"0.0001", unimod_df$`P-value (Global)`)
@@ -85,8 +86,10 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
     xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption,  row.names = FALSE, longtable = TRUE) %>%
       kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size) %>%
       column_spec(which(names(unimod_df) == "Global P-value") - 1, bold = T)  %>%
-      group_rows(index = eval(parse(text =   paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)), collapse = ", " ), ")")   )),
+      group_rows(index = table(unimod_df$Variable),
                  latex_gap_space = '1em')
+      # group_rows(index = eval(parse(text =   paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)), collapse = ", " ), ")")   )),
+      #            latex_gap_space = '1em')
     # group_rows(index = c('TEMPSVIU' = 1, 'Edata' = 1, 'BMI' = 1, 'EdataDIAG' = 1, 'TABAC' = 2, 'SBP' = 1, 'DBP' = 1, 'ECG' = 2, 'CHD' = 1))
     # row_spec(which(unimod_df$`P-value (Global)` < 0.05), bold = T, color = "black", background = "#C0B2CF") %>%
 
