@@ -76,9 +76,9 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   names(glmmod) <- var2test
 
   unimod_df <- do.call(rbind, unimod)
-  unimod_df <- cbind(Variable  = gsub("\\.*.$","",unimod_df$varlev), unimod_df)
+  # unimod_df <- cbind(Variable  = gsub("\\.*.$","",unimod_df$varlev), unimod_df)
   # unimod_df <- cbind(Variable  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
-  # rownames(unimod_df) <- gsub("^.*\\.","",rownames(unimod_df))
+  rownames(unimod_df) <- gsub("^.*\\.","",rownames(unimod_df))
   ## unimod_df$`P-value (Global)` <- as.numeric(unimod_df$`P-value (Global)`)
   ## unimod_df$`P-value (Global)` <- ifelse(unimod_df$`P-value (Global)` < 0.0001,"0.0001", unimod_df$`P-value (Global)`)
 
@@ -86,7 +86,7 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
     xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption,  row.names = FALSE, longtable = TRUE) %>%
       kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size) %>%
       column_spec(which(names(unimod_df) == "Global P-value") - 1, bold = T)  %>%
-      group_rows(index = table(unimod_df$Variable),
+      group_rows(index = table(unimod_df$Variable)[unique(as.character(unimod_df$Variable))],
                  latex_gap_space = '1em')
       # group_rows(index = eval(parse(text =   paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)), collapse = ", " ), ")")   )),
       #            latex_gap_space = '1em')
