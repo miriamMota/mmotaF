@@ -54,42 +54,49 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
 
 
   mods <- lapply(var2test,
-                   function(var) {
+                 function(var) {
 
-                     if (is.null(var2match)) {
-                       formula <- as.formula(paste(y," ~", var))
-                       res.logist <- glm(formula, data = data[complete.cases(data[,y]),], family = binomial)
-                     }else{
-                       formula <- as.formula(paste( "as.numeric(",y,")~", var," + strata(",var2match,")"))
-                       res.logist <-  survival::clogit(formula,  data[complete.cases(data[,y]),])
-                     }
-                     res_lm <- round(tabOR_lr(mod = res.logist,xtab = FALSE, title = var, show.intcp = FALSE, show.n = show.n, show.aov.pval = show.aov.pval),2)
-                     rownames(res_lm) <- gsub(var,"", rownames(res_lm))
-                     res_lm[is.na(res_lm)] <- ""
-                     res_lm <- cbind(varlev = paste0(var,".",rownames(res_lm)), res_lm)
-                     return(list(mod = res.logist, mod.res = res_lm))
-                   })
+                   if (is.null(var2match)) {
+                     formula <- as.formula(paste(y," ~", var))
+                     res.logist <- glm(formula, data = data[complete.cases(data[,y]),], family = binomial)
+                   }else{
+                     formula <- as.formula(paste( "as.numeric(",y,")~", var," + strata(",var2match,")"))
+                     res.logist <-  survival::clogit(formula,  data[complete.cases(data[,y]),])
+                   }
+                   res_lm <- round(tabOR_lr(mod = res.logist,xtab = FALSE, title = var, show.intcp = FALSE, show.n = show.n, show.aov.pval = show.aov.pval),2)
+                   rownames(res_lm) <- gsub(var,"", rownames(res_lm))
+                   res_lm[is.na(res_lm)] <- ""
+                   res_lm <- cbind(varlev = paste0(var,".",rownames(res_lm)), res_lm)
+                   return(list(mod = res.logist, mod.res = res_lm))
+                 })
   unimod <- lapply(mods,function(x)x[[2]])
   names(unimod) <- var2test
+  for (i in seq_along(unimod))   unimod[[i]] <- cbind(unimod[[i]], Variable = names(unimod)[[i]] )
 
   glmmod <- lapply(mods,function(x)x[[1]])
   names(glmmod) <- var2test
 
   unimod_df <- do.call(rbind, unimod)
+  unimod_df <- cbind(Variable = unimod_df$Variable, unimod_df[,!names(unimod_df) %in% "Variable"])
+  unimod_df <- cbind(Level  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
+  ## aquesta linia s'afegeix pq a20.09.2018 hi ha un problema amb el paquet kable al agrupar la ultima variable
+  unimod_df <- rbind(unimod_df, aa = "")
+
   # unimod_df <- cbind(Variable  = gsub("\\.*.$","",unimod_df$varlev), unimod_df)
   # unimod_df <- cbind(Variable  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
-  rownames(unimod_df) <- gsub("^.*\\.","",rownames(unimod_df))
+  # rownames(unimod_df) <- gsub("^.*\\.","",unimod_df$varlev)
   ## unimod_df$`P-value (Global)` <- as.numeric(unimod_df$`P-value (Global)`)
   ## unimod_df$`P-value (Global)` <- ifelse(unimod_df$`P-value (Global)` < 0.0001,"0.0001", unimod_df$`P-value (Global)`)
 
   if (group) {
-    xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption,  row.names = FALSE, longtable = TRUE) %>%
+    tab_group <-  table(unimod_df$Variable)[unique(as.character(unimod_df$Variable))]
+    # tab_group[length(tab_group)] <- tab_group[length(tab_group)] + 1
+    xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev", "Variable")], format = format, booktabs = T,caption = caption,  row.names = FALSE, longtable = TRUE) %>%
       kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size) %>%
       column_spec(which(names(unimod_df) == "Global P-value") - 1, bold = T)  %>%
-      group_rows(index = table(unimod_df$Variable)[unique(as.character(unimod_df$Variable))],
-                 latex_gap_space = '1em')
-      # group_rows(index = eval(parse(text =   paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)), collapse = ", " ), ")")   )),
-      #            latex_gap_space = '1em')
+      # group_rows(index = tab_group,latex_gap_space = '1em')
+      group_rows(index = eval(parse(text = paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)),
+                                                              collapse = ", " ), ")")   )),latex_gap_space = '1em')
     # group_rows(index = c('TEMPSVIU' = 1, 'Edata' = 1, 'BMI' = 1, 'EdataDIAG' = 1, 'TABAC' = 2, 'SBP' = 1, 'DBP' = 1, 'ECG' = 2, 'CHD' = 1))
     # row_spec(which(unimod_df$`P-value (Global)` < 0.05), bold = T, color = "black", background = "#C0B2CF") %>%
 
