@@ -5,9 +5,9 @@
 \title{A barplot_ueb Function}
 \usage{
 barplot_ueb(y, group = NULL, dat, las = 0, title.plot = NULL,
-  sub.plot = NULL, cex.lab = 1, cex.main = 1, cex.lg = 1, ylab = "",
-  title.lg = FALSE, do.test = FALSE, show.lg = FALSE, show.freq = TRUE,
-  at.text = 1)
+  sub.plot = NULL, cex.lab = 1, cex.main = 1, cex.lg = 1,
+  ylab = "", title.lg = FALSE, do.test = FALSE, show.lg = FALSE,
+  show.freq = TRUE, at.text = 1)
 }
 \arguments{
 \item{y}{name factor vector of data values.}

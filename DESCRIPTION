@@ -7,6 +7,6 @@ Depends:
     R (>= 3.0.0),xtable, pROC, Hmisc, beeswarm, survival, stargazer, kableExtra, knitr, magrittr, OptimalCutpoints, epiR, caret
 License: GPL (>= 2)
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Encoding: UTF-8
 BugReports: https://github.com/miriamMota/mmotaF/issues

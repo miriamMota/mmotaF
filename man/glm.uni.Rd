@@ -4,8 +4,9 @@
 \alias{glm.uni}
 \title{A glm.uni Function}
 \usage{
-glm.uni(y, var2test, var2match = NULL, data, size = 8.5, format = "latex",
-  caption = NULL, show.n = TRUE, show.aov.pval = TRUE, group = TRUE)
+glm.uni(y, var2test, var2match = NULL, data, size = 8.5,
+  format = "latex", caption = NULL, show.n = TRUE,
+  show.aov.pval = TRUE, group = TRUE)
 }
 \arguments{
 \item{y}{response variable. Variable factor con 2 categorias}

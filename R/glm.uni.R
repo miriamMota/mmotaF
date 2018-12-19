@@ -80,7 +80,7 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   unimod_df <- cbind(Variable = unimod_df$Variable, unimod_df[,!names(unimod_df) %in% "Variable"])
   unimod_df <- cbind(Level  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
   ## aquesta linia s'afegeix pq a20.09.2018 hi ha un problema amb el paquet kable al agrupar la ultima variable
-  unimod_df <- rbind(unimod_df, aa = "")
+  # unimod_df <- rbind(unimod_df, aa = "")
 
   # unimod_df <- cbind(Variable  = gsub("\\.*.$","",unimod_df$varlev), unimod_df)
   # unimod_df <- cbind(Variable  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
