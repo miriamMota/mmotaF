@@ -37,7 +37,7 @@ boxplot_bw <- function(y, group = NULL, dat,
                        cex.main = 1,
                        ylab = "",
                        xlab = NULL,
-                       do.test = FALSE, at.text = 1) {
+                       do.test = FALSE, at.text = 1, color = NULL ) {
 
     if (is.null(ylim.plot))
         ylim.plot <- c(min(dat[, y], na.rm = T), max(dat[, y] + 0.2, na.rm = T))
