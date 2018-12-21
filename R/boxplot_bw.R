@@ -68,14 +68,15 @@ boxplot_bw <- function(y, group = NULL, dat,
       if (is.null(title.plot))  {title.plot <- ""}
       label_group <- Hmisc::label(dat[,group])
       xlab <- ifelse(is.null(xlab), ifelse(label_group == "", group, label_group), xlab)
-      if(class(dat[,group]) == "character")      dat[,group] <- as.factor(as.character(dat[,group]))
+      if (class(dat[,group]) == "character")  dat[,group] <- as.factor(as.character(dat[,group]))
 
         beeswarm(dat[, y] ~ dat[, group],
                  ylab = "", xlab = xlab,
                  main = title.plot,
                  ylim = ylim.plot,
                  axes = F, cex.main = cex.main,
-                 pch = 20, col = gg_color(length(levels(dat[, group]))))
+                 pch = 20,
+                 col = ifelse(is.null(color), gg_color(length(levels(dat[, group]))),color) )
         boxplot(dat[, y] ~ dat[, group],
                 add = T,
                 col = makeTransparent("grey", alpha = 0.3),
