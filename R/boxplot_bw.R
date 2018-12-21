@@ -68,8 +68,7 @@ boxplot_bw <- function(y, group = NULL, dat,
       if (is.null(title.plot))  {title.plot <- ""}
       label_group <- Hmisc::label(dat[,group])
       xlab <- ifelse(is.null(xlab), ifelse(label_group == "", group, label_group), xlab)
-
-      dat[,group] <- as.factor(as.character(dat[,group]))
+      if(class(dat[,group]) == "character")      dat[,group] <- as.factor(as.character(dat[,group]))
 
         beeswarm(dat[, y] ~ dat[, group],
                  ylab = "", xlab = xlab,
