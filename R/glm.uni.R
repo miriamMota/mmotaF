@@ -19,23 +19,6 @@
 #'
 
 
-
-# # coef one variable
-# cp <- coefplot(resglm$unimod_list$wt, intercept = F)
-# cp
-#
-# # OR one variable
-# bk <- seq(-10,10, by = 2)
-# cp + scale_x_continuous(breaks = bk, labels = round(exp(bk),2), name = "OR")
-#'
-# # coef all variables
-# mp <- multiplot(resglm$unimod_list, intercept = F, innerCI = 1, outerCI = 1)
-# mp
-#
-# # coef all variables
-# mp + scale_x_continuous(breaks = bk, labels = round(exp(bk),2), name = "OR") +
-
-
 glm.uni <- function(y, var2test, var2match = NULL, data,
                     size = 8.5,
                     format = "latex",
@@ -92,7 +75,7 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
     tab_group <-  table(unimod_df$Variable)[unique(as.character(unimod_df$Variable))]
     # tab_group[length(tab_group)] <- tab_group[length(tab_group)] + 1
     xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev", "Variable")], format = format, booktabs = T,caption = caption,  row.names = FALSE, longtable = TRUE) %>%
-      kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size) %>%
+      kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size, full_width = F, position = "left") %>%
       column_spec(which(names(unimod_df) == "Global P-value") - 1, bold = T)  %>%
       # group_rows(index = tab_group,latex_gap_space = '1em')
       group_rows(index = eval(parse(text = paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)),
@@ -102,9 +85,25 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
 
   }else{
     xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption, longtable = TRUE) %>%
-      kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size) %>%
+      kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size, full_width = F, position = "left") %>%
       column_spec(which(names(unimod_df) == "P-value (Global)") , bold = T)
   }
 
   return(list(unimod_list = glmmod, unimod_ci_list = unimod, unimod_ci_df = unimod_df, xtab = xtab))
 }
+
+# # coef one variable
+# cp <- coefplot(resglm$unimod_list$wt, intercept = F)
+# cp
+#
+# # OR one variable
+# bk <- seq(-10,10, by = 2)
+# cp + scale_x_continuous(breaks = bk, labels = round(exp(bk),2), name = "OR")
+#'
+# # coef all variables
+# mp <- multiplot(resglm$unimod_list, intercept = F, innerCI = 1, outerCI = 1)
+# mp
+#
+# # coef all variables
+# mp + scale_x_continuous(breaks = bk, labels = round(exp(bk),2), name = "OR") +
+
