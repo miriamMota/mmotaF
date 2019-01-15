@@ -14,9 +14,11 @@
 #' @param show.cascon A logical value indicating whether show number cases/controls. Default value is TRUE
 #' @param show.detail A logical value indicating whether show detail output. Default value is TRUE
 #' @param xtab A logical value indicating whether the output is a xtable. Default value is FALSE.
+#' @param xtab.type A character string. Possible values are latex, html, markdown, pandoc, and rst; this will be automatically determined if the function is called within knitr; it can also be set in the global option knitr.table.format. If format is a function, it must return a character string.
 #' @param direction character string specifying the direction to compute the ROC curve. By default individuals with a test value lower than the cutoff are classified as healthy (negative test), whereas patients with a test value greater than (or equal to) the cutoff are classified as diseased (positive test). If this is not the case, however, and the high values are related to health, this argument should be established at ">".
 #' @param cex.main expansion factor for main names (size main)
 #' @export doROC
+#' @import knitr
 #' @import pROC OptimalCutpoints xtable
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
@@ -58,7 +60,7 @@ doROC <- function(frml, x , group  , dat,
                   show.cascon = TRUE,
                   show.detail = TRUE,
                   xtab = FALSE,
-
+                  xtab.type = "latex",
                   direction = c("<", ">"), ...)
 {
 
@@ -91,8 +93,8 @@ doROC <- function(frml, x , group  , dat,
     dat$pred <- NA
     dat[names(pred),]$pred <- pred
     x <- "pred"
-  # }else{
-  #   if (!missing(frml)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
+    # }else{
+    #   if (!missing(frml)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
   }
   results$dat <- dat
 
@@ -129,8 +131,14 @@ doROC <- function(frml, x , group  , dat,
 
   ## es mostren els resultats general com xtable per a latex
   if (xtab) {
-    print(xtable(results$res_sum$p.table$Global$Youden[[1]],
-           caption = paste(title,". AUC ", results$res_sum$p.table$Global$AUC_CI )))
+    # print(xtable(results$res_sum$p.table$Global$Youden[[1]],
+    #        caption = paste(title,". AUC ", results$res_sum$p.table$Global$AUC_CI )))
+
+    res_xtab <- kable(results$res_sum$p.table$Global$Youden[[1]], format = xtab.type, booktabs = T,
+                      caption = paste(title,". AUC ", results$res_sum$p.table$Global$AUC_CI ), longtable = TRUE,
+                      escape = F)
+    results$xtab <- res_xtab
+
   }
 
   ## punts de talls

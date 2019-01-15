@@ -6,7 +6,8 @@
 \usage{
 boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
   sub.plot = NULL, ylim.plot = NULL, cex.lab = 1, cex.main = 1,
-  ylab = "", xlab = NULL, do.test = FALSE, at.text = 1)
+  ylab = "", xlab = NULL, do.test = FALSE, at.text = 1,
+  color = NULL)
 }
 \arguments{
 \item{y}{name numeric vector of data values.}

@@ -7,7 +7,7 @@
 doROC(frml, x, group, dat, tag.healthy = NULL, title = NULL,
   modGLM = NULL, doPlot = TRUE, cex.main = 0.9, show.lg = TRUE,
   show.cascon = TRUE, show.detail = TRUE, xtab = FALSE,
-  direction = c("<", ">"), ...)
+  xtab.type = "latex", direction = c("<", ">"), ...)
 }
 \arguments{
 \item{frml}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.}
@@ -35,6 +35,8 @@ doROC(frml, x, group, dat, tag.healthy = NULL, title = NULL,
 \item{show.detail}{A logical value indicating whether show detail output. Default value is TRUE}
 
 \item{xtab}{A logical value indicating whether the output is a xtable. Default value is FALSE.}
+
+\item{xtab.type}{A character string. Possible values are latex, html, markdown, pandoc, and rst; this will be automatically determined if the function is called within knitr; it can also be set in the global option knitr.table.format. If format is a function, it must return a character string.}
 
 \item{direction}{character string specifying the direction to compute the ROC curve. By default individuals with a test value lower than the cutoff are classified as healthy (negative test), whereas patients with a test value greater than (or equal to) the cutoff are classified as diseased (positive test). If this is not the case, however, and the high values are related to health, this argument should be established at ">".}
 }
