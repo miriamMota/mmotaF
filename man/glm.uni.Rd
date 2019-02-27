@@ -33,7 +33,6 @@ resglm <- glm.uni(y = "am",
 var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
 data = mtc_bis, format = "latex", size = 10)
 
-
 }
 \keyword{OR}
 \keyword{logistic}

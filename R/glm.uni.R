@@ -79,14 +79,16 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
       column_spec(which(names(unimod_df) == "Global P-value") - 1, bold = T)  %>%
       # group_rows(index = tab_group,latex_gap_space = '1em')
       group_rows(index = eval(parse(text = paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)),
-                                                              collapse = ", " ), ")")   )),latex_gap_space = '1em')
+                                                              collapse = ", " ), ")")   )),latex_gap_space = '1em')%>%
+      row_spec(0,background = "#993489", color = "white")
     # group_rows(index = c('TEMPSVIU' = 1, 'Edata' = 1, 'BMI' = 1, 'EdataDIAG' = 1, 'TABAC' = 2, 'SBP' = 1, 'DBP' = 1, 'ECG' = 2, 'CHD' = 1))
     # row_spec(which(unimod_df$`P-value (Global)` < 0.05), bold = T, color = "black", background = "#C0B2CF") %>%
 
   }else{
     xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption, longtable = TRUE) %>%
       kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size, full_width = F, position = "left") %>%
-      column_spec(which(names(unimod_df) == "P-value (Global)") , bold = T)
+      column_spec(which(names(unimod_df) == "P-value (Global)") , bold = T)%>%
+      row_spec(0,background = "#993489", color = "white")
   }
 
   return(list(unimod_list = glmmod, unimod_ci_list = unimod, unimod_ci_df = unimod_df, xtab = xtab))
