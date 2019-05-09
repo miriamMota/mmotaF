@@ -2,7 +2,7 @@
 % Please edit documentation in R/desc_plot.R
 \name{descPlot}
 \alias{descPlot}
-\title{A descPlot Function}
+\title{A desc_plot Function}
 \usage{
 descPlot(...)
 }
@@ -39,10 +39,10 @@ Genera graficos univariantes para todas las variables que se indiquen, el format
 }
 \examples{
 df <- data.frame(Y=as.factor(rbinom(50,1,.40)),Y1=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
-descPlot(dat = df, color = 'red', rowcol = c(1,2))
-descPlot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1), las = 2)
-descPlot(mtc_bis)
-descPlot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = TRUE, las = 2 )
+desc_plot(dat = df, color = 'red', rowcol = c(1,2))
+desc_plot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1), las = 2)
+desc_plot(mtc_bis)
+desc_plot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = TRUE, las = 2 )
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
