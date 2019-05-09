@@ -6,7 +6,7 @@
 \usage{
 barplot_ueb(y, group = NULL, dat, las = 0, title.plot = NULL,
   sub.plot = NULL, cex.lab = 1, cex.main = 1, cex.lg = 1,
-  ylab = "", title.lg = FALSE, do.test = FALSE, show.lg = FALSE,
+  ylab = "", title.lg = TRUE, do.test = FALSE, show.lg = FALSE,
   show.freq = TRUE, at.text = 1)
 }
 \arguments{

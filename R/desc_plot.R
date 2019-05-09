@@ -16,6 +16,7 @@
 #' @param do.test logical value si se quiere realizar test kruskall Wallis.
 #' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
 #' @export descPlot
+#' @export desc_plot
 #' @import beeswarm Hmisc
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
@@ -27,7 +28,13 @@
 #' @keywords plots descriptive
 
 
-descPlot <- function(dat, y = NULL,
+descPlot <- function(...) {
+    .Deprecated("desc_plot") #include a package argument, too
+    desc_plot(...)
+}
+
+
+desc_plot <- function(dat, y = NULL,
                      nameFile = "descriptive_plots.pdf",
                      topdf = FALSE,
                      subtitle = NULL,
