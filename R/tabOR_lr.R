@@ -28,6 +28,7 @@ tabOR_lr <- function(mod,
                      title = "title",
                      xtab.type = "latex",
                      sz.latex = "small",
+                     font_size = 13,
                      label = NULL,
                      show.intcp = FALSE,
                      show.n = TRUE,
@@ -47,7 +48,7 @@ tabOR_lr <- function(mod,
   if (show.intcp | class(mod)[1] == "clogit") {
     pval_glob <- as.numeric(c(anova(mod,test = "Chisq")$Pr[2], rep("", length(p.val) - 1)))
     # pval_glob <- ifelse(pval_glob == 0, "$<$ 0.01", pval_glob )
-    if(class(mod)[1] == "clogit")
+    if (class(mod)[1] == "clogit")
     {
       n_mod <- as.numeric(c(mod$n , rep("", length(p.val) - 1)))
     }else{
@@ -79,7 +80,11 @@ tabOR_lr <- function(mod,
 
 
   if (xtab) {
-    print(xtable(tauORcoef, caption = title, digits = 2, label = label), type = xtab.type, size = sz.latex)
+    # print(xtable(tauORcoef, caption = title, digits = 2, label = label), type = xtab.type, size = sz.latex)
+    kable(tauORcoef, caption = title, digits = 2) %>%
+      kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = font_size, full_width = F) %>%
+      row_spec(0,background = "#993489", color = "white")
+
   } else {
     return(tauORcoef)
   }

@@ -5,8 +5,8 @@
 \title{A tabOR_lr Function}
 \usage{
 tabOR_lr(mod, xtab = FALSE, title = "title", xtab.type = "latex",
-  sz.latex = "small", label = NULL, show.intcp = FALSE,
-  show.n = TRUE, show.aov.pval = TRUE)
+  sz.latex = "small", font_size = 13, label = NULL,
+  show.intcp = FALSE, show.n = TRUE, show.aov.pval = TRUE)
 }
 \arguments{
 \item{mod}{a fitted object of class inheriting from "glm".}
