@@ -14,6 +14,7 @@
 #' @param ylab a title for the y axis
 #' @param xlab a title for the x axis.
 #' @param cex.lab size of the axis label text with a numeric value.
+#' @param cex.pval size of the p-value text with a numeric value.
 #' @param cex.main expansion factor for main names (size main)
 #' @export boxplot_bw
 #' @import beeswarm
@@ -22,11 +23,10 @@
 #' df <- data.frame(runif = c(runif(100, min = -3, max = 3),
 #' rep(0,25)), rnorm = c(rnorm(100),rep(0,25)) )
 #' boxplot_bw(dat = df, y = 'rnorm' )
-#' boxplot_bw(dat = mtc_bis, y = 'qsec' )
+#' boxplot_bw(dat = mtc_bis, y = 'qsec', title.plot = "Title" )
 #' boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',
 #' title.plot = "Boxplot per grup", do.test = TRUE, las = 2)
 #' @keywords plots descriptive boxplot
-
 
 boxplot_bw <- function(y, group = NULL, dat,
                        las = 0,
@@ -35,64 +35,67 @@ boxplot_bw <- function(y, group = NULL, dat,
                        ylim.plot = NULL,
                        cex.lab = 1,
                        cex.main = 1,
+                       cex.pval = 0.6,
                        ylab = "",
                        xlab = NULL,
                        do.test = FALSE, at.text = 1, color = NULL ) {
 
-    if (is.null(ylim.plot))
-        ylim.plot <- c(min(dat[, y], na.rm = T), max(dat[, y] + 0.2, na.rm = T))
-    op <- par(cex.axis = cex.lab)
+  if (is.null(ylim.plot))
+    ylim.plot <- c(min(dat[, y], na.rm = T), max(dat[, y] + 0.2, na.rm = T))
+  op <- par(cex.axis = cex.lab)
 
-    ## univariant
-    if (is.null(group)) {
-        if (is.null(title.plot))
-            title.plot <- y
-        beeswarm(dat[, y],
-                 ylab = "",
-                 main = title.plot,
-                 sub = sub.plot,
-                 cex.main = cex.main,
-                 cex.sub = .7,
-                 ylim = ylim.plot,
-                 axes = F,
-                 pch = 20,
-                 col = gg_color(1), corral = "gutter")
+  ## univariant
+  if (is.null(group)) {
+    if (is.null(title.plot))
+      title.plot <- y
+    beeswarm(dat[, y],
+             ylab = "",
+             main = title.plot,
+             sub = sub.plot,
+             cex.main = cex.main,
+             cex.sub = .7,
+             ylim = ylim.plot,
+             axes = F,
+             pch = 20,
+             col = gg_color(1), corral = "gutter")
 
-        boxplot(dat[, y],
-                add = T,
-                col = makeTransparent("grey", alpha = 0.3),
-                las = las)
+    boxplot(dat[, y],
+            add = T,
+            col = makeTransparent("grey", alpha = 0.3),
+            las = las)
 
-        ## bivariant
-    } else {
-      if (is.null(title.plot))  {title.plot <- ""}
-      label_group <- Hmisc::label(dat[,group])
-      xlab <- ifelse(is.null(xlab), ifelse(label_group == "", group, label_group), xlab)
-      if (class(dat[,group]) == "character")  dat[,group] <- as.factor(as.character(dat[,group]))
+    ## bivariant
+  } else {
+    if (is.null(title.plot))  {title.plot <- ""}
+    label_group <- Hmisc::label(dat[,group])
+    xlab <- ifelse(is.null(xlab), ifelse(label_group == "", group, label_group), xlab)
+    if (class(dat[,group]) == "character")  dat[,group] <- as.factor(as.character(dat[,group]))
 
-     if (is.null(color))  color <- gg_color(length(levels(dat[, group])))
+    if (is.null(color))  color <- gg_color(length(levels(dat[, group])))
 
-        beeswarm(dat[, y] ~ dat[, group],
-                 ylab = "", xlab = xlab,
-                 main = title.plot,
-                 ylim = ylim.plot,
-                 axes = F, cex.main = cex.main,
-                 pch = 20,
-                 col = color )
-        boxplot(dat[, y] ~ dat[, group],
-                add = T,
-                col = makeTransparent("grey", alpha = 0.3),
-                las = las,
-                cex.lab = cex.lab,
-                sub = sub.plot,
-                cex.sub = .7,
-                ylab = ylab)
-        if (do.test) {
-          KWpval <- kruskal.test(dat[, y] ~ dat[, group])$p.val
-          mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) ,
-                at = at.text, side = 3,cex = 0.6)
-        }
-
+    beeswarm(dat[, y] ~ dat[, group],
+             ylab = "", xlab = xlab,
+             main = title.plot,
+             ylim = ylim.plot,
+             axes = F,
+             cex.main = cex.main,
+             cex.lab = cex.lab,
+             pch = 20,
+             col = color )
+    boxplot(dat[, y] ~ dat[, group],
+            add = T,
+            col = makeTransparent("grey", alpha = 0.3),
+            las = las,
+            cex.lab = cex.lab,
+            sub = sub.plot,
+            cex.sub = .7,
+            ylab = ylab)
+    if (do.test) {
+      KWpval <- kruskal.test(dat[, y] ~ dat[, group])$p.val
+      mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) ,
+            at = at.text, side = 3,cex = cex.pval)
     }
-    par(op)
+
+  }
+  par(op)
 }
