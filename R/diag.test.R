@@ -6,7 +6,7 @@
 #' @param tag.healthy the value codifying healthy individuals in the status variable. Por defecto nivel de referencia levels(dat[,group])[1]
 #' @param nround integer indicating the number of decimal places (round) or significant digits (signif) to be used. Negative values are allowed
 #' @export diag.test
-#' @import epiR caret
+#' @import epiR caret e1071
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' data(aSAH)

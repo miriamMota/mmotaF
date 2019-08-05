@@ -2,7 +2,7 @@
 #' A re_name Function
 #'
 #' Renombra los identificadores de columna, substituyendo '.' por '_', eliminando acentos, ec.
-#' @param dat data frame que contiene las variables a evaluar
+#' @param dat data frame que contiene las variables a evaluar or character vector with variable names.
 #' @param char a character string specifying the characters to be translated. If a character vector of length 2 or more is supplied, the first element is used with a warning.
 #' @param newchar a character string specifying the translations. If a character vector of length 2 or more is supplied, the first element is used with a warning.
 #' @export re_name
@@ -18,20 +18,32 @@
 #' @keywords names dataframe correct
 
 re_name <- function(data,char = NULL, newchar = NULL) {
+  if (is.data.frame(data)) {
+    nms <- names(data)
+  } else {
+    nms <- data
+  }
+
   if (!is.null(char))
-    names(data) <-  chartr(char, newchar, names(data))
-  names(data) <- gsub(".", "_",
-                      gsub("..", ".",
-                           gsub("..", ".",
-                                gsub("..", ".", names(data), fixed = T),
-                                fixed = T), fixed = T), fixed = T)
-  names(data) <- gsub(" ", "_", names(data), fixed = T)
-  names(data) <- gsub("/", "_", names(data), fixed = T)
-  names(data) <- gsub("__", "_", names(data), fixed = T)
-  names(data) <- gsub("_$", "", names(data))
-  names(data) <- gsub("^X_", "", names(data))
-  names(data) <- chartr("áéóíúÁÉÍÓÚ", "aeoiuAEIOU", names(data))
+    nms <-  chartr(char, newchar, nms)
+  nms <- gsub(".", "_",
+              gsub("..", ".",
+                   gsub("..", ".",
+                        gsub("..", ".", nms, fixed = T),
+                        fixed = T), fixed = T), fixed = T)
+  nms <- gsub(" ", "_", nms, fixed = T)
+  nms <- gsub("/", "_", nms, fixed = T)
+  nms <- gsub("__", "_", nms, fixed = T)
+  nms <- gsub("_$", "", nms)
+  nms <- gsub("^X_", "", nms)
+  nms <- chartr("áéóíúÁÉÍÓÚ", "aeoiuAEIOU", nms)
   # words <- words[-grep("http|@|#|ü|ä|ö|'", words)] # remove urls, usernames, hashtags and umlauts (the latter can not be displayed by all fonts)
   # clean_words <- words[-grep("[^A-Za-z0-9]", words)]
-  return(data)
+
+  if (is.data.frame(data)) {
+    names(data) <- nms
+    return(data)
+  } else {
+    return(nms)
+  }
 }

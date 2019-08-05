@@ -6,8 +6,8 @@
 \usage{
 boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
   sub.plot = NULL, ylim.plot = NULL, cex.lab = 1, cex.main = 1,
-  ylab = "", xlab = NULL, do.test = FALSE, at.text = 1,
-  color = NULL)
+  cex.pval = 0.6, ylab = "", xlab = NULL, do.test = FALSE,
+  at.text = 1, color = NULL)
 }
 \arguments{
 \item{y}{name numeric vector of data values.}
@@ -29,6 +29,8 @@ boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
 
 \item{cex.main}{expansion factor for main names (size main)}
 
+\item{cex.pval}{size of the p-value text with a numeric value.}
+
 \item{ylab}{a title for the y axis}
 
 \item{xlab}{a title for the x axis.}
@@ -44,7 +46,7 @@ Boxplot incluyendo puntos individuales
 df <- data.frame(runif = c(runif(100, min = -3, max = 3),
 rep(0,25)), rnorm = c(rnorm(100),rep(0,25)) )
 boxplot_bw(dat = df, y = 'rnorm' )
-boxplot_bw(dat = mtc_bis, y = 'qsec' )
+boxplot_bw(dat = mtc_bis, y = 'qsec', title.plot = "Title" )
 boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',
 title.plot = "Boxplot per grup", do.test = TRUE, las = 2)
 }

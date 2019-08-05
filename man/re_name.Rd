@@ -11,7 +11,7 @@ re_name(data, char = NULL, newchar = NULL)
 
 \item{newchar}{a character string specifying the translations. If a character vector of length 2 or more is supplied, the first element is used with a warning.}
 
-\item{dat}{data frame que contiene las variables a evaluar}
+\item{dat}{data frame que contiene las variables a evaluar or character vector with variable names.}
 }
 \description{
 Renombra los identificadores de columna, substituyendo '.' por '_', eliminando acentos, ec.
