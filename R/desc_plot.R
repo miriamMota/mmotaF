@@ -109,14 +109,14 @@ desc_plot <- function(dat, y = NULL,
                   if (class(dat[,i])[length(class(dat[,i]))] == "Date" |
                       class(dat[,i])[length(class(dat[,i]))] == "POSIXt") {
                     breaks.units <- ifelse(length(unique(format(dat[,i],"%Y"))) >= 4 , "years", "months"  )
-                    try(hist(dat[, i], xlab = "", breaks = breaks.units,
+                    try(hist(dat[, i], xlab = "", breaks = breaks.units, cex.main = cex.main,
                              main = namevar[i], freq = T, las = las, cex.axis = cex.lab,
                              sub = ifelse(is.null(subtitle), "", subtitle),
                              col = makeTransparent("#57ADC2", alpha = 0.8)), TRUE)
 
                   }else{
                   try(hist(dat[, i], xlab = "",
-                           main = namevar[i],
+                           main = namevar[i], cex.main = cex.main,
                            sub = ifelse(is.null(subtitle), "", subtitle),
                            col = makeTransparent(color, alpha = 0.8)), TRUE)
                   try(rug(dat[, i]))
