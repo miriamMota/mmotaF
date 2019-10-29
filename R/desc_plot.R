@@ -17,7 +17,7 @@
 #' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
 #' @export descPlot
 #' @export desc_plot
-#' @import beeswarm Hmisc
+#' @import beeswarm Hmisc janitor
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
 #' df <- data.frame(Y=as.factor(rbinom(50,1,.40)),Y1=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
@@ -52,6 +52,9 @@ desc_plot <- function(dat, y = NULL,
 
      par(mfrow = rowcol)
 
+    ## eliminem columnes buides
+    dat <- remove_empty(dat, which = c("cols"))
+
     if (topdf) {
         pdf(nameFile)
         par(mfrow = rowcol)
@@ -61,6 +64,9 @@ desc_plot <- function(dat, y = NULL,
     } else {
         namevar <- Hmisc::label(dat)
     }
+
+
+
 
     for (i in 1:dim(dat)[2]) {
 
