@@ -21,19 +21,19 @@
 
 glm.uni <- function(y, var2test, var2match = NULL, data,
                     size = 8.5,
-                    format = "latex",
+                    format = "html",
                     caption = NULL,
                     show.n = TRUE,
                     show.aov.pval = TRUE,
                     group = TRUE){
 
-  if (class(data[,y]) != "factor") stop("variable 'y' must be factor")
+  if (!is.factor(data[,y]) ) stop("variable 'y' must be factor")
   if (length(levels(data[,y])) != 2) stop("variable 'y' must have two levels")
   if (is.null(caption)) caption <- paste("Univariate logistic regression (", y, ")")
 
-  for (i in seq_along(var2test)) {
-    if (class(data[,var2test[i]])[length(class(data[,var2test[i]]))] == "factor" ) data[,var2test[i]] <- factor(data[,var2test[i]])
-  }
+  # for (i in seq_along(var2test)) {
+  #   if (class(data[,var2test[i]])[length(class(data[,var2test[i]]))] == "factor" ) data[,var2test[i]] <- factor(data[,var2test[i]])
+  # }
 
 
   mods <- lapply(var2test,
@@ -78,8 +78,8 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
       kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size, full_width = F, position = "left") %>%
       column_spec(which(names(unimod_df) == "Global P-value") - 1, bold = T)  %>%
       # group_rows(index = tab_group,latex_gap_space = '1em')
-      group_rows(index = eval(parse(text = paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)),
-                                                              collapse = ", " ), ")")   )),latex_gap_space = '1em')%>%
+      kableExtra::group_rows(index = eval(parse(text = paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)),
+                                                                          collapse = ", " ), ")")   )),latex_gap_space = '1em')%>%
       row_spec(0,background = "#993489", color = "white")
     # group_rows(index = c('TEMPSVIU' = 1, 'Edata' = 1, 'BMI' = 1, 'EdataDIAG' = 1, 'TABAC' = 2, 'SBP' = 1, 'DBP' = 1, 'ECG' = 2, 'CHD' = 1))
     # row_spec(which(unimod_df$`P-value (Global)` < 0.05), bold = T, color = "black", background = "#C0B2CF") %>%
