@@ -35,22 +35,22 @@ descPlot <- function(...) {
 
 
 desc_plot <- function(dat, y = NULL,
-                     nameFile = "descriptive_plots.pdf",
-                     topdf = FALSE,
-                     subtitle = NULL,
-                     color = "#8D4ABA",
-                     rowcol = c(3, 2),
-                     show.lg = FALSE,
-                     show.freq = TRUE,
-                     cex.lab = 1,
-                     cex.lg = 0.65,
-                     cex.main = 0.9,
-                     las = 0,
-                     do.test = FALSE,
-                     at.text = 1) {
+                      nameFile = "descriptive_plots.pdf",
+                      topdf = FALSE,
+                      subtitle = NULL,
+                      color = "#8D4ABA",
+                      rowcol = c(3, 2),
+                      show.lg = FALSE,
+                      show.freq = TRUE,
+                      cex.lab = 1,
+                      cex.lg = 0.65,
+                      cex.main = 0.9,
+                      las = 0,
+                      do.test = FALSE,
+                      at.text = 1) {
 
 
-     par(mfrow = rowcol)
+    par(mfrow = rowcol)
 
     ## eliminem columnes buides
     dat <- remove_empty(dat, which = c("cols"))
@@ -59,11 +59,10 @@ desc_plot <- function(dat, y = NULL,
         pdf(nameFile)
         par(mfrow = rowcol)
     }
-    if (sum(Hmisc::label(dat[!names(dat) %in% y]) == "") != 0) {
-        namevar <- names(dat)
-    } else {
-        namevar <- Hmisc::label(dat)
-    }
+
+    lbls<- Hmisc::label(dat[!names(dat) %in% y])
+    namevar <- lbls
+    namevar[lbls == ""] <- names(dat)[!names(dat) %in% y][lbls == ""]
 
 
 
@@ -88,51 +87,51 @@ desc_plot <- function(dat, y = NULL,
                                 cex.lg = cex.lg)
 
 
-                  ## descriptiu bivariat
+                    ## descriptiu bivariat
                 } else {
 
-                  barplot_ueb(y = names(dat)[i], group = y, dat = dat,
-                              sub.plot = ifelse(is.null(subtitle), "", subtitle),
-                              las = las,
-                              cex.lab = cex.lab,
-                              cex.main = cex.main,
-                              show.freq = show.freq,
-                              show.lg = show.lg,
-                              cex.lg = cex.lg,
-                              do.test = do.test,
-                              at.text = at.text,
-                              title.plot = namevar[i] )
+                    barplot_ueb(y = names(dat)[i], group = y, dat = dat,
+                                sub.plot = ifelse(is.null(subtitle), "", subtitle),
+                                las = las,
+                                cex.lab = cex.lab,
+                                cex.main = cex.main,
+                                show.freq = show.freq,
+                                show.lg = show.lg,
+                                cex.lg = cex.lg,
+                                do.test = do.test,
+                                at.text = at.text,
+                                title.plot = namevar[i] )
                 }
 
 
                 ##### variables numeriques
             } else if (class(dat[, i])[length(class(dat[, i]))] == "character") {
-              message(paste("La variable",names(dat)[i], "es tipo caracter y no se ha realizado gráfico"))
-              }else {
+                message(paste("La variable",names(dat)[i], "es tipo caracter y no se ha realizado gráfico"))
+            }else {
 
                 ## descriptiu univariat
                 if (is.null(y)) {
-                  if (class(dat[,i])[length(class(dat[,i]))] == "Date" |
-                      class(dat[,i])[length(class(dat[,i]))] == "POSIXt") {
-                    breaks.units <- ifelse(length(unique(format(dat[,i],"%Y"))) >= 4 , "years", "months"  )
-                    try(hist(dat[, i], xlab = "", breaks = breaks.units, cex.main = cex.main,
-                             main = namevar[i], freq = T, las = las, cex.axis = cex.lab,
-                             sub = ifelse(is.null(subtitle), "", subtitle),
-                             col = makeTransparent("#57ADC2", alpha = 0.8)), TRUE)
+                    if (class(dat[,i])[length(class(dat[,i]))] == "Date" |
+                        class(dat[,i])[length(class(dat[,i]))] == "POSIXt") {
+                        breaks.units <- ifelse(length(unique(format(dat[,i],"%Y"))) >= 4 , "years", "months"  )
+                        try(hist(dat[, i], xlab = "", breaks = breaks.units, cex.main = cex.main,
+                                 main = namevar[i], freq = T, las = las, cex.axis = cex.lab,
+                                 sub = ifelse(is.null(subtitle), "", subtitle),
+                                 col = makeTransparent("#57ADC2", alpha = 0.8)), TRUE)
 
-                  }else{
-                  try(hist(dat[, i], xlab = "",
-                           main = namevar[i], cex.main = cex.main,
-                           sub = ifelse(is.null(subtitle), "", subtitle),
-                           col = makeTransparent(color, alpha = 0.8)), TRUE)
-                  try(rug(dat[, i]))
-                  }
-                  ## descriptiu bivariat
+                    }else{
+                        try(hist(dat[, i], xlab = "",
+                                 main = namevar[i], cex.main = cex.main,
+                                 sub = ifelse(is.null(subtitle), "", subtitle),
+                                 col = makeTransparent(color, alpha = 0.8)), TRUE)
+                        try(rug(dat[, i]))
+                    }
+                    ## descriptiu bivariat
                 } else {
-                  boxplot_bw(y = i, group = y, dat = dat, las = las,
-                             title.plot = namevar[i],
-                             cex.lab = cex.lab, do.test = do.test,
-                             at.text = at.text, cex.main = cex.main)
+                    boxplot_bw(y = i, group = y, dat = dat, las = las,
+                               title.plot = namevar[i],
+                               cex.lab = cex.lab, do.test = do.test,
+                               at.text = at.text, cex.main = cex.main)
                 }
             }
 
