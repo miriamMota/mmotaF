@@ -11,13 +11,13 @@
 #' @param cex.lab expansion factor for axis names (bar labels). (size x labels)
 #' @param cex.lg expansion factor for legend names (size legend)
 #' @param cex.main expansion factor for main names (size main)
+#' @param cex.n expansion factor for size n
 #' @param show.lg TRUE o FALSE indica si se muestra la leyenda. Por defecto FALSE.
 #' @param title.leg TRUE o FALSE indica si se muestra el titulo de la leyenda. Por defecto FALSE.
 #' @param show.freq TRUE o FALSE indica si se muestran las frecuencias. Por defecto TRUE
 #' @param do.test logical value si se quiere realizar test Chi cuadrado SIN corrección de yates.
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
-#' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
 #' @param ylab a title for the y axis
 #' @export barplot_ueb
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
@@ -37,12 +37,12 @@ barplot_ueb <- function(y, group = NULL, dat,
                        cex.lab = 1,
                        cex.main = 1,
                        cex.lg = 1,
+                       cex.n = 0.8,
                        ylab = "",
                        title.lg = TRUE,
                        do.test = FALSE,
                        show.lg = FALSE,
-                       show.freq = TRUE,
-                       at.text = 1)  {
+                       show.freq = TRUE)  {
   ## descriptiu univariat
   if (is.null(group)) {
     parmar <- c(5.1, 4.1, 4.1, 2.1)
@@ -67,6 +67,8 @@ barplot_ueb <- function(y, group = NULL, dat,
                   col = col.lev, ylim = c(0, max(tab2bar) + 6.5),
                   las = las, cex.names = cex.lab,
                   cex.main = cex.main)
+    mtext(paste0("n = ", sum(complete.cases(dat[,y]))),side = 3, adj = 1,
+          cex = cex.n)
     if (show.freq)
       try(text(aa, tab2bar + 4, labels = table(dat[, y]), cex = 0.8))
     if (show.lg) {
@@ -100,15 +102,17 @@ barplot_ueb <- function(y, group = NULL, dat,
            fill = col.lev,
            cex = cex.lg, yjust = 0.5,
              title = ifelse(title.lg, ifelse(Hmisc::label(dat[,y]) == "", "", Hmisc::label(dat[,y])), ""))  ## ajustar llegenda y
+    mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
+          cex = cex.n)
     if (do.test) {
       if (any(table(dat[, y], dat[, group]) < 5)) {
         fishpval <- fisher.test(dat[, y], dat[, group])$p.val
         mtext(paste("Fisher p-value: ", ifelse( round(fishpval,3) < 0.001, "<0.001", round(fishpval,3) ) ) ,
-              at = at.text, side = 3,cex = 0.6)
+              adj = 0, side = 3,cex = 0.6)
       }else{
         Chipval <- chisq.test(dat[, y], dat[, group], correct = F)$p.val
         mtext(paste("Chi p-value: ", ifelse( round(Chipval,3) < 0.001, "<0.001", round(Chipval,3) ) ) ,
-              at = at.text, side = 3,cex = 0.6)
+              adj = 0, side = 3,cex = 0.6)
       }
 
     }
