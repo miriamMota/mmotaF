@@ -23,7 +23,7 @@
 #' desc_plot(dat = df, color = 'red', rowcol = c(1,2))
 #' desc_plot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1), las = 2)
 #' desc_plot(mtc_bis)
-#' desc_plot(dat = mtc_bis, y ='gear', rowcol = c(2,2), do.test = TRUE, las = 2 )
+#' # desc_plot(dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = TRUE, las = 2 )
 #' @keywords plots descriptive
 
 
@@ -44,6 +44,7 @@ desc_plot <- function(dat, y = NULL,
                       cex.lab = 1,
                       cex.lg = 0.65,
                       cex.main = 0.9,
+                      cex.n = 0.5,
                       las = 0,
                       do.test = FALSE, ...) {
 
@@ -122,6 +123,8 @@ desc_plot <- function(dat, y = NULL,
                                  sub = ifelse(is.null(subtitle), "", subtitle),
                                  col = makeTransparent(color, alpha = 0.8), ...), TRUE)
                         try(rug(dat[, i]))
+                        try(mtext(paste0("n = ", sum(complete.cases(dat[,names(dat)[i]]))),side = 3, adj = 1,
+                                      cex = cex.n))
                     }
                     ## descriptiu bivariat
                 } else {
@@ -129,6 +132,8 @@ desc_plot <- function(dat, y = NULL,
                                title.plot = namevar[i],
                                cex.lab = cex.lab, do.test = do.test,
                                cex.main = cex.main, ...)
+                    mtext(paste0("n = ",nrow(na.omit(dat[,c(names(dat)[i],y)]))),side = 3, adj = 1,
+                          cex = cex.n)
                 }
             }
 
