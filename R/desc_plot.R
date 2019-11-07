@@ -81,6 +81,7 @@ desc_plot <- function(dat, y = NULL,
                                 las = las,
                                 cex.lab = cex.lab,
                                 cex.main = cex.main,
+                                cex.n = cex.n,
                                 show.freq = show.freq,
                                 show.lg = show.lg,
                                 cex.lg = cex.lg, ...)
@@ -97,6 +98,7 @@ desc_plot <- function(dat, y = NULL,
                                 show.freq = show.freq,
                                 show.lg = show.lg,
                                 cex.lg = cex.lg,
+                                cex.n = cex.n,
                                 do.test = do.test,
                                 title.plot = namevar[i] , ...)
                 }
