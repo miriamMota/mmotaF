@@ -14,7 +14,6 @@
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @param do.test logical value si se quiere realizar test kruskall Wallis.
-#' @param at.text if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.
 #' @export descPlot
 #' @export desc_plot
 #' @import beeswarm Hmisc janitor
@@ -46,8 +45,7 @@ desc_plot <- function(dat, y = NULL,
                       cex.lg = 0.65,
                       cex.main = 0.9,
                       las = 0,
-                      do.test = FALSE,
-                      at.text = 1) {
+                      do.test = FALSE) {
 
 
     par(mfrow = rowcol)
@@ -99,7 +97,6 @@ desc_plot <- function(dat, y = NULL,
                                 show.lg = show.lg,
                                 cex.lg = cex.lg,
                                 do.test = do.test,
-                                at.text = at.text,
                                 title.plot = namevar[i] )
                 }
 
@@ -131,7 +128,7 @@ desc_plot <- function(dat, y = NULL,
                     boxplot_bw(y = i, group = y, dat = dat, las = las,
                                title.plot = namevar[i],
                                cex.lab = cex.lab, do.test = do.test,
-                               at.text = at.text, cex.main = cex.main)
+                               cex.main = cex.main)
                 }
             }
 
