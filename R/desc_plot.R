@@ -45,7 +45,7 @@ desc_plot <- function(dat, y = NULL,
                       cex.lg = 0.65,
                       cex.main = 0.9,
                       las = 0,
-                      do.test = FALSE) {
+                      do.test = FALSE, ...) {
 
 
     par(mfrow = rowcol)
@@ -82,7 +82,7 @@ desc_plot <- function(dat, y = NULL,
                                 cex.main = cex.main,
                                 show.freq = show.freq,
                                 show.lg = show.lg,
-                                cex.lg = cex.lg)
+                                cex.lg = cex.lg, ...)
 
 
                     ## descriptiu bivariat
@@ -97,7 +97,7 @@ desc_plot <- function(dat, y = NULL,
                                 show.lg = show.lg,
                                 cex.lg = cex.lg,
                                 do.test = do.test,
-                                title.plot = namevar[i] )
+                                title.plot = namevar[i] , ...)
                 }
 
 
@@ -114,13 +114,13 @@ desc_plot <- function(dat, y = NULL,
                         try(hist(dat[, i], xlab = "", breaks = breaks.units, cex.main = cex.main,
                                  main = namevar[i], freq = T, las = las, cex.axis = cex.lab,
                                  sub = ifelse(is.null(subtitle), "", subtitle),
-                                 col = makeTransparent("#57ADC2", alpha = 0.8)), TRUE)
+                                 col = makeTransparent("#57ADC2", alpha = 0.8), ...), TRUE)
 
                     }else{
                         try(hist(dat[, i], xlab = "",
                                  main = namevar[i], cex.main = cex.main,
                                  sub = ifelse(is.null(subtitle), "", subtitle),
-                                 col = makeTransparent(color, alpha = 0.8)), TRUE)
+                                 col = makeTransparent(color, alpha = 0.8), ...), TRUE)
                         try(rug(dat[, i]))
                     }
                     ## descriptiu bivariat
@@ -128,7 +128,7 @@ desc_plot <- function(dat, y = NULL,
                     boxplot_bw(y = i, group = y, dat = dat, las = las,
                                title.plot = namevar[i],
                                cex.lab = cex.lab, do.test = do.test,
-                               cex.main = cex.main)
+                               cex.main = cex.main, ...)
                 }
             }
 
