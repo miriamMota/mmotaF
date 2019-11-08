@@ -76,7 +76,7 @@ desc_plot <- function(dat, y = NULL,
                 if (is.null(y)) {
 
                     barplot_ueb(y = names(dat)[i], dat = dat,
-                                title.plot = namevar[i],
+                                title.plot = strwrap(namevar[i],width = 40) ,
                                 sub.plot = ifelse(is.null(subtitle), "", subtitle),
                                 las = las,
                                 cex.lab = cex.lab,
@@ -100,7 +100,7 @@ desc_plot <- function(dat, y = NULL,
                                 cex.lg = cex.lg,
                                 cex.n = cex.n,
                                 do.test = do.test,
-                                title.plot = namevar[i] , ...)
+                                title.plot = strwrap(namevar[i],width = 40) , ...)
                 }
 
 
@@ -115,13 +115,13 @@ desc_plot <- function(dat, y = NULL,
                         class(dat[,i])[length(class(dat[,i]))] == "POSIXt") {
                         breaks.units <- ifelse(length(unique(format(dat[,i],"%Y"))) >= 4 , "years", "months"  )
                         try(hist(dat[, i], xlab = "", breaks = breaks.units, cex.main = cex.main,
-                                 main = namevar[i], freq = T, las = las, cex.axis = cex.lab,
+                                 main = strwrap(namevar[i],width = 40), freq = T, las = las, cex.axis = cex.lab,
                                  sub = ifelse(is.null(subtitle), "", subtitle),
                                  col = makeTransparent("#57ADC2", alpha = 0.8), ...), TRUE)
 
                     }else{
                         try(hist(dat[, i], xlab = "",
-                                 main = namevar[i], cex.main = cex.main,
+                                 main = strwrap(namevar[i],width = 40), cex.main = cex.main,
                                  sub = ifelse(is.null(subtitle), "", subtitle),
                                  col = makeTransparent(color, alpha = 0.8), ...), TRUE)
                         try(rug(dat[, i]))
@@ -133,7 +133,7 @@ desc_plot <- function(dat, y = NULL,
                     boxplot_bw(y = names(dat)[i], group
                                = y,
                                dat = dat, las = las,
-                               title.plot = namevar[i],
+                               title.plot = strwrap(namevar[i],width = 40),
                                cex.lab = cex.lab,
                                do.test = do.test,
                                cex.main = cex.main, ...)
