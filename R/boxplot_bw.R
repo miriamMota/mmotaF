@@ -73,6 +73,7 @@ boxplot_bw <- function(y, group = NULL, dat,
     if (is.null(title.plot))  {title.plot <- ""}
     label_group <- Hmisc::label(dat[,group])
     xlab <- ifelse(is.null(xlab), ifelse(label_group == "", group, label_group), xlab)
+    xlab <- strwrap(xlab,width = 40)
     if (class(dat[,group]) == "character")  dat[,group] <- as.factor(as.character(dat[,group]))
 
     if (is.null(color))  color <- gg_color(length(levels(dat[, group])))
