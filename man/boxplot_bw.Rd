@@ -6,8 +6,8 @@
 \usage{
 boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
   sub.plot = NULL, ylim.plot = NULL, cex.lab = 1, cex.main = 1,
-  cex.pval = 0.6, ylab = "", xlab = NULL, do.test = FALSE,
-  at.text = 1, color = NULL)
+  cex.pval = 0.6, cex.n = 0.5, ylab = "", xlab = NULL,
+  do.test = FALSE, color = NULL)
 }
 \arguments{
 \item{y}{name numeric vector of data values.}
@@ -31,13 +31,13 @@ boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
 
 \item{cex.pval}{size of the p-value text with a numeric value.}
 
+\item{cex.n}{expansion factor for size n}
+
 \item{ylab}{a title for the y axis}
 
 \item{xlab}{a title for the x axis.}
 
 \item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
-
-\item{at.text}{if do.test TRUE, give location of each string in user coordinates. If the component of at corresponding to a particular text item is not a finite value (the default), the location will be determined by adj.}
 }
 \description{
 Boxplot incluyendo puntos individuales

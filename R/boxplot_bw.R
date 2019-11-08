@@ -36,7 +36,7 @@ boxplot_bw <- function(y, group = NULL, dat,
                        cex.lab = 1,
                        cex.main = 1,
                        cex.pval = 0.6,
-                       cex.n = 0.8,
+                       cex.n = 0.5,
                        ylab = "",
                        xlab = NULL,
                        do.test = FALSE, color = NULL ) {
@@ -98,10 +98,9 @@ boxplot_bw <- function(y, group = NULL, dat,
       KWpval <- kruskal.test(dat[, y] ~ dat[, group])$p.val
       mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) ,
             adj = 0, side = 3,cex = cex.pval)
-      mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
-            cex = cex.n)
     }
-
+    mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
+          cex = cex.n)
   }
   par(op)
 }

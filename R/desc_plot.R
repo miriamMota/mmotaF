@@ -23,7 +23,7 @@
 #' desc_plot(dat = df, color = 'red', rowcol = c(1,2))
 #' desc_plot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1), las = 2)
 #' desc_plot(mtc_bis)
-#' # desc_plot(dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = TRUE, las = 2 )
+#' desc_plot(dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
 #' @keywords plots descriptive
 
 
@@ -130,12 +130,15 @@ desc_plot <- function(dat, y = NULL,
                     }
                     ## descriptiu bivariat
                 } else {
-                    boxplot_bw(y = i, group = y, dat = dat, las = las,
+                    boxplot_bw(y = names(dat)[i], group
+                               = y,
+                               dat = dat, las = las,
                                title.plot = namevar[i],
-                               cex.lab = cex.lab, do.test = do.test,
+                               cex.lab = cex.lab,
+                               do.test = do.test,
                                cex.main = cex.main, ...)
-                    mtext(paste0("n = ",nrow(na.omit(dat[,c(names(dat)[i],y)]))),side = 3, adj = 1,
-                          cex = cex.n)
+                    # mtext(paste0("n = ",nrow(na.omit(dat[,c(names(dat)[i],y)]))),side = 3, adj = 1,
+                    #       cex = cex.n)
                 }
             }
 
