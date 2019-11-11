@@ -68,7 +68,7 @@ barplot_ueb <- function(y, group = NULL, dat,
                   sub = ifelse(is.null(sub.plot), "", sub.plot),
                   col = col.lev, ylim = c(0, max(tab2bar) + 6.5),
                   las = las, cex.names = cex.lab,
-                  cex.main = cex.main)
+                  cex.main = cex.main, names.arg = strwrap(levels(df[,y]),10)  )
     mtext(paste0("n = ", sum(complete.cases(dat[,y]))),side = 3, adj = 1,
           cex = cex.n)
     if (show.freq)
@@ -98,7 +98,7 @@ barplot_ueb <- function(y, group = NULL, dat,
                   cex.names = cex.lab, cex.main = cex.main)
 
     legend(length(levels(dat[, group])) + 0.7, 50, inset = c(-0.25, 0),
-           legend = levels(dat[, y]),
+           legend = strwrap(levels(dat[, y])),
            bg = "white",
            fill = col.lev,
            cex = cex.lg, yjust = 0.5,
