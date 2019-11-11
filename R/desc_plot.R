@@ -76,7 +76,7 @@ desc_plot <- function(dat, y = NULL,
                 if (is.null(y)) {
 
                     barplot_ueb(y = names(dat)[i], dat = dat,
-                                title.plot = strwrap(namevar[i],width = 40) ,
+                                title.plot = namevar[i] ,
                                 sub.plot = ifelse(is.null(subtitle), "", subtitle),
                                 las = las,
                                 cex.lab = cex.lab,
@@ -84,7 +84,7 @@ desc_plot <- function(dat, y = NULL,
                                 cex.n = cex.n,
                                 show.freq = show.freq,
                                 show.lg = show.lg,
-                                cex.lg = cex.lg, ...)
+                                cex.lg = cex.lg)
 
 
                     ## descriptiu bivariat
@@ -100,7 +100,7 @@ desc_plot <- function(dat, y = NULL,
                                 cex.lg = cex.lg,
                                 cex.n = cex.n,
                                 do.test = do.test,
-                                title.plot = strwrap(namevar[i],width = 40) , ...)
+                                title.plot = namevar[i] )
                 }
 
 
@@ -117,16 +117,16 @@ desc_plot <- function(dat, y = NULL,
                         try(hist(dat[, i], xlab = "", breaks = breaks.units, cex.main = cex.main,
                                  main = strwrap(namevar[i],width = 40), freq = T, las = las, cex.axis = cex.lab,
                                  sub = ifelse(is.null(subtitle), "", subtitle),
-                                 col = makeTransparent("#57ADC2", alpha = 0.8), ...), TRUE)
+                                 col = makeTransparent("#57ADC2", alpha = 0.8)), TRUE)
 
                     }else{
                         try(hist(dat[, i], xlab = "",
                                  main = strwrap(namevar[i],width = 40), cex.main = cex.main,
                                  sub = ifelse(is.null(subtitle), "", subtitle),
-                                 col = makeTransparent(color, alpha = 0.8), ...), TRUE)
+                                 col = makeTransparent(color, alpha = 0.8)), TRUE)
                         try(rug(dat[, i]))
                         try(mtext(paste0("n = ", sum(complete.cases(dat[,names(dat)[i]]))),side = 3, adj = 1,
-                                      cex = cex.n))
+                                  cex = cex.n))
                     }
                     ## descriptiu bivariat
                 } else {
@@ -136,7 +136,7 @@ desc_plot <- function(dat, y = NULL,
                                title.plot = strwrap(namevar[i],width = 40),
                                cex.lab = cex.lab,
                                do.test = do.test,
-                               cex.main = cex.main, ...)
+                               cex.main = cex.main)
                     # mtext(paste0("n = ",nrow(na.omit(dat[,c(names(dat)[i],y)]))),side = 3, adj = 1,
                     #       cex = cex.n)
                 }
