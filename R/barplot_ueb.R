@@ -43,6 +43,10 @@ barplot_ueb <- function(y, group = NULL, dat,
                        do.test = FALSE,
                        show.lg = FALSE,
                        show.freq = TRUE)  {
+
+
+  if(is.null(title.plot))     title.plot <- ifelse(Hmisc::label(dat[,y]) == "", y, Hmisc::label(dat[,y]))
+
   ## descriptiu univariat
   if (is.null(group)) {
     parmar <- c(5.1, 4.1, 4.1, 2.1)
@@ -57,10 +61,7 @@ barplot_ueb <- function(y, group = NULL, dat,
       parmar <- c(5.1, 4.1, 4.1, 7.1)
     }
 
-    if(is.null(title.plot))     title.plot <- ifelse(Hmisc::label(dat[,y]) == "", y, Hmisc::label(dat[,y]))
-
-
-    op <- par(mar = parmar, xpd = TRUE)
+       op <- par(mar = parmar, xpd = TRUE)
     col.lev <- gg_color(length(levels(dat[, y])))
     tab2bar <- prop.table(table(dat[, y])) * 100
     aa <- barplot(tab2bar, xlab = "", ylab = "%",
