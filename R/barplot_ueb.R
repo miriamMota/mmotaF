@@ -104,7 +104,7 @@ barplot_ueb <- function(y, group = NULL, dat,
            bg = "white",
            fill = col.lev,
            cex = cex.lg, yjust = 0.5,
-             title = ifelse(title.lg, ifelse(Hmisc::label(dat[,y]) == "", "", Hmisc::label(dat[,y])), ""))  ## ajustar llegenda y
+             title = title.plot)  ## ajustar llegenda y
     mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
           cex = cex.n)
     if (do.test) {
