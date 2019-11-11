@@ -68,7 +68,7 @@ barplot_ueb <- function(y, group = NULL, dat,
                   sub = ifelse(is.null(sub.plot), "", sub.plot),
                   col = col.lev, ylim = c(0, max(tab2bar) + 6.5),
                   las = las, cex.names = cex.lab,
-                  cex.main = cex.main, names.arg = strwrap(levels(df[,y]),10)  )
+                  cex.main = cex.main, names.arg = strwrap(levels(dat[,y]),10)  )
     mtext(paste0("n = ", sum(complete.cases(dat[,y]))),side = 3, adj = 1,
           cex = cex.n)
     if (show.freq)
