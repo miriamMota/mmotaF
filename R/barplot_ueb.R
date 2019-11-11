@@ -22,8 +22,8 @@
 #' @export barplot_ueb
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' df <- data.frame(sex = c(sample(c('Male', 'Female'), 500, replace = TRUE, prob = c(.2,.8) ),
-#' sample(c('Male', 'Female'), 500, replace = TRUE, prob = c(.4,.6) )),
+#' df <- data.frame(sex = c(sample(c('asdasdadadMale asdasdadadMale', 'asdasdasdFemale asdasdasdFemale'), 500, replace = TRUE, prob = c(.2,.8) ),
+#' sample(c('asdasdadadMale asdasdadadMale', 'asdasdasdFemale asdasdasdFemale'), 500, replace = TRUE, prob = c(.4,.6) )),
 #' grup =  c( rep('Casos', 500),rep('Control', 500)  ))
 #' barplot_ueb(y = "sex", dat = df)
 #' barplot_ueb(y = "sex",group = "grup", dat = df, cex.lab = 0.8, do.test = TRUE)
@@ -68,7 +68,8 @@ barplot_ueb <- function(y, group = NULL, dat,
                   sub = ifelse(is.null(sub.plot), "", sub.plot),
                   col = col.lev, ylim = c(0, max(tab2bar) + 6.5),
                   las = las, cex.names = cex.lab,
-                  cex.main = cex.main, names.arg = strwrap(levels(dat[,y]),10)  )
+                  cex.main = cex.main,
+                  names.arg = wrap.it(levels(dat[,y]),10)  )
     mtext(paste0("n = ", sum(complete.cases(dat[,y]))),side = 3, adj = 1,
           cex = cex.n)
     if (show.freq)
@@ -98,7 +99,7 @@ barplot_ueb <- function(y, group = NULL, dat,
                   cex.names = cex.lab, cex.main = cex.main)
 
     legend(length(levels(dat[, group])) + 0.7, 50, inset = c(-0.25, 0),
-           legend = strwrap(levels(dat[, y])),
+           legend = wrap.it(levels(dat[, y]),10),
            bg = "white",
            fill = col.lev,
            cex = cex.lg, yjust = 0.5,
@@ -120,5 +121,26 @@ barplot_ueb <- function(y, group = NULL, dat,
 
 
     par(op)
+  }
+}
+
+
+
+wrap.it <- function(x, len)
+{
+  sapply(x, function(y) paste(strwrap(y, len),
+                              collapse = "\n"),
+         USE.NAMES = FALSE)
+}
+
+
+# Call this function with a list or vector
+wrap.labels <- function(x, len)
+{
+  if (is.list(x))
+  {
+    lapply(x, wrap.it, len)
+  } else {
+    wrap.it(x, len)
   }
 }
