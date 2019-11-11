@@ -99,7 +99,8 @@ barplot_ueb <- function(y, group = NULL, dat,
                   cex.names = cex.lab, cex.main = cex.main)
 
     legend(length(levels(dat[, group])) + 0.7, 50, inset = c(-0.25, 0),
-           legend = wrap.it(levels(dat[, y]),10),
+           # legend = wrap.it(levels(dat[, y]),10),
+           legend = levels(dat[, y]),
            bg = "white",
            fill = col.lev,
            cex = cex.lg, yjust = 0.5,
@@ -133,14 +134,3 @@ wrap.it <- function(x, len)
          USE.NAMES = FALSE)
 }
 
-
-# Call this function with a list or vector
-wrap.labels <- function(x, len)
-{
-  if (is.list(x))
-  {
-    lapply(x, wrap.it, len)
-  } else {
-    wrap.it(x, len)
-  }
-}
