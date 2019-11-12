@@ -81,7 +81,7 @@ barplot_ueb <- function(y, group = NULL, dat,
              legend = levels(dat[, y]),
              bg = "white",
              fill = col.lev, cex = cex.lg,
-             yjust = 0, title = y)
+             yjust = 0, title = wrap.it(y,10) )
       par(op)
     }
     par(op)
