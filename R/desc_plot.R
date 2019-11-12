@@ -59,12 +59,11 @@ desc_plot <- function(dat, y = NULL,
         par(mfrow = rowcol)
     }
 
-    ## Labels de les
-    if (ifelse(!is.null(y), names(dat)[i] != y, TRUE)){
+    ## Labels i names  de les a gràficar excepte la que crea grup.
         lbls<- Hmisc::label(dat[!names(dat) %in% y])
         lbls[lbls == ""] <- names(dat)[!names(dat) %in% y][lbls == ""]
         namevar <- names(lbls)
-    }
+
 
     for (i in seq_along(namevar)) {
 
