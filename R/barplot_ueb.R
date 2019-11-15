@@ -31,18 +31,18 @@
 
 
 barplot_ueb <- function(y, group = NULL, dat,
-                       las = 0,
-                       title.plot = NULL,
-                       sub.plot = NULL,
-                       cex.lab = 1,
-                       cex.main = 1,
-                       cex.lg = 1,
-                       cex.n = 0.8,
-                       ylab = "",
-                       title.lg = TRUE,
-                       do.test = FALSE,
-                       show.lg = FALSE,
-                       show.freq = TRUE)  {
+                        las = 0,
+                        title.plot = NULL,
+                        sub.plot = NULL,
+                        cex.lab = 1,
+                        cex.main = 1,
+                        cex.lg = 1,
+                        cex.n = 0.8,
+                        ylab = "",
+                        title.lg = TRUE,
+                        do.test = FALSE,
+                        show.lg = FALSE,
+                        show.freq = TRUE)  {
 
 
   if(is.null(title.plot))     title.plot <- ifelse(Hmisc::label(dat[,y]) == "", y, Hmisc::label(dat[,y]))
@@ -50,18 +50,18 @@ barplot_ueb <- function(y, group = NULL, dat,
   ## descriptiu univariat
   if (is.null(group)) {
     parmar <- c(5.1, 4.1, 4.1, 2.1)
-    } else {
-      parmar <- c(5.1, 4.1, 4.1, 7.1)
-      label_group <- Hmisc::label(dat[,group])
-      dat[, group] <- as.factor(as.character(dat[, group]))
-    }
+  } else {
+    parmar <- c(5.1, 4.1, 4.1, 7.1)
+    label_group <- Hmisc::label(dat[,group])
+    dat[, group] <- as.factor(as.character(dat[, group]))
+  }
 
   if (is.null(group)) {
     if (show.lg) {
       parmar <- c(5.1, 4.1, 4.1, 7.1)
     }
 
-       op <- par(mar = parmar, xpd = TRUE)
+    op <- par(mar = parmar, xpd = TRUE)
     col.lev <- gg_color(length(levels(dat[, y])))
     tab2bar <- prop.table(table(dat[, y])) * 100
     aa <- barplot(tab2bar, xlab = "", ylab = "%",
@@ -97,7 +97,8 @@ barplot_ueb <- function(y, group = NULL, dat,
                   ylab = "%", main = strwrap(title.plot,width = 40),
                   sub = ifelse(is.null(sub.plot), "", sub.plot),
                   col = col.lev, las = las,
-                  cex.names = cex.lab, cex.main = cex.main)
+                  cex.names = cex.lab, cex.main = cex.main,
+                  names = wrap.it(levels(dat[,group]),10))
 
     legend(length(levels(dat[, group])) + 0.7, 50, inset = c(-0.25, 0),
            # legend = wrap.it(levels(dat[, y]),10),
