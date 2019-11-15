@@ -74,12 +74,12 @@ boxplot_bw <- function(y, group = NULL, dat,
     label_group <- Hmisc::label(dat[,group])
     xlab <- ifelse(is.null(xlab), ifelse(label_group == "", group, label_group), xlab)
     xlab <- strwrap(xlab,width = 40)
-    if (class(dat[,group]) == "character")  dat[,group] <- as.factor(as.character(dat[,group]))
+    if (any(class(dat[,group]) == "character"))  dat[,group] <- as.factor(as.character(dat[,group]))
 
     if (is.null(color))  color <- gg_color(length(levels(dat[, group])))
 
     beeswarm(dat[, y] ~ dat[, group],
-             ylab = "", xlab = xlab,
+             ylab = "", xlab = wrap.it(xlab,30),
              main = strwrap(title.plot,width = 40),
              ylim = ylim.plot,
              axes = F,
@@ -94,7 +94,8 @@ boxplot_bw <- function(y, group = NULL, dat,
             cex.lab = cex.lab,
             sub = sub.plot,
             cex.sub = .7,
-            ylab = ylab)
+            ylab = ylab,
+            names = wrap.it(levels(dat[,group]),10))
     if (do.test) {
       KWpval <- kruskal.test(dat[, y] ~ dat[, group])$p.val
       mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) ,
