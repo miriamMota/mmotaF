@@ -1,3 +1,4 @@
+
 #' A boxplot_bw Function
 #'
 #' Boxplot incluyendo puntos individuales
@@ -86,14 +87,16 @@ boxplot_bw <- function(y, group = NULL, dat,
              ylim = ylim.plot,
              axes = F,
              cex.main = cex.main,
-             cex.lab = cex.lab,
+             cex.lab = 1,
+             cex.axis = cex.lab,
              pch = 20,
              col = color )
     boxplot(dat[, y] ~ dat[, group],
             add = T,
             col = makeTransparent("grey", alpha = 0.3),
             las = las,
-            cex.lab = cex.lab,
+            cex.lab = 1,
+            cex.axis = cex.lab,
             sub = sub.plot,
             cex.sub = .7,
             ylab = ylab,
