@@ -70,6 +70,7 @@ boxplot_bw <- function(y, group = NULL, dat,
 
     ## bivariant
   } else {
+    dat[,group] <- droplevels(dat[,group])
     if (is.null(title.plot))  {title.plot <- ""}
     label_group <- Hmisc::label(dat[,group])
     xlab <- ifelse(is.null(xlab), ifelse(label_group == "", group, label_group), xlab)
