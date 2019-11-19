@@ -70,8 +70,8 @@ boxplot_bw <- function(y, group = NULL, dat,
 
     ## bivariant
   } else {
-    dat[,group] <- droplevels(dat[,group])
-    if (is.null(title.plot))  {title.plot <- ""}
+    if (is.null(title.plot))  {title.plot <- ""
+    }
     label_group <- Hmisc::label(dat[,group])
     xlab <- ifelse(is.null(xlab), ifelse(label_group == "", group, label_group), xlab)
     xlab <- strwrap(xlab,width = 40)
@@ -79,6 +79,7 @@ boxplot_bw <- function(y, group = NULL, dat,
 
     if (is.null(color))  color <- gg_color(length(levels(dat[, group])))
 
+    dat[,group] <- droplevels(dat[,group])
     beeswarm(dat[, y] ~ dat[, group],
              ylab = "", xlab = wrap.it(xlab,30),
              main = strwrap(title.plot,width = 40),

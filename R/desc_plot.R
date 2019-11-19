@@ -129,8 +129,8 @@ desc_plot <- function(dat, y = NULL,
                 }
                 ## descriptiu bivariat
             } else {
-                boxplot_bw(y = namevar[i], group
-                           = y,
+                boxplot_bw(y = namevar[i],
+                           group = y,
                            dat = dat, las = las,
                            title.plot = strwrap(lbls[i],width = 40),
                            cex.lab = cex.lab,
