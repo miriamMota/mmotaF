@@ -55,7 +55,7 @@ barplot_ueb <- function(y, group = NULL, dat,
     label_group <- Hmisc::label(dat[,group])
     if(!is.factor(dat[, group])) { dat[, group] <- as.factor(as.character(dat[, group]))
     }else{
-      dat[, group] <- factor_ueb(dat[, group])
+      dat[, group] <- droplevels(dat[, group])
     }
   }
 
