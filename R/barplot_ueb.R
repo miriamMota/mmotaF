@@ -22,10 +22,10 @@
 #' @export barplot_ueb
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' df <- data.frame(sex = c(sample(c('asdasdadadMale asdasdadadMale', 'asdasdasdFemale asdasdasdFemale'), 500, replace = TRUE, prob = c(.2,.8) ),
-#' sample(c('asdasdadadMale asdasdadadMale', 'asdasdasdFemale asdasdasdFemale'), 500, replace = TRUE, prob = c(.4,.6) )),
+#' df <- data.frame(sex = c(sample(c('Male Male', 'asdasdasdFemale asdasdasdFemale'), 500, replace = TRUE, prob = c(.2,.8) ),
+#' sample(c('Male Male', 'Female Female'), 500, replace = TRUE, prob = c(.4,.6) )),
 #' grup =  c( rep('Casos', 500),rep('Control', 500)  ))
-#' barplot_ueb(y = "sex", dat = df)
+#' barplot_ueb(y = "grup", dat = df)
 #' barplot_ueb(y = "sex",group = "grup", dat = df, cex.lab = 0.8, do.test = TRUE)
 #' @keywords plots descriptive barplot
 
@@ -53,7 +53,7 @@ barplot_ueb <- function(y, group = NULL, dat,
   } else {
     parmar <- c(5.1, 4.1, 4.1, 7.1)
     label_group <- Hmisc::label(dat[,group])
-    dat[, group] <- as.factor(as.character(dat[, group]))
+    if(!is.factor(dat[, group]))  dat[, group] <- as.factor(as.character(dat[, group]))
   }
 
   if (is.null(group)) {
