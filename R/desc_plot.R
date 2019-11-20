@@ -99,7 +99,7 @@ desc_plot <- function(dat, y = NULL,
                             cex.lg = cex.lg,
                             cex.n = cex.n,
                             do.test = do.test,
-                            title.plot = lbls[i] )
+                            title.plot = lbls[i],... )
             }
 
 
