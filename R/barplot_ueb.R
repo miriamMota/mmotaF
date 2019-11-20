@@ -53,7 +53,10 @@ barplot_ueb <- function(y, group = NULL, dat,
   } else {
     parmar <- c(5.1, 4.1, 4.1, 7.1)
     label_group <- Hmisc::label(dat[,group])
-    if(!is.factor(dat[, group]))  dat[, group] <- as.factor(as.character(dat[, group]))
+    if(!is.factor(dat[, group])) { dat[, group] <- as.factor(as.character(dat[, group]))
+    }else{
+      dat[, group] <- factor_ueb(dat[, group])
+    }
   }
 
   if (is.null(group)) {
