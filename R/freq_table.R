@@ -13,7 +13,7 @@
 #' @import stargazer
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' freq_table(var.cat = c('cyl','vs','gear', 'carb'), y = 'am', data = mtc_bis, restab = TRUE)
+#' # freq_table(var.cat = c('cyl','vs','gear', 'carb'), y = 'am', data = mtc_bis, restab = TRUE)
 #' @keywords freq tables compare qualitative
 
 freq_table <- function(var.cat, y,

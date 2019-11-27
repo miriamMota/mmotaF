@@ -4,7 +4,7 @@
 \alias{select.varCG}
 \title{A select.varCG Function}
 \usage{
-\method{select}{varCG}(restab, p.value = 0.05)
+select.varCG(restab, p.value = 0.05)
 }
 \arguments{
 \item{restab}{an object of class 'compareGroups'}

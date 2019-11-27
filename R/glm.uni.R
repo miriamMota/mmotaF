@@ -11,7 +11,7 @@
 #' @param group TRUE o FALSE mostrar variables agrupadas en la tabla
 #' @keywords OR summary regresion logistic
 #' @export glm.uni
-#' @import kableExtra knitr magrittr survival anaStatsUEB
+#' @import kableExtra knitr magrittr survival
 #' @examples
 #' resglm <- glm.uni(y = "am",
 #' var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,

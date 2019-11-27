@@ -28,7 +28,7 @@ freq_table(var.cat, y, data, margin = NULL, nround = 2,
 Tabla de frecuencias relativas, por fila columnas o global.
 }
 \examples{
-freq_table(var.cat = c('cyl','vs','gear', 'carb'), y = 'am', data = mtc_bis, restab = TRUE)
+# freq_table(var.cat = c('cyl','vs','gear', 'carb'), y = 'am', data = mtc_bis, restab = TRUE)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
