@@ -18,7 +18,6 @@
 #' data = mtc_bis, format = "html", size = 10)
 #'
 
-
 glm.uni <- function(y, var2test, var2match = NULL, data,
                     size = 8.5,
                     format = "html",
@@ -39,8 +38,6 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   # for (i in seq_along(var2test)) {
   #   if (class(data[,var2test[i]])[length(class(data[,var2test[i]]))] == "factor" ) data[,var2test[i]] <- factor(data[,var2test[i]])
   # }
-
-
   mods <- lapply(var2test,
                  function(var) {
 
@@ -65,34 +62,25 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   names(glmmod) <- var2test
 
   unimod_df <- do.call(rbind, unimod)
-  unimod_df <- cbind(Variable = unimod_df$Variable, unimod_df[,!names(unimod_df) %in% "Variable"])
   unimod_df <- cbind(Level  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
-  ## aquesta linia s'afegeix pq a20.09.2018 hi ha un problema amb el paquet kable al agrupar la ultima variable
-  # unimod_df <- rbind(unimod_df, aa = "")
+  unimod_df <- cbind(Variable = unimod_df$Variable, unimod_df[,!names(unimod_df) %in% "Variable"])
 
-  # unimod_df <- cbind(Variable  = gsub("\\.*.$","",unimod_df$varlev), unimod_df)
-  # unimod_df <- cbind(Variable  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
-  # rownames(unimod_df) <- gsub("^.*\\.","",unimod_df$varlev)
-  ## unimod_df$`P-value (Global)` <- as.numeric(unimod_df$`P-value (Global)`)
-  ## unimod_df$`P-value (Global)` <- ifelse(unimod_df$`P-value (Global)` < 0.0001,"0.0001", unimod_df$`P-value (Global)`)
+
+  unimod_df$Variable <- as.character(unimod_df$Variable)
+  unimod_df$Variable[Hmisc::label(data[,unimod_df$Variable]) != ""] <-  Hmisc::label(data[,unimod_df$Variable])[Hmisc::label(data[,unimod_df$Variable]) != ""]
 
   if (group) {
     tab_group <-  table(unimod_df$Variable)[unique(as.character(unimod_df$Variable))]
-    # tab_group[length(tab_group)] <- tab_group[length(tab_group)] + 1
-    xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev", "Variable")], format = format, booktabs = T,caption = caption,  row.names = FALSE, longtable = TRUE) %>%
-      kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size, full_width = F, position = "left") %>%
+    xtab <- kable_ueb(unimod_df[,!names(unimod_df) %in% c("varlev", "Variable")], format = format, booktabs = T,caption = caption,  row.names = FALSE,
+                      longtable = TRUE, position = "left")  %>%
       column_spec(which(names(unimod_df) == "Global P-value") - 1, bold = T)  %>%
-      # group_rows(index = tab_group,latex_gap_space = '1em')
-      kableExtra::group_rows(index = eval(parse(text = paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)),
-                                                                          collapse = ", " ), ")")   )),latex_gap_space = '1em')%>%
-      row_spec(0,background = "#993489", color = "white")
-    # group_rows(index = c('TEMPSVIU' = 1, 'Edata' = 1, 'BMI' = 1, 'EdataDIAG' = 1, 'TABAC' = 2, 'SBP' = 1, 'DBP' = 1, 'ECG' = 2, 'CHD' = 1))
-    # row_spec(which(unimod_df$`P-value (Global)` < 0.05), bold = T, color = "black", background = "#C0B2CF") %>%
-
+      kableExtra::group_rows(index = tab_group,latex_gap_space = '1em')
+      # kableExtra::group_rows(index = eval(parse(text = paste0("c(",paste0("'",names(unimod), "'" , " = ",unlist(lapply(unimod,nrow)),
+      #                                                                     collapse = ", " ), ")")   )),latex_gap_space = '1em')
   }else{
     xtab <- kable_ueb(unimod_df[,!names(unimod_df) %in% c("varlev")],
                       format = format, caption = caption, longtable = TRUE,
-                      position = "left") %>%
+                      position = "left", row.names = FALSE) %>%
       column_spec(which(names(unimod_df) == "P-value (Global)") ,
                   bold = T)
   }
