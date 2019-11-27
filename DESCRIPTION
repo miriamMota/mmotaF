@@ -4,9 +4,26 @@ Version: 0.0.0.9000
 Authors@R: person("Mota", "Miriam", email = "mmota.foix@gmail.com", role = c("aut", "cre"))
 Description: Primer paquet, funcions R habituals
 Depends:
-    R (>= 3.0.0),xtable, pROC, Hmisc, beeswarm, survival, stargazer, kableExtra, knitr, magrittr, OptimalCutpoints, epiR, caret, e1071, janitor
+    R (>= 3.0.0), 
+    anaStatsUEB, 
+    pROC,
+    stargazer,
+    xtable, 
+    Hmisc, 
+    beeswarm, 
+    survival, 
+    kableExtra, 
+    knitr, 
+    magrittr, 
+    OptimalCutpoints, 
+    epiR, 
+    caret, 
+    e1071, 
+    janitor
+VignetteBuilder: knitr
 License: GPL (>= 2)
 LazyData: true
+SystemRequirements: git for install_git
 RoxygenNote: 6.1.1
 Encoding: UTF-8
 BugReports: https://github.com/miriamMota/mmotaF/issues

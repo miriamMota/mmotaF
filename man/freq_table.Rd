@@ -4,8 +4,8 @@
 \alias{freq_table}
 \title{A freq_table Function}
 \usage{
-freq_table(var.cat, y, data, margin = NULL, nround = 2, latex = TRUE,
-  title = "titles for the table", xtab.type = "latex")
+freq_table(var.cat, y, data, margin = NULL, nround = 2,
+  restab = TRUE, title = "titles for the table", xtab.type = "html")
 }
 \arguments{
 \item{var.cat}{vector con el nombre de las variables categoricas a resumir}
@@ -18,7 +18,7 @@ freq_table(var.cat, y, data, margin = NULL, nround = 2, latex = TRUE,
 
 \item{nround}{integer indicating the number of decimal places (round).}
 
-\item{latex}{TRUE o FALSE, para obtener tabla en formato .tex}
+\item{restab}{TRUE o FALSE, para obtener tabla en formato .tex or .html}
 
 \item{title}{titles for the table}
 
@@ -28,7 +28,7 @@ freq_table(var.cat, y, data, margin = NULL, nround = 2, latex = TRUE,
 Tabla de frecuencias relativas, por fila columnas o global.
 }
 \examples{
-freq_table(var.cat = c('cyl','vs','gear', 'carb'), y = 'am', data = mtc_bis, latex = TRUE)
+freq_table(var.cat = c('cyl','vs','gear', 'carb'), y = 'am', data = mtc_bis, restab = TRUE)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

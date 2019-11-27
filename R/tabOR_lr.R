@@ -78,13 +78,9 @@ tabOR_lr <- function(mod,
     tauORcoef <- tauORcoef[,!names(tauORcoef) %in% ("P-value (Global)")]
   }
 
-
   if (xtab) {
     # print(xtable(tauORcoef, caption = title, digits = 2, label = label), type = xtab.type, size = sz.latex)
-    kable(tauORcoef, caption = title, digits = 2) %>%
-      kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = font_size, full_width = F) %>%
-      row_spec(0,background = "#993489", color = "white")
-
+    kable_ueb(tauORcoef, caption = title)
   } else {
     return(tauORcoef)
   }

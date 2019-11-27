@@ -31,7 +31,7 @@ Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un
 \examples{
 resglm <- glm.uni(y = "am",
 var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
-data = mtc_bis, format = "latex", size = 10)
+data = mtc_bis, format = "html", size = 10)
 
 }
 \keyword{OR}

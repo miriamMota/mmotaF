@@ -6,22 +6,22 @@
 #' @param y nombre de la variable factor principal.
 #' @param margin index, or vector of indices to generate margin for
 #' @param nround integer indicating the number of decimal places (round).
-#' @param latex TRUE o FALSE, para obtener tabla en formato .tex
+#' @param restab TRUE o FALSE, para obtener tabla en formato .tex or .html
 #' @param title titles for the table
 #' @param xtab.type A character string. Possible values are latex, html, markdown, pandoc, and rst; this will be automatically determined if the function is called within knitr; it can also be set in the global option knitr.table.format. If format is a function, it must return a character string.
 #' @export freq_table
 #' @import stargazer
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
-#' freq_table(var.cat = c('cyl','vs','gear', 'carb'), y = 'am', data = mtc_bis, latex = TRUE)
+#' freq_table(var.cat = c('cyl','vs','gear', 'carb'), y = 'am', data = mtc_bis, restab = TRUE)
 #' @keywords freq tables compare qualitative
 
 freq_table <- function(var.cat, y,
                        data, margin = NULL,
                        nround = 2,
-                       latex = TRUE,
+                       restab = TRUE,
                        title = "titles for the table",
-                       xtab.type = "latex") {
+                       xtab.type = "html") {
 
   data[, y] <- factor(data[, y])
   res_freq_all <- NULL
@@ -37,9 +37,9 @@ freq_table <- function(var.cat, y,
     colnames(res_freq) <- c("Variable", "Levels", colnames(freq_abs))
     res_freq_all <- rbind(res_freq_all, rep("", ncol(res_freq)), res_freq)
   }
-  if (latex) {
-    kable(res_freq_all, format = xtab.type, booktabs = T,
-          caption = title , longtable = TRUE, escape = F)
+  if (restab) {
+    kable_ueb(res_freq_all, format = xtab.type, booktabs = T,
+          caption = title)
   } else {
     return(res_freq_all)
   }

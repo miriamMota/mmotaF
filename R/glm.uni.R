@@ -11,11 +11,11 @@
 #' @param group TRUE o FALSE mostrar variables agrupadas en la tabla
 #' @keywords OR summary regresion logistic
 #' @export glm.uni
-#' @import kableExtra knitr magrittr survival
+#' @import kableExtra knitr magrittr survival anaStatsUEB
 #' @examples
 #' resglm <- glm.uni(y = "am",
 #' var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
-#' data = mtc_bis, format = "latex", size = 10)
+#' data = mtc_bis, format = "html", size = 10)
 #'
 
 
@@ -90,10 +90,11 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
     # row_spec(which(unimod_df$`P-value (Global)` < 0.05), bold = T, color = "black", background = "#C0B2CF") %>%
 
   }else{
-    xtab <- kable(unimod_df[,!names(unimod_df) %in% c("varlev")], format = format, booktabs = T,caption = caption, longtable = TRUE) %>%
-      kable_styling(latex_options = c("striped","hold_position", "repeat_header"), font_size = size, full_width = F, position = "left") %>%
-      column_spec(which(names(unimod_df) == "P-value (Global)") , bold = T)%>%
-      row_spec(0,background = "#993489", color = "white")
+    xtab <- kable_ueb(unimod_df[,!names(unimod_df) %in% c("varlev")],
+                      format = format, caption = caption, longtable = TRUE,
+                      position = "left") %>%
+      column_spec(which(names(unimod_df) == "P-value (Global)") ,
+                  bold = T)
   }
 
   return(list(unimod_list = glmmod, unimod_ci_list = unimod, unimod_ci_df = unimod_df, xtab = xtab))
