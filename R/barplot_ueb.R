@@ -53,9 +53,12 @@ barplot_ueb <- function(y, group = NULL, dat,
   } else {
     parmar <- c(5.1, 4.1, 4.1, 7.1)
     label_group <- Hmisc::label(dat[,group])
-    if(!is.factor(dat[, group])) { dat[, group] <- as.factor(as.character(dat[, group]))
-    }else{
-      dat[, group] <- droplevels(dat[, group])
+    if(!is.factor(dat[, group]))  dat[, group] <- as.factor(as.character(dat[, group]))
+    if(any(table(data[,group]) == 0 ) ) {
+      lbg <- Hmisc::label(data[,group])
+      data[,group] <- droplevels(data[,group])
+      message("Some levels of ", group, " are removed since no observation in that/those levels")
+      Hmisc::label(data[,group]) <- lbg
     }
   }
 
@@ -91,6 +94,13 @@ barplot_ueb <- function(y, group = NULL, dat,
 
     ## descriptiu bivariat
   } else {
+    if(any(table(data[,y]) == 0 ) ) {
+      lb <- Hmisc::label(data[,y])
+      data[,y] <- droplevels(data[,y])
+      message("Some levels of ", y, " are removed since no observation in that/those levels")
+      Hmisc::label(data[,y]) <- lb
+    }
+
     op <- par(mar = parmar, xpd = TRUE)
 
     col.lev <- gg_color(length(levels(dat[, y])))
