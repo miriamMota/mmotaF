@@ -18,7 +18,8 @@ Depends:
     epiR, 
     caret, 
     e1071, 
-    janitor
+    janitor,
+    formula.tools
 VignetteBuilder: knitr
 License: GPL (>= 2)
 LazyData: true

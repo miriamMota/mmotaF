@@ -18,7 +18,7 @@
 #' @param direction character string specifying the direction to compute the ROC curve. By default individuals with a test value lower than the cutoff are classified as healthy (negative test), whereas patients with a test value greater than (or equal to) the cutoff are classified as diseased (positive test). If this is not the case, however, and the high values are related to health, this argument should be established at ">".
 #' @param cex.main expansion factor for main names (size main)
 #' @export doROC
-#' @import knitr
+#' @import knitr formula.tools
 #' @import pROC OptimalCutpoints xtable
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
 #' @examples
@@ -75,9 +75,10 @@ doROC <- function(frml, x , group  , dat,
   if (is.null(modGLM)) stop("Es necesario indicar, TRUE o FALSE para el parametro modGLM.")
   if ((missing(x) | missing(group)) & missing(frml))  stop("'x' and 'group' argument required, or 'frml' argument required", call. = FALSE)
 
-  if (missing(x)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
+  # if (missing(x)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
+  if (missing(x)) x <-  rhs.vars(frml)
   if (missing(frml)) frml <- as.formula(paste(group, "~", paste0(x, collapse = " + ")))
-  if (missing(group)) group <- strsplit(as.character(frml), "~", fixed = T)[[2]]
+  if (missing(group)) group <- lhs.vars(frml)
   if (is.null(title)) title <- paste(group, "-",paste0(x, collapse = "+"))
   if (is.null(tag.healthy)) tag.healthy <- levels(dat[,group])[1]
 
@@ -93,8 +94,6 @@ doROC <- function(frml, x , group  , dat,
     dat$pred <- NA
     dat[names(pred),]$pred <- pred
     x <- "pred"
-    # }else{
-    #   if (!missing(frml)) x <- strsplit(as.character(frml), "~", fixed = T)[[3]]
   }
   results$dat <- dat
 
@@ -144,9 +143,9 @@ doROC <- function(frml, x , group  , dat,
   ## punts de talls
   if (modGLM) {
     results$cutoff.probability <- clasRes$Youden$Global$optimal.cutoff$cutoff # threshold  de Youden probability
-    name_var_cuanti <-  strsplit(as.character(frml), "~", fixed = T)[[3]]
+    name_var_cuanti <-  rhs.vars(frml)
 
-    if (length(unlist(strsplit(name_var_cuanti, "+", fixed = T))) == 1) {
+    if (length(rhs.vars(frml)) == 1) {
       results$cutoff.variable <- results$dat[,name_var_cuanti][which(results$dat$pred == results$cutoff.probability)]
     }else{
       results$cutoff.variable <- "No se puede calcular debido a que existe más de una variable explicativa."
@@ -180,15 +179,3 @@ doROC <- function(frml, x , group  , dat,
   return(results)
 }
 
-# set.seed(81)
-# df <- data.frame(y = as.factor(rbinom(50,1,.40)),x = rnorm(50,10,1))
-# resROC <- doROC (frml = y ~ x, title = 'prova1', tag.healthy= "1",
-# cex.main = 0.6, dat = df, modGLM = FALSE, direction = ">")
-# resROC$cutoff.variable
-# resROC <- doROC (frml = y ~ x, title = 'prova1',
-# cex.main = 0.6, dat = df, modGLM = TRUE)
-# # si usamos el parametro modGLM = TRUE y queremos obtener el punto
-# #de corte real en la variable.
-# # Esto SOLO funciona si tenemos unicamente UNA variable explicativa.
-# resROC$cutoff.variable
-# (pt <- resROC$dat$x[which(resROC$dat$pred == resROC$cutoff.probability)])
