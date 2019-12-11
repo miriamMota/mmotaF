@@ -2,6 +2,8 @@
 #'
 #' Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es 'data.frame'
 #' @param dat data frame que contiene las variables a graficar.
+#' @param covariates a character string with names of variables.
+#' @param frml Right side of ~ must have the terms in an additive way, and left side of ~ must contain the name of the grouping variable or can be left in blank (in this latter case descriptives for whole sample are calculated and no test is performed).
 #' @param topdf valor lógico indicando si se quieren guardar los gráficos en pdf. Por defecto FALSE.
 #' @param nameFile nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto 'descriptive_plots.pdf'.
 #' @param subtitle subtitol
@@ -24,7 +26,20 @@
 #' desc_plot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1), las = 2)
 #' desc_plot(mtc_bis)
 #' desc_plot(dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
+#'
+#' ## Indicant variables a evaluar
+#' desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
+#' desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
+#'
+#' # Indicanta variables a evaluar mitjançant formula
+#' desc_plot(frml =  ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
+#' desc_plot(frml = am ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
+
 #' @keywords plots descriptive
+
+
+
+
 
 
 descPlot <- function(...) {
@@ -33,7 +48,10 @@ descPlot <- function(...) {
 }
 
 
-desc_plot <- function(dat, y = NULL,
+desc_plot <- function(dat,
+                      covariates = NULL,
+                      frml = NULL,
+                      y = NULL,
                       nameFile = "descriptive_plots.pdf",
                       topdf = FALSE,
                       subtitle = NULL,
@@ -47,9 +65,23 @@ desc_plot <- function(dat, y = NULL,
                       cex.n = 0.5,
                       las = 0,
                       do.test = FALSE, ...) {
-
-
     par(mfrow = rowcol)
+
+    ## en el cas de que hi hagi formula seleccionem el grup i les covariates
+    if(!is.null(frml)){
+        covariates <- rhs.vars(frml)
+        if(!is.null(lhs.vars(frml))) {y <- lhs.vars(frml)}
+    }
+
+    ## en el cas de que seleccionem variables a analitzar reduim bbdd a variables necesaies
+    if(!is.null(covariates)){
+        if(!is.null(y)) {
+            dat <-  dat[,c(covariates,y)]
+        }else{
+            dat <- dat[,c(covariates)]
+        }
+    }
+
 
     ## eliminem columnes buides
     dat <- remove_empty(dat, which = c("cols"))

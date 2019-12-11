@@ -5,6 +5,7 @@
 #' bivariante es posible realizar test Chi cuadrado.
 #' @param y name factor vector of data values.
 #' @param group name factor vector. Default value is NULL.
+#' @param frml Right side of ~ must have the terms in an additive way, and left side of ~ must contain the name of the grouping variable or can be left in blank (in this latter case descriptives for whole sample are calculated and no test is performed).
 #' @param dat matrix or data frame containing the variables in the formula.
 #' @param title.plot a main title for the plot
 #' @param sub.plot a sub title for the plot
@@ -26,11 +27,17 @@
 #' sample(c('Male Male', 'Female Female'), 500, replace = TRUE, prob = c(.4,.6) )),
 #' grup =  c( rep('Casos', 500),rep('Control', 500)  ))
 #' barplot_ueb(y = "grup", dat = df)
-#' barplot_ueb(y = "sex",group = "grup", dat = df, cex.lab = 0.8, do.test = TRUE)
+#' barplot_ueb(y = "sex",group = "", dat = df, cex.lab = 0.8, do.test = TRUE)
+#' # El mateix cridant la funció amb formula
+#' barplot_ueb(frml = ~ sex, dat = df)
+#' barplot_ueb(frml =  grup ~ sex, dat = df, cex.lab = 0.8, do.test = TRUE)
+
 #' @keywords plots descriptive barplot
 
 
-barplot_ueb <- function(y, group = NULL, dat,
+barplot_ueb <- function(y, group = NULL,
+                        frml =NULL,
+                        dat,
                         las = 0,
                         title.plot = NULL,
                         sub.plot = NULL,
@@ -43,6 +50,15 @@ barplot_ueb <- function(y, group = NULL, dat,
                         do.test = FALSE,
                         show.lg = FALSE,
                         show.freq = TRUE)  {
+  ## en el cas de que hi hagi formula seleccionem el grup i la y
+  if(!is.null(frml)){
+    y <- rhs.vars(frml)
+    if(!is.null(lhs.vars(frml))) {group <- lhs.vars(frml)}
+  }
+
+
+
+
 
 
   if(is.null(title.plot))     title.plot <- ifelse(Hmisc::label(dat[,y]) == "", y, Hmisc::label(dat[,y]))

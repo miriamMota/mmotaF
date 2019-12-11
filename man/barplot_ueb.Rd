@@ -4,15 +4,17 @@
 \alias{barplot_ueb}
 \title{A barplot_ueb Function}
 \usage{
-barplot_ueb(y, group = NULL, dat, las = 0, title.plot = NULL,
-  sub.plot = NULL, cex.lab = 1, cex.main = 1, cex.lg = 1,
-  cex.n = 0.8, ylab = "", title.lg = TRUE, do.test = FALSE,
-  show.lg = FALSE, show.freq = TRUE)
+barplot_ueb(y, group = NULL, frml = NULL, dat, las = 0,
+  title.plot = NULL, sub.plot = NULL, cex.lab = 1, cex.main = 1,
+  cex.lg = 1, cex.n = 0.8, ylab = "", title.lg = TRUE,
+  do.test = FALSE, show.lg = FALSE, show.freq = TRUE)
 }
 \arguments{
 \item{y}{name factor vector of data values.}
 
 \item{group}{name factor vector. Default value is NULL.}
+
+\item{frml}{Right side of ~ must have the terms in an additive way, and left side of ~ must contain the name of the grouping variable or can be left in blank (in this latter case descriptives for whole sample are calculated and no test is performed).}
 
 \item{dat}{matrix or data frame containing the variables in the formula.}
 
@@ -51,7 +53,10 @@ df <- data.frame(sex = c(sample(c('Male Male', 'Female Female'), 500, replace = 
 sample(c('Male Male', 'Female Female'), 500, replace = TRUE, prob = c(.4,.6) )),
 grup =  c( rep('Casos', 500),rep('Control', 500)  ))
 barplot_ueb(y = "grup", dat = df)
-barplot_ueb(y = "sex",group = "grup", dat = df, cex.lab = 0.8, do.test = TRUE)
+barplot_ueb(y = "sex",group = "", dat = df, cex.lab = 0.8, do.test = TRUE)
+# El mateix cridant la funció amb formula
+barplot_ueb(frml = ~ sex, dat = df)
+barplot_ueb(frml =  grup ~ sex, dat = df, cex.lab = 0.8, do.test = TRUE)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
