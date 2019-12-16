@@ -9,6 +9,10 @@ descPlot(...)
 \arguments{
 \item{dat}{data frame que contiene las variables a graficar.}
 
+\item{covariates}{a character string with names of variables.}
+
+\item{frml}{Right side of ~ must have the terms in an additive way, and left side of ~ must contain the name of the grouping variable or can be left in blank (in this latter case descriptives for whole sample are calculated and no test is performed).}
+
 \item{topdf}{valor lógico indicando si se quieren guardar los gráficos en pdf. Por defecto FALSE.}
 
 \item{nameFile}{nombre del fichero (tipo caracter) donde guardar los gráficos. Por defecto 'descriptive_plots.pdf'.}
@@ -41,6 +45,14 @@ desc_plot(dat = df, color = 'red', rowcol = c(1,2))
 desc_plot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1), las = 2)
 desc_plot(mtc_bis)
 desc_plot(dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
+
+## Indicant variables a evaluar
+desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
+desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
+
+# Indicanta variables a evaluar mitjançant formula
+desc_plot(frml =  ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
+desc_plot(frml = am ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

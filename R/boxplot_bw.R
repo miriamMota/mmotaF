@@ -4,6 +4,7 @@
 #' Boxplot incluyendo puntos individuales
 #' @param dat matrix or data frame containing the variables in the formula.
 #' @param y name numeric vector of data values.
+#' @param frml Right side of ~ must have the terms in an additive way, and left side of ~ must contain the name of the grouping variable or can be left in blank (in this latter case descriptives for whole sample are calculated and no test is performed).
 #' @param group name factor vector. Default value is NULL.
 #' @param ylim.plot is vector which contains lower and upper limits which are to appear on the y axes.
 #' @param title.plot a main title for the plot
@@ -27,9 +28,14 @@
 #' boxplot_bw(dat = mtc_bis, y = 'qsec', title.plot = "Title" )
 #' boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',
 #' title.plot = "Boxplot per grup", do.test = TRUE, las = 2)
+#' boxplot_bw(dat = df, frml =   ~ rnorm )
+#' boxplot_bw(dat = mtc_bis, , frml =  gear ~ qsec ,
+#' title.plot = "Boxplot per grup", do.test = TRUE, las = 2)
 #' @keywords plots descriptive boxplot
 
-boxplot_bw <- function(y, group = NULL, dat,
+boxplot_bw <- function(y, group = NULL,
+                       frml = NULL,
+                       dat,
                        las = 0,
                        title.plot = NULL,
                        sub.plot = NULL,
@@ -41,6 +47,14 @@ boxplot_bw <- function(y, group = NULL, dat,
                        ylab = "",
                        xlab = NULL,
                        do.test = FALSE, color = NULL ) {
+
+
+  ## en el cas de que hi hagi formula seleccionem el grup i la y
+  if(!is.null(frml)){
+    y <- rhs.vars(frml)
+    if(!is.null(lhs.vars(frml))) {group <- lhs.vars(frml)}
+  }
+
 
   if (is.null(ylim.plot))
     ylim.plot <- c(min(dat[, y], na.rm = T), max(dat[, y] + 0.2, na.rm = T))

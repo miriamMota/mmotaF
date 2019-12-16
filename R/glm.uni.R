@@ -13,9 +13,9 @@
 #' @export glm.uni
 #' @import kableExtra knitr magrittr survival
 #' @examples
-#' resglm <- glm.uni(y = "am",
-#' var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
-#' data = mtc_bis, format = "html", size = 10)
+#' # resglm <- glm.uni(y = "am",
+#' # var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
+#' # data = mtc_bis, format = "html", size = 10)
 #'
 
 glm.uni <- function(y, var2test, var2match = NULL, data,
