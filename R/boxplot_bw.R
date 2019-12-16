@@ -4,7 +4,6 @@
 #' Boxplot incluyendo puntos individuales
 #' @param dat matrix or data frame containing the variables in the formula.
 #' @param y name numeric vector of data values.
-#' @param frml Right side of ~ must have the terms in an additive way, and left side of ~ must contain the name of the grouping variable or can be left in blank (in this latter case descriptives for whole sample are calculated and no test is performed).
 #' @param group name factor vector. Default value is NULL.
 #' @param ylim.plot is vector which contains lower and upper limits which are to appear on the y axes.
 #' @param title.plot a main title for the plot
@@ -18,6 +17,7 @@
 #' @param cex.pval size of the p-value text with a numeric value.
 #' @param cex.main expansion factor for main names (size main)
 #' @param cex.n expansion factor for size n
+#' @param bw logical value for beeswarm
 #' @export boxplot_bw
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
@@ -28,14 +28,13 @@
 #' boxplot_bw(dat = mtc_bis, y = 'qsec', title.plot = "Title" )
 #' boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',
 #' title.plot = "Boxplot per grup", do.test = TRUE, las = 2)
-#' boxplot_bw(dat = df, frml =   ~ rnorm )
-#' boxplot_bw(dat = mtc_bis, , frml =  gear ~ qsec ,
-#' title.plot = "Boxplot per grup", do.test = TRUE, las = 2)
+#' boxplot_bw(dat = df, y = 'rnorm', bw = FALSE )
+#' boxplot_bw(dat = mtc_bis, y = 'qsec', title.plot = "Title", bw = FALSE )
+#' boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',
+#' title.plot = "Boxplot per grup", do.test = TRUE, las = 2, bw = FALSE)
 #' @keywords plots descriptive boxplot
 
-boxplot_bw <- function(y, group = NULL,
-                       frml = NULL,
-                       dat,
+boxplot_bw <- function(y, group = NULL, dat,
                        las = 0,
                        title.plot = NULL,
                        sub.plot = NULL,
@@ -46,16 +45,11 @@ boxplot_bw <- function(y, group = NULL,
                        cex.n = 0.5,
                        ylab = "",
                        xlab = NULL,
-                       do.test = FALSE, color = NULL ) {
+                       do.test = FALSE,
+                       color = NULL,
+                       bw = TRUE) {
 
-
-  ## en el cas de que hi hagi formula seleccionem el grup i la y
-  if(!is.null(frml)){
-    y <- rhs.vars(frml)
-    if(!is.null(lhs.vars(frml))) {group <- lhs.vars(frml)}
-  }
-
-
+  cex.dot <- ifelse(bw,1,0)
   if (is.null(ylim.plot))
     ylim.plot <- c(min(dat[, y], na.rm = T), max(dat[, y] + 0.2, na.rm = T))
   op <- par(cex.axis = cex.lab)
@@ -73,7 +67,9 @@ boxplot_bw <- function(y, group = NULL,
              ylim = ylim.plot,
              axes = F,
              pch = 20,
-             col = gg_color(1), corral = "gutter")
+             col = gg_color(1),
+             corral = "gutter",
+             cex = cex.dot )
 
     boxplot(dat[, y],
             add = T,
@@ -104,7 +100,7 @@ boxplot_bw <- function(y, group = NULL,
              cex.lab = 1,
              cex.axis = cex.lab,
              pch = 20,
-             col = color )
+             col = color, cex = cex.dot )
     boxplot(dat[, y] ~ dat[, group],
             add = T,
             col = makeTransparent("grey", alpha = 0.3),
