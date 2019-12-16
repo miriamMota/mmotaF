@@ -80,7 +80,7 @@ boxplot_bw <- function(y, group = NULL, dat,
 
     if (is.null(color))  color <- gg_color(length(levels(dat[, group])))
 
-    dat[,group] <- droplevels(dat[,group])
+    if(is.factor(dat[,group]))  dat[,group] <- droplevels(dat[,group])
     beeswarm(dat[, y] ~ dat[, group],
              ylab = "", xlab = wrap.it(xlab,30),
              main = strwrap(title.plot,width = 40),

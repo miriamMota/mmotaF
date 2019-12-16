@@ -56,7 +56,7 @@ barplot_ueb <- function(y, group = NULL, dat,
     if(!is.factor(dat[, group]))  dat[, group] <- as.factor(as.character(dat[, group]))
     if(any(table(dat[,group]) == 0 ) ) {
       lbg <- Hmisc::label(dat[,group])
-      dat[,group] <- droplevels(dat[,group])
+      if(is.factor(dat[,group])) dat[,group] <- droplevels(dat[,group])
       message("Some levels of ", group, " are removed since no observation in that/those levels")
       Hmisc::label(dat[,group]) <- lbg
     }
@@ -96,7 +96,7 @@ barplot_ueb <- function(y, group = NULL, dat,
   } else {
     if(any(table(dat[,y]) == 0 ) ) {
       lb <- Hmisc::label(dat[,y])
-      dat[,y] <- droplevels(dat[,y])
+      if(is.factor(dat[,y]))dat[,y] <- droplevels(dat[,y])
       message("Some levels of ", y, " are removed since no observation in that/those levels")
       Hmisc::label(dat[,y]) <- lb
     }
