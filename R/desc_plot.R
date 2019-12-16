@@ -16,6 +16,7 @@
 #' @param las numeric in {0,1,2,3}; the style of axis labels. 0: always parallel to the axis [default],
 #' 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.
 #' @param do.test logical value si se quiere realizar test kruskall Wallis.
+#' @param bw logical value for beeswarm
 #' @export descPlot
 #' @export desc_plot
 #' @import beeswarm Hmisc janitor
@@ -30,6 +31,7 @@
 #' ## Indicant variables a evaluar
 #' desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
 #' desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
+#' desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2,bw = FALSE )
 #'
 #' # Indicanta variables a evaluar mitjançant formula
 #' desc_plot(frml =  ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
@@ -64,7 +66,8 @@ desc_plot <- function(dat,
                       cex.main = 0.9,
                       cex.n = 0.5,
                       las = 0,
-                      do.test = FALSE, ...) {
+                      do.test = FALSE,
+                      bw = TRUE, ...) {
     par(mfrow = rowcol)
 
     ## en el cas de que hi hagi formula seleccionem el grup i les covariates
@@ -167,7 +170,7 @@ desc_plot <- function(dat,
                            title.plot = strwrap(lbls[i],width = 40),
                            cex.lab = cex.lab,
                            do.test = do.test,
-                           cex.main = cex.main)
+                           cex.main = cex.main,bw = bw)
                 # mtext(paste0("n = ",nrow(na.omit(dat[,c(names(dat)[i],y)]))),side = 3, adj = 1,
                 #       cex = cex.n)
             }
