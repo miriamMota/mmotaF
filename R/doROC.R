@@ -17,6 +17,7 @@
 #' @param xtab.type A character string. Possible values are latex, html, markdown, pandoc, and rst; this will be automatically determined if the function is called within knitr; it can also be set in the global option knitr.table.format. If format is a function, it must return a character string.
 #' @param direction character string specifying the direction to compute the ROC curve. By default individuals with a test value lower than the cutoff are classified as healthy (negative test), whereas patients with a test value greater than (or equal to) the cutoff are classified as diseased (positive test). If this is not the case, however, and the high values are related to health, this argument should be established at ">".
 #' @param cex.main expansion factor for main names (size main)
+#' @param cex.text expansion factor for text (size cases controls text)
 #' @export doROC
 #' @import knitr formula.tools
 #' @import pROC OptimalCutpoints xtable
@@ -55,7 +56,10 @@ doROC <- function(frml, x , group  , dat,
                   title = NULL,
                   modGLM = NULL,
                   doPlot = TRUE,
-                  cex.main = 0.9,
+                  cex.main = 2,
+                  cex.text = 1.4,
+                  cex.sub = 0.9,
+                  cex = 0.5,
                   show.lg = TRUE,
                   show.cascon = TRUE,
                   show.detail = TRUE,
@@ -108,13 +112,16 @@ doROC <- function(frml, x , group  , dat,
   results$res_sum <- summary(clasRes)
 
   if (doPlot) {
-    plot(clasRes, which = 1, legend = show.lg, cex.main = cex.main, ylim = c(0,1))
-    mtext(title, side = 3)
+    opt <- par(cex=cex, cex.main=cex.main)
+    plot(clasRes, which = 1, legend = show.lg,
+         ylim = c(0,1), ...)
+    par(opt)
+    mtext(title, side = 3, cex = cex.sub)
     if (show.cascon) {
       text(.85, .25,
            paste0("controls: ", clasRes$Youden$Global$measures.acc$n$h,
                   "\n cases: ", clasRes$Youden$Global$measures.acc$n$d),
-           cex = 0.8)
+           cex = cex.text)
     }
 
   }
