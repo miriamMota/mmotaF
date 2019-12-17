@@ -112,9 +112,9 @@ doROC <- function(frml, x , group  , dat,
   results$res_sum <- summary(clasRes)
 
   if (doPlot) {
-    opt <- par(cex=cex, cex.main=cex.main)
+    opt <- par(cex=cex, cex.main=cex.main, ...)
     plot(clasRes, which = 1, legend = show.lg,
-         ylim = c(0,1), ...)
+         ylim = c(0,1))
     par(opt)
     mtext(title, side = 3, cex = cex.sub)
     if (show.cascon) {
