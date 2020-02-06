@@ -46,7 +46,7 @@ barplot_ueb <- function(y, group = NULL,
                         cex.lg = 1,
                         cex.n = 0.8,
                         ylab = "",
-                        title.lg = TRUE,
+                        title.lg = FALSE,
                         do.test = FALSE,
                         show.lg = FALSE,
                         show.freq = TRUE)  {
@@ -136,7 +136,7 @@ barplot_ueb <- function(y, group = NULL,
            fill = col.lev,
            cex = cex.lg, yjust = 0.5,
            # title = ifelse(title.lg, wrap.it(title.plot,7), ""))  ## ajustar llegenda y
-          title = ifelse(title.lg, title.plot, ""))  ## ajustar llegenda y
+            title = ifelse(title.lg, title.plot, ""))  ## ajustar llegenda y
     mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
           cex = cex.n)
     if (do.test) {
