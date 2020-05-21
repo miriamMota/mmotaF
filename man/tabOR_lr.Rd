@@ -24,6 +24,10 @@ tabOR_lr(...)
 \item{show.n}{TRUE o FALSE muestra el total de individuos usados para el ajuste del modelo. Default value is "TRUE".}
 
 \item{show.aov.pval}{TRUE o FALSE muestra el p-valor del modelo global. Default value is "TRUE".}
+
+\item{show.pretty}{TRUE o FALSE muestra las 'labels' de las variables. Solo funciona para lm y glm . Default value is "FALSE".}
+
+\item{group_rw}{TRUE o FALSE  agrupa las filas por variables. Default value is "FALSE".}
 }
 \description{
 Genera tabla resumen para modelos lineales,logisticos y cox

@@ -10,6 +10,8 @@
 #' @param show.intcp TRUE o FALSE, indica si se muestra o no el intercept del modelo. En ambos casos el modelo se ha calcula con intercept. Default value is "FALSE".
 #' @param show.n TRUE o FALSE muestra el total de individuos usados para el ajuste del modelo. Default value is "TRUE".
 #' @param show.aov.pval TRUE o FALSE muestra el p-valor del modelo global. Default value is "TRUE".
+#' @param show.pretty TRUE o FALSE muestra las 'labels' de las variables. Solo funciona para lm y glm . Default value is "FALSE".
+#' @param group_rw TRUE o FALSE  agrupa las filas por variables. Default value is "FALSE".
 #' @keywords OR regresion logistica
 #' @export tabOR_lr
 #' @export desc_mod
@@ -24,11 +26,12 @@ tabOR_lr <- function(...) {
 
 desc_mod <- function(mod,
                      xtab = FALSE,
-                     title = "title",
+                     title = "Model summary",
                      xtab.type = "latex",
                      sz.latex = "small",
                      font_size = 13,
-                     label = NULL,
+                     show.pretty = FALSE,
+                     group_rw = FALSE,
                      show.intcp = FALSE,
                      show.n = TRUE,
                      show.aov.pval = TRUE) {
@@ -44,21 +47,59 @@ desc_mod <- function(mod,
   res <- pret_mod[, c("Variable", type_mod, "CI (lower)", "CI (upper)", grep("Pr", names(pret_mod), value = T) ) ]
   rownames(res) <- res$Variable
 
+
+
+
   if(!show.intcp){
     res <- res %>% dplyr::filter(Variable != "(Intercept)" )
   }
 
-  res$`P-value (Global)` <- na.omit(anova(mod,test = "Chisq")$Pr)[1]
-  res$N <- nobs(mod)
+  #P.valueGlobal
+  res[1,"P-value (Global)"] <- na.omit(anova(mod,test = "Chisq")$Pr)[1]
+  #N total
+  res[1,"N"] <- nobs(mod)
   # colnames(tauORcoef) <- c("OR", "LowerIC", "UpperIC", "P-value", "P-value (Global)", "N")
+
+
 
 
   if (!show.n) {  res <- res[,!names(res) %in% ("N")]  }
 
   if (!show.aov.pval) {    res <- res[,!names(res) %in% ("P-value (Global)")]  }
 
+
+  if (show.pretty){
+    if(class(mod)[1] == "glm" | class(mod)[1] == "lm") {
+      vars_mod <- get.vars(alias(mod)$Model)[-1]
+      Hmisc::label(mod$model, self = F)[Hmisc::label(mod$model) == ""] <- names(mod$model)[Hmisc::label(mod$model)==""]
+      label_var <- Hmisc::label(mod$model)[-1]
+    }else{
+      vars_mod <- attr(terms(mod),"term.labels")
+    }
+
+    matches <- stringr::str_c(vars_mod, collapse ="|")
+    vars_name <- stringr::str_extract_all(res$Variable, matches, simplify = T)[,1]
+    res <- tibble::add_column(res,vars_name,.before = "Variable")
+
+    if(class(mod)[1] == "glm" | class(mod)[1] == "lm") {
+      vars_label <- c(if(show.intcp) "Intercept",label_var)
+      res <- tibble::add_column(res,vars_label,.before = "Variable")
+    }
+    levs <- stringr::str_replace_all(res$Variable,vars_name,"")
+    res <- tibble::add_column(res,levs,.before = "Variable")
+
+    res <- res %>% select(- Variable,-vars_name)
+
+  }
+
   if (xtab) {
-    kable_ueb(res, caption = title)
+    if(group_rw) {
+      kable_ueb(res[,!names(res)%in% c("var_name", "vars_label")], caption = title) %>%
+        kableExtra::group_rows(index = table(res$vars_label)[unique(as.character(res$vars_label))])
+    }else{
+      kable_ueb(res, caption = title)
+    }
+
   } else {
     return(res)
   }
