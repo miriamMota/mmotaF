@@ -4,10 +4,27 @@
 \alias{doROC}
 \title{A doROC Function}
 \usage{
-doROC(frml, x, group, dat, tag.healthy = NULL, title = NULL,
-  modGLM = NULL, doPlot = TRUE, cex.main = 0.9, show.lg = TRUE,
-  show.cascon = TRUE, show.detail = TRUE, xtab = FALSE,
-  xtab.type = "latex", direction = c("<", ">"), ...)
+doROC(
+  frml,
+  x,
+  group,
+  dat,
+  tag.healthy = NULL,
+  title = NULL,
+  modGLM = NULL,
+  doPlot = TRUE,
+  cex.main = 2,
+  cex.text = 1.4,
+  cex.sub = 0.9,
+  cex = 0.5,
+  show.lg = TRUE,
+  show.cascon = TRUE,
+  show.detail = TRUE,
+  xtab = FALSE,
+  xtab.type = "latex",
+  direction = c("<", ">"),
+  ...
+)
 }
 \arguments{
 \item{frml}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.}
@@ -27,6 +44,8 @@ doROC(frml, x, group, dat, tag.healthy = NULL, title = NULL,
 \item{doPlot}{A logical value indicating whether show a plot. Default value is TRUE}
 
 \item{cex.main}{expansion factor for main names (size main)}
+
+\item{cex.text}{expansion factor for text (size cases controls text)}
 
 \item{show.lg}{A logical value indicating whether show a legend Default value is TRUE}
 

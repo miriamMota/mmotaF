@@ -19,11 +19,13 @@ Depends:
     caret, 
     e1071, 
     janitor,
-    formula.tools
+    formula.tools,
+    dplyr,
+    papeR
 VignetteBuilder: knitr
 License: GPL (>= 2)
 LazyData: true
 SystemRequirements: git for install_git
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Encoding: UTF-8
 BugReports: https://github.com/miriamMota/mmotaF/issues

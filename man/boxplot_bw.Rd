@@ -4,17 +4,29 @@
 \alias{boxplot_bw}
 \title{A boxplot_bw Function}
 \usage{
-boxplot_bw(y, group = NULL, frml = NULL, dat, las = 0,
-  title.plot = NULL, sub.plot = NULL, ylim.plot = NULL,
-  cex.lab = 1, cex.main = 1, cex.pval = 0.6, cex.n = 0.5,
-  ylab = "", xlab = NULL, do.test = FALSE, color = NULL)
+boxplot_bw(
+  y,
+  group = NULL,
+  dat,
+  las = 0,
+  title.plot = NULL,
+  sub.plot = NULL,
+  ylim.plot = NULL,
+  cex.lab = 1,
+  cex.main = 1,
+  cex.pval = 0.6,
+  cex.n = 0.5,
+  ylab = "",
+  xlab = NULL,
+  do.test = FALSE,
+  color = NULL,
+  bw = TRUE
+)
 }
 \arguments{
 \item{y}{name numeric vector of data values.}
 
 \item{group}{name factor vector. Default value is NULL.}
-
-\item{frml}{Right side of ~ must have the terms in an additive way, and left side of ~ must contain the name of the grouping variable or can be left in blank (in this latter case descriptives for whole sample are calculated and no test is performed).}
 
 \item{dat}{matrix or data frame containing the variables in the formula.}
 
@@ -40,6 +52,8 @@ boxplot_bw(y, group = NULL, frml = NULL, dat, las = 0,
 \item{xlab}{a title for the x axis.}
 
 \item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
+
+\item{bw}{logical value for beeswarm}
 }
 \description{
 Boxplot incluyendo puntos individuales
@@ -51,9 +65,10 @@ boxplot_bw(dat = df, y = 'rnorm' )
 boxplot_bw(dat = mtc_bis, y = 'qsec', title.plot = "Title" )
 boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',
 title.plot = "Boxplot per grup", do.test = TRUE, las = 2)
-boxplot_bw(dat = df, frml =   ~ rnorm )
-boxplot_bw(dat = mtc_bis, , frml =  gear ~ qsec ,
-title.plot = "Boxplot per grup", do.test = TRUE, las = 2)
+boxplot_bw(dat = df, y = 'rnorm', bw = FALSE )
+boxplot_bw(dat = mtc_bis, y = 'qsec', title.plot = "Title", bw = FALSE )
+boxplot_bw(dat = mtc_bis, y = 'qsec', group = 'gear',
+title.plot = "Boxplot per grup", do.test = TRUE, las = 2, bw = FALSE)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

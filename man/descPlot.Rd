@@ -35,6 +35,8 @@ descPlot(...)
 1: always horizontal, 2:always perpendicular to the axis, 3: always vertical.}
 
 \item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
+
+\item{bw}{logical value for beeswarm}
 }
 \description{
 Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es 'data.frame'
@@ -49,8 +51,9 @@ desc_plot(dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
 ## Indicant variables a evaluar
 desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
 desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
+desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2,bw = FALSE )
 
-# Indicanta variables a evaluar mitjançant formula
+# Indicanta variables a evaluar mitjanÃ§ant formula
 desc_plot(frml =  ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
 desc_plot(frml = am ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
 }
