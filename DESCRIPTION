@@ -21,7 +21,8 @@ Depends:
     janitor,
     formula.tools,
     dplyr,
-    papeR
+    papeR,
+    stringr
 VignetteBuilder: knitr
 License: GPL (>= 2)
 LazyData: true

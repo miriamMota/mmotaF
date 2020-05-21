@@ -29,12 +29,7 @@ tabOR_lr(...)
 Genera tabla resumen para modelos lineales,logisticos y cox
 }
 \examples{
-df <- data.frame( x = rnorm(48,10,1),
-y = as.factor(c(rep("1",16), rep("0",32) ) ), match = c(rep(1:16,3) ) )
-mod <- glm(y ~ x, data = df, family = binomial)
-desc_mod(mod, xtab = FALSE,title='OR de los coeficientes', show.intcp = TRUE)
-#mod <- survival::clogit(as.numeric(y) ~ x + strata(match), data = df)
-#desc_mod(mod, xtab = FALSE,title='OR de los coeficientes')
+
 }
 \keyword{OR}
 \keyword{logistica}
