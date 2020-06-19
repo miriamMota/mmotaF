@@ -44,6 +44,12 @@ desc_mod <- function(mod,
                       coxph = "Hazard Ratio")
   pret_mod <- papeR::prettify(summary(mod))
   names(pret_mod)[names(pret_mod) == " "] <- "Variable"
+  if(class(mod)[1] == "lm" & !all(grepl("CI", names(pret_mod))) ){
+    mod_ci <- as.data.frame(confint(mod))
+    names(mod_ci) <- c("CI (lower)", "CI (upper)")
+    pret_mod <- cbind(pret_mod,mod_ci )
+  }
+
   res <- pret_mod[, c("Variable", type_mod, "CI (lower)", "CI (upper)", grep("Pr", names(pret_mod), value = T) ) ]
   rownames(res) <- res$Variable
 
