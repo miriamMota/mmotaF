@@ -88,10 +88,13 @@ desc_mod <- function(mod,
     res <- tibble::add_column(res,vars_name,.before = "Variable")
 
     if(class(mod)[1] == "glm" | class(mod)[1] == "lm") {
-      vars_label <- c(if(show.intcp) "Intercept",label_var)
+      vars_label <- label_var
+      vars_label <- stringr::str_replace_all(res$vars_name,label_var,"")
+      if(show.intcp) vars_label<- c("Intercept", vars_label)
       res <- tibble::add_column(res,vars_label,.before = "Variable")
     }
     levs <- stringr::str_replace_all(res$Variable,vars_name,"")
+    levs <- gsub(": ","",levs,fixed = T)
     res <- tibble::add_column(res,levs,.before = "Variable")
 
     res <- res %>% select(- Variable,-vars_name)
