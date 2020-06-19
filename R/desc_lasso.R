@@ -56,7 +56,8 @@ desc_lasso <- function(glmmod, s, y = NULL, data, show.all = FALSE){
 
 
 
-  results$lasso_ht <- kable_ueb(df_lasso_selected[,!names(df_lasso_selected) %in% c("vars_name", "feature", "var_label")], row.names = FALSE, digits = 3) %>%
+  results$lasso_ht <- kable_ueb(df_lasso_selected[,!names(df_lasso_selected) %in% c("vars_name", "feature", "var_label")]
+                                , row.names = FALSE, digits = 3,caption = "Summary selected Lasso coefficients" ) %>%
     kableExtra:: group_rows( index =  table(df_lasso_selected$var_label)[unique(as.character(df_lasso_selected$var_label))])
 
 
