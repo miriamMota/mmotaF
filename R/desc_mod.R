@@ -103,12 +103,12 @@ desc_mod <- function(mod,
 
   if (xtab) {
     if(group_rw) {
-      kable_ueb(res[,!names(res)%in% c("var_name", "vars_label")], caption = title) %>%
+      res_ht <- kable_ueb(res[,!names(res)%in% c("var_name", "vars_label")], caption = title) %>%
         kableExtra::group_rows(index = table(res$vars_label)[unique(as.character(res$vars_label))])
     }else{
-      kable_ueb(res, caption = title)
+      res_ht <-kable_ueb(res, caption = title)
     }
-
+    return(res_ht)
   } else {
     return(res)
   }
