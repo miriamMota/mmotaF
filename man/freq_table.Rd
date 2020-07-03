@@ -4,16 +4,8 @@
 \alias{freq_table}
 \title{A freq_table Function}
 \usage{
-freq_table(
-  var.cat,
-  y,
-  data,
-  margin = NULL,
-  nround = 2,
-  restab = TRUE,
-  title = "titles for the table",
-  xtab.type = "html"
-)
+freq_table(var.cat, y, data, margin = NULL, nround = 2,
+  restab = TRUE, title = "titles for the table", xtab.type = "html")
 }
 \arguments{
 \item{var.cat}{vector con el nombre de las variables categoricas a resumir}
