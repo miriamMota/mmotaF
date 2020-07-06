@@ -3,6 +3,7 @@
 #' Genera resumen para los coeficientes de laso distintos de 0 ( o todos)
 #' @param varlev character vector. Nombre de la variable (var) y los niveles de los factores. Habitualmente, la salida de los coeficientes de un modelo.
 #' @param var character vector. Original name of variable
+#' @param del.intercept TRUE or FALSE. Remove "(Intercept)"
 #' @keywords lasso coefficients models
 #' @export extract_names
 #' @import stringr
@@ -15,10 +16,11 @@
 
 
 
-extract_names <- function(varlev, var){
+extract_names <- function(varlev, var, del.intercept = T){
   matches <- stringr::str_c(var, collapse ="|")
   levs <- stringr::str_replace_all(string = varlev, pattern = matches,"")
   names_var_sel <- stringr::str_replace_all(string = varlev,
                                             pattern = stringr::str_c(levs, collapse ="$|"),"")
+  if(del.intercept) names_var_sel <- names_var_sel[!names_var_sel %in% "(Intercept)"]
   return(names_var_sel)
 }

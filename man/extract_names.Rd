@@ -4,12 +4,14 @@
 \alias{extract_names}
 \title{A extract_names Function}
 \usage{
-extract_names(varlev, var)
+extract_names(varlev, var, del.intercept = T)
 }
 \arguments{
 \item{varlev}{character vector. Nombre de la variable (var) y los niveles de los factores. Habitualmente, la salida de los coeficientes de un modelo.}
 
 \item{var}{character vector. Original name of variable}
+
+\item{del.intercept}{TRUE or FALSE. Remove "(Intercept)"}
 }
 \description{
 Genera resumen para los coeficientes de laso distintos de 0 ( o todos)
