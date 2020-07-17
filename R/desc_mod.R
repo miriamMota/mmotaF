@@ -12,6 +12,7 @@
 #' @param show.aov.pval TRUE o FALSE muestra el p-valor del modelo global. Default value is "TRUE".
 #' @param show.pretty TRUE o FALSE muestra las 'labels' de las variables. Solo funciona para lm y glm . Default value is "FALSE".
 #' @param group_rw TRUE o FALSE  agrupa las filas por variables. Default value is "FALSE".
+#' @param row.names TRUE or FALSE. Show or not rownames
 #' @keywords OR regresion logistica
 #' @export tabOR_lr
 #' @export desc_mod
@@ -34,7 +35,8 @@ desc_mod <- function(mod,
                      group_rw = FALSE,
                      show.intcp = FALSE,
                      show.n = TRUE,
-                     show.aov.pval = TRUE) {
+                     show.aov.pval = TRUE,
+                     row.names = TRUE) {
 
 
   type_mod <-  switch(class(mod)[1],
@@ -44,12 +46,6 @@ desc_mod <- function(mod,
                       coxph = "Hazard Ratio")
   pret_mod <- papeR::prettify(summary(mod))
   names(pret_mod)[names(pret_mod) == " "] <- "Variable"
-  if(class(mod)[1] == "lm" & !all(grepl("CI", names(pret_mod))) ){
-    mod_ci <- as.data.frame(confint(mod))
-    names(mod_ci) <- c("CI (lower)", "CI (upper)")
-    pret_mod <- cbind(pret_mod,mod_ci )
-  }
-
   res <- pret_mod[, c("Variable", type_mod, "CI (lower)", "CI (upper)", grep("Pr", names(pret_mod), value = T) ) ]
   rownames(res) <- res$Variable
 
@@ -88,13 +84,10 @@ desc_mod <- function(mod,
     res <- tibble::add_column(res,vars_name,.before = "Variable")
 
     if(class(mod)[1] == "glm" | class(mod)[1] == "lm") {
-      vars_label <- label_var
-      vars_label <- stringr::str_replace_all(res$vars_name,label_var,"")
-      if(show.intcp) vars_label<- c("Intercept", vars_label)
+      vars_label <- c(if(show.intcp) "Intercept",label_var)
       res <- tibble::add_column(res,vars_label,.before = "Variable")
     }
     levs <- stringr::str_replace_all(res$Variable,vars_name,"")
-    levs <- gsub(": ","",levs,fixed = T)
     res <- tibble::add_column(res,levs,.before = "Variable")
 
     res <- res %>% select(- Variable,-vars_name)
@@ -103,12 +96,13 @@ desc_mod <- function(mod,
 
   if (xtab) {
     if(group_rw) {
-      res_ht <- kable_ueb(res[,!names(res)%in% c("var_name", "vars_label")], caption = title) %>%
+      kable_ueb(res[,!names(res)%in% c("var_name", "vars_label")],
+                caption = title, row.names = row.names) %>%
         kableExtra::group_rows(index = table(res$vars_label)[unique(as.character(res$vars_label))])
     }else{
-      res_ht <-kable_ueb(res, caption = title)
+      kable_ueb(res, caption = title, row.names = row.names)
     }
-    return(res_ht)
+
   } else {
     return(res)
   }
