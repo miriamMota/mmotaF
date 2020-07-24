@@ -12,6 +12,7 @@
 #' @param show.aov.pval TRUE o FALSE muestra el p-valor del modelo global. Default value is "TRUE".
 #' @param show.pretty TRUE o FALSE muestra las 'labels' de las variables. Solo funciona para lm y glm . Default value is "FALSE".
 #' @param group_rw TRUE o FALSE  agrupa las filas por variables. Default value is "FALSE".
+#' @param row.names TRUE or FALSE. Show or not rownames
 #' @keywords OR regresion logistica
 #' @export tabOR_lr
 #' @export desc_mod
@@ -34,7 +35,8 @@ desc_mod <- function(mod,
                      group_rw = FALSE,
                      show.intcp = FALSE,
                      show.n = TRUE,
-                     show.aov.pval = TRUE) {
+                     show.aov.pval = TRUE,
+                     row.names = TRUE) {
 
 
   type_mod <-  switch(class(mod)[1],
@@ -94,10 +96,11 @@ desc_mod <- function(mod,
 
   if (xtab) {
     if(group_rw) {
-      kable_ueb(res[,!names(res)%in% c("var_name", "vars_label")], caption = title) %>%
+      kable_ueb(res[,!names(res)%in% c("var_name", "vars_label")],
+                caption = title, row.names = row.names) %>%
         kableExtra::group_rows(index = table(res$vars_label)[unique(as.character(res$vars_label))])
     }else{
-      kable_ueb(res, caption = title)
+      kable_ueb(res, caption = title, row.names = row.names)
     }
 
   } else {
