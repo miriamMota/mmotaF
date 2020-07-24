@@ -74,7 +74,7 @@ desc_mod <- function(mod,
     if(class(mod)[1] == "glm" | class(mod)[1] == "lm") {
       vars_mod <- get.vars(alias(mod)$Model)[-1]
       Hmisc::label(mod$model, self = F)[Hmisc::label(mod$model) == ""] <- names(mod$model)[Hmisc::label(mod$model)==""]
-      label_var <- Hmisc::label(mod$model)[-1]
+      # label_var <-  Hmisc::label(mod$model[,res$vars_name]) # Hmisc::label(mod$model)[-1]
     }else{
       vars_mod <- attr(terms(mod),"term.labels")
     }
@@ -84,7 +84,8 @@ desc_mod <- function(mod,
     res <- tibble::add_column(res,vars_name,.before = "Variable")
 
     if(class(mod)[1] == "glm" | class(mod)[1] == "lm") {
-      vars_label <- c(if(show.intcp) "Intercept",label_var)
+      vars_label <-  Hmisc::label(mod$model[,res$vars_name])
+      if(show.intcp) vars_label <- c("Intercept",vars_label)
       res <- tibble::add_column(res,vars_label,.before = "Variable")
     }
     levs <- stringr::str_replace_all(res$Variable,vars_name,"")
