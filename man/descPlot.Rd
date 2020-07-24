@@ -53,7 +53,7 @@ desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, rowcol = c(2,2), do.test = F
 desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
 desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2,bw = FALSE )
 
-# Indicanta variables a evaluar mitjanÃ§ant formula
+# Indicanta variables a evaluar mitjançant formula
 desc_plot(frml =  ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
 desc_plot(frml = am ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
 }

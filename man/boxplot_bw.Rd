@@ -4,24 +4,10 @@
 \alias{boxplot_bw}
 \title{A boxplot_bw Function}
 \usage{
-boxplot_bw(
-  y,
-  group = NULL,
-  dat,
-  las = 0,
-  title.plot = NULL,
-  sub.plot = NULL,
-  ylim.plot = NULL,
-  cex.lab = 1,
-  cex.main = 1,
-  cex.pval = 0.6,
-  cex.n = 0.5,
-  ylab = "",
-  xlab = NULL,
-  do.test = FALSE,
-  color = NULL,
-  bw = TRUE
-)
+boxplot_bw(y, group = NULL, dat, las = 0, title.plot = NULL,
+  sub.plot = NULL, ylim.plot = NULL, cex.lab = 1, cex.main = 1,
+  cex.pval = 0.6, cex.n = 0.5, ylab = "", xlab = NULL,
+  do.test = FALSE, color = NULL, bw = TRUE)
 }
 \arguments{
 \item{y}{name numeric vector of data values.}
