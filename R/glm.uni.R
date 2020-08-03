@@ -48,7 +48,8 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
                      formula <- as.formula(paste( "as.numeric(",y,")~", var," + strata(",var2match,")"))
                      res.logist <-  survival::clogit(formula,  data[complete.cases(data[,y]),])
                    }
-                   res_lm <- round(tabOR_lr(mod = res.logist,xtab = FALSE, title = var, show.intcp = FALSE, show.n = show.n, show.aov.pval = show.aov.pval),2)
+                   res_lm <- tabOR_lr(mod = res.logist,xtab = FALSE, title = var, show.intcp = FALSE, show.n = show.n,
+                                      show.aov.pval = show.aov.pval)
                    rownames(res_lm) <- gsub(var,"", rownames(res_lm))
                    res_lm[is.na(res_lm)] <- ""
                    res_lm <- cbind(varlev = paste0(var,".",rownames(res_lm)), res_lm)
