@@ -5,7 +5,6 @@
 #' @param xtab TRUE o FALSE, para obtener tabla en formato .tex
 #' @param title if xtab = T, Character vector containing the table's caption or title.
 #' @param xtab.type Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".
-#' @param sz.latex A character vector that is inserted just before the tabular environment starts. This can be used to set the font size and a variety of other table settings. Initial backslashes are automatically prefixed, if not supplied by user. Default value is "small".
 #' @param label Character vector of length 1 containing the LaTeX label. Default value is NULL.
 #' @param show.intcp TRUE o FALSE, indica si se muestra o no el intercept del modelo. En ambos casos el modelo se ha calcula con intercept. Default value is "FALSE".
 #' @param show.n TRUE o FALSE muestra el total de individuos usados para el ajuste del modelo. Default value is "TRUE".
@@ -30,14 +29,13 @@ desc_mod <- function(mod,
                      xtab = FALSE,
                      title = "Model summary",
                      xtab.type = "latex",
-                     sz.latex = "small",
                      font_size = 13,
                      show.pretty = FALSE,
                      group_rw = FALSE,
                      show.intcp = FALSE,
                      show.n = TRUE,
                      show.aov.pval = TRUE,
-                     row.names = TRUE, digits = 2) {
+                     row.names = F, digits = 2) {
 
 
   type_mod <-  switch(class(mod)[1],
@@ -58,7 +56,7 @@ desc_mod <- function(mod,
   }
 
   #P.valueGlobal
-  res[1,"P-value (Global)"] <- na.omit(anova(mod,test = "Chisq")$Pr)[1]
+  # res[1,"P-value (Global)"] <- na.omit(anova(mod,test = "Chisq")$Pr)[1] ## INCORRECTE
   #N total
   res[1,"N"] <- nobs(mod)
   # colnames(tauORcoef) <- c("OR", "LowerIC", "UpperIC", "P-value", "P-value (Global)", "N")
