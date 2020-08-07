@@ -4,10 +4,24 @@
 \alias{barplot_ueb}
 \title{A barplot_ueb Function}
 \usage{
-barplot_ueb(y, group = NULL, frml = NULL, dat, las = 0,
-  title.plot = NULL, sub.plot = NULL, cex.lab = 1, cex.main = 1,
-  cex.lg = 1, cex.n = 0.8, ylab = "", title.lg = FALSE,
-  do.test = FALSE, show.lg = FALSE, show.freq = TRUE)
+barplot_ueb(
+  y,
+  group = NULL,
+  frml = NULL,
+  dat,
+  las = 0,
+  title.plot = NULL,
+  sub.plot = NULL,
+  cex.lab = 1,
+  cex.main = 1,
+  cex.lg = 1,
+  cex.n = 0.8,
+  ylab = "",
+  title.lg = FALSE,
+  do.test = FALSE,
+  show.lg = FALSE,
+  show.freq = TRUE
+)
 }
 \arguments{
 \item{y}{name factor vector of data values.}
@@ -54,7 +68,7 @@ bivariante es posible realizar test Chi cuadrado.
 # grup =  c( rep('Casos', 500),rep('Control', 500)  ))
 # barplot_ueb(y = "grup", dat = df)
 # barplot_ueb(y = "sex",group = "grup", dat = df, cex.lab = 0.8, do.test = TRUE)
-# El mateix cridant la funció amb formula
+# El mateix cridant la funciÃ³ amb formula
 # barplot_ueb(frml = ~ sex, dat = df)
 # barplot_ueb(frml =  grup ~ sex, dat = df, cex.lab = 0.8, do.test = TRUE)
 }
