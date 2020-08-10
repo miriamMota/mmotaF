@@ -15,8 +15,6 @@ tabOR_lr(...)
 
 \item{xtab.type}{Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".}
 
-\item{sz.latex}{A character vector that is inserted just before the tabular environment starts. This can be used to set the font size and a variety of other table settings. Initial backslashes are automatically prefixed, if not supplied by user. Default value is "small".}
-
 \item{label}{Character vector of length 1 containing the LaTeX label. Default value is NULL.}
 
 \item{show.intcp}{TRUE o FALSE, indica si se muestra o no el intercept del modelo. En ambos casos el modelo se ha calcula con intercept. Default value is "FALSE".}
@@ -28,6 +26,10 @@ tabOR_lr(...)
 \item{show.pretty}{TRUE o FALSE muestra las 'labels' de las variables. Solo funciona para lm y glm . Default value is "FALSE".}
 
 \item{group_rw}{TRUE o FALSE  agrupa las filas por variables. Default value is "FALSE".}
+
+\item{row.names}{TRUE or FALSE. Show or not rownames}
+
+\item{digits}{numeric vector specifying the number of digits to display}
 }
 \description{
 Genera tabla resumen para modelos lineales,logisticos y cox
