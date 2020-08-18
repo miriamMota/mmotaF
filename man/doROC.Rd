@@ -4,27 +4,11 @@
 \alias{doROC}
 \title{A doROC Function}
 \usage{
-doROC(
-  frml,
-  x,
-  group,
-  dat,
-  tag.healthy = NULL,
-  title = NULL,
-  modGLM = NULL,
-  doPlot = TRUE,
-  cex.main = 2,
-  cex.text = 1.4,
-  cex.sub = 0.9,
-  cex = 0.5,
-  show.lg = TRUE,
-  show.cascon = TRUE,
-  show.detail = TRUE,
-  xtab = FALSE,
-  xtab.type = "latex",
-  direction = c("<", ">"),
-  ...
-)
+doROC(frml, x, group, dat, tag.healthy = NULL, title = NULL,
+  modGLM = NULL, doPlot = TRUE, cex.main = 2, cex.text = 1.4,
+  cex.sub = 0.9, cex = 0.5, show.lg = TRUE, show.cascon = TRUE,
+  show.detail = TRUE, xtab = FALSE, xtab.type = "latex",
+  direction = c("<", ">"), ...)
 }
 \arguments{
 \item{frml}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Es necesario usar este parametro cuando tengamos mas de una variable explicativa.}

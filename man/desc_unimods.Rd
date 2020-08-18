@@ -4,17 +4,8 @@
 \alias{desc_unimods}
 \title{A desc_unimods Function}
 \usage{
-desc_unimods(
-  y,
-  var2test,
-  data,
-  type = NULL,
-  size = 8.5,
-  format = "html",
-  caption = NULL,
-  show.n = TRUE,
-  group = TRUE
-)
+desc_unimods(y, var2test, data, type = NULL, size = 8.5,
+  format = "html", caption = NULL, show.n = TRUE, group = TRUE)
 }
 \arguments{
 \item{y}{response variable.}
