@@ -20,7 +20,8 @@ extract_names <- function(varlev, var, del.intercept = T){
   matches <- stringr::str_c(var, collapse ="|")
   levs <- stringr::str_replace_all(string = varlev, pattern = matches,"")
   names_var_sel <- stringr::str_replace_all(string = varlev,
-                                            pattern = stringr::str_c(levs, collapse ="$|"),"")
+                                            pattern = paste0(stringr::str_c(levs, collapse = "$|"), "$"),
+                                            "")
   if(del.intercept) names_var_sel <- names_var_sel[!names_var_sel %in% "(Intercept)"]
   return(names_var_sel)
 }
