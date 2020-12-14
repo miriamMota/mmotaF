@@ -63,15 +63,15 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
   names(glmmod) <- var2test
 
   unimod_df <- do.call(rbind, unimod)
-  unimod_df <- cbind(Level  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
-  unimod_df <- cbind(Variable = rownames(unimod_df), unimod_df[,!names(unimod_df) %in% "Variable"])
+  # unimod_df <- cbind(Level  = gsub("^.*\\.","",unimod_df$varlev), unimod_df)
+  # unimod_df <- cbind(Variable = rownames(unimod_df), unimod_df[,!names(unimod_df) %in% "Variable"])
 
 
-  rownames(unimod_df) <- as.character(rownames(unimod_df))
-  rownames(unimod_df)[Hmisc::label(data[,rownames(unimod_df)]) != ""] <-  Hmisc::label(data[,rownames(unimod_df)])[Hmisc::label(data[,rownames(unimod_df)]) != ""]
+  # rownames(unimod_df) <- as.character(rownames(unimod_df))
+  # rownames(unimod_df)[Hmisc::label(data[,rownames(unimod_df)]) != ""] <-  Hmisc::label(data[,rownames(unimod_df)])[Hmisc::label(data[,rownames(unimod_df)]) != ""]
 
   if (group) {
-    tab_group <-  table(rownames(unimod_df))[unique(as.character(rownames(unimod_df)))]
+    tab_group <- table(unimod_df$Variable)[unique(as.character(unimod_df$Variable))]
     xtab <- kable_ueb(unimod_df[,!names(unimod_df) %in% c("varlev", "Variable")], format = format, booktabs = T,caption = caption,  row.names = FALSE,
                       longtable = TRUE, position = "left")  %>%
       column_spec(which(names(unimod_df) == "Global P-value") - 1, bold = T)  %>%
