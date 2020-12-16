@@ -50,7 +50,7 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
                      res.logist <-  survival::clogit(formula,  data[complete.cases(data[,y]),])
                    }
                    res_lm <- desc_mod(mod = res.logist,xtab = FALSE, title = var, show.intcp = FALSE, show.n = show.n,
-                                      show.aov.pval = show.aov.pval)
+                                      show.aov.pval = show.aov.pval, digits = 3)
                    rownames(res_lm) <- gsub(var,"", rownames(res_lm))
                    res_lm[is.na(res_lm)] <- ""
                    res_lm <- cbind(varlev = paste0(var,".",rownames(res_lm)), res_lm)
@@ -70,8 +70,6 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
 
   # rownames(unimod_df) <- as.character(rownames(unimod_df))
   # rownames(unimod_df)[Hmisc::label(data[,rownames(unimod_df)]) != ""] <-  Hmisc::label(data[,rownames(unimod_df)])[Hmisc::label(data[,rownames(unimod_df)]) != ""]
-
-  unimod_df <- unimod_df %>%  mutate_if(is.numeric, round,nround)
 
   if (group) {
     tab_group <- table(unimod_df$Variable)[unique(as.character(unimod_df$Variable))]
