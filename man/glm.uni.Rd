@@ -4,9 +4,19 @@
 \alias{glm.uni}
 \title{A glm.uni Function}
 \usage{
-glm.uni(y, var2test, var2match = NULL, data, size = 8.5,
-  format = "html", caption = NULL, show.n = TRUE,
-  show.aov.pval = FALSE, group = TRUE)
+glm.uni(
+  y,
+  var2test,
+  var2match = NULL,
+  data,
+  size = 8.5,
+  format = "html",
+  caption = NULL,
+  show.n = TRUE,
+  show.aov.pval = FALSE,
+  group = TRUE,
+  nround = 3
+)
 }
 \arguments{
 \item{y}{response variable. Variable factor con 2 categorias}

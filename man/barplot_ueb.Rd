@@ -4,10 +4,24 @@
 \alias{barplot_ueb}
 \title{A barplot_ueb Function}
 \usage{
-barplot_ueb(y, group = NULL, frml = NULL, dat, las = 0,
-  title.plot = NULL, sub.plot = NULL, cex.lab = 1, cex.main = 1,
-  cex.lg = 1, cex.n = 0.8, ylab = "", title.lg = FALSE,
-  do.test = FALSE, show.lg = FALSE, show.freq = TRUE)
+barplot_ueb(
+  y,
+  group = NULL,
+  frml = NULL,
+  dat,
+  las = 0,
+  title.plot = NULL,
+  sub.plot = NULL,
+  cex.lab = 1,
+  cex.main = 1,
+  cex.lg = 1,
+  cex.n = 0.8,
+  ylab = "",
+  title.lg = FALSE,
+  do.test = FALSE,
+  show.lg = FALSE,
+  show.freq = TRUE
+)
 }
 \arguments{
 \item{y}{name factor vector of data values.}

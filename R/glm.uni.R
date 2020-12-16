@@ -11,7 +11,7 @@
 #' @param group TRUE o FALSE mostrar variables agrupadas en la tabla
 #' @keywords OR summary regresion logistic
 #' @export glm.uni
-#' @import kableExtra knitr magrittr survival
+#' @import kableExtra knitr magrittr survival dplyr
 #' @examples
 #' # resglm <- glm.uni(y = "am",
 #' # var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
@@ -24,7 +24,8 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
                     caption = NULL,
                     show.n = TRUE,
                     show.aov.pval = FALSE,
-                    group = TRUE){
+                    group = TRUE,
+                    nround = 3){
 
   if (!is.factor(data[,y]) ){
     stop("variable 'y' must be factor")
@@ -69,6 +70,8 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
 
   # rownames(unimod_df) <- as.character(rownames(unimod_df))
   # rownames(unimod_df)[Hmisc::label(data[,rownames(unimod_df)]) != ""] <-  Hmisc::label(data[,rownames(unimod_df)])[Hmisc::label(data[,rownames(unimod_df)]) != ""]
+
+  unimod_df <- unimod_df %>%  mutate_if(is.numeric, round,nround)
 
   if (group) {
     tab_group <- table(unimod_df$Variable)[unique(as.character(unimod_df$Variable))]
