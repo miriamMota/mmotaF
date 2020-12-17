@@ -91,6 +91,8 @@ desc_mod <- function(mod,
     res <- tibble::add_column(res,levs,.before = "Variable")
 
     res <- res %>% select(- Variable,-vars_name)
+    res <- res %>%
+      mutate_if(is.numeric, round,digits)
 
   }
 
@@ -107,3 +109,4 @@ desc_mod <- function(mod,
     return(res)
   }
 }
+
