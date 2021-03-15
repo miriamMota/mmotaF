@@ -67,7 +67,8 @@ desc_plot <- function(dat,
                       cex.n = 0.5,
                       las = 0,
                       do.test = FALSE,
-                      bw = TRUE, ...) {
+                      bw = TRUE,
+                      show.n=T, ...) {
     par(mfrow = rowcol)
 
     ## en el cas de que hi hagi formula seleccionem el grup i les covariates
@@ -170,7 +171,7 @@ desc_plot <- function(dat,
                            title.plot = strwrap(lbls[i],width = 40),
                            cex.lab = cex.lab,
                            do.test = do.test,
-                           cex.main = cex.main,bw = bw)
+                           cex.main = cex.main,bw = bw, show.n = show.n)
                 # mtext(paste0("n = ",nrow(na.omit(dat[,c(names(dat)[i],y)]))),side = 3, adj = 1,
                 #       cex = cex.n)
             }
