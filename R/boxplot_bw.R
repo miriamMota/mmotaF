@@ -47,7 +47,8 @@ boxplot_bw <- function(y, group = NULL, dat,
                        xlab = NULL,
                        do.test = FALSE,
                        color = NULL,
-                       bw = TRUE) {
+                       bw = TRUE,
+                       show.n = T) {
 
   cex.dot <- ifelse(bw,1,0)
   if (is.null(ylim.plot))
@@ -115,7 +116,7 @@ boxplot_bw <- function(y, group = NULL, dat,
       mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) ,
             adj = 0, side = 3,cex = cex.pval)
     }
-    mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
+    if(show.n) mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
           cex = cex.n)
   }
   par(op)
