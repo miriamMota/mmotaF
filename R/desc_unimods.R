@@ -36,20 +36,21 @@ desc_unimods <- function(y, var2test, data, type = NULL,
                                          ifelse(type == "logistic", paste( "Reference level:", levels(data[,y])[1]), ""))
 
   unimod_df <- NULL
+  mod <- list()
   for(i in seq_along(var2test)){
     # print(var_mod[i])
     frml <- as.formula(paste0(y," ~", var2test[i]))
 
-    mod <- switch (type,
-                   "logistic" = glm(frml,data =  data, family = "binomial"),
-                   "linear" = lm(frml, data)
+    mod[[var2test[i]]] <- switch (type,
+                                  "logistic" = glm(frml,data =  data, family = "binomial"),
+                                  "linear" = lm(frml, data)
     )
-    unimod_df <- rbind(unimod_df, desc_mod(mod,show.pretty = T))
+    unimod_df <- rbind(unimod_df, desc_mod(mod[[var2test[i]]],show.pretty = T))
   }
   xtab <- kable_ueb(unimod_df[, !names(unimod_df) %in% "vars_label"], row.names = F, digits = 3,font_size = size,
                     caption = )
   if(group){
     xtab <- xtab %>% kableExtra::group_rows(index = table(unimod_df$vars_label)[unique(as.character(unimod_df$vars_label))])
   }
-  return(list( unimod_ci_df = unimod_df, xtab = xtab))
+  return(list( unimod_ci_df = unimod_df, xtab = xtab, mods =mod) )
 }
