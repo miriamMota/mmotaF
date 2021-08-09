@@ -1,4 +1,3 @@
-
 #' A boxplot_bw Function
 #'
 #' Boxplot incluyendo puntos individuales
@@ -50,7 +49,7 @@ boxplot_bw <- function(y, group = NULL, dat,
                        bw = TRUE,
                        show.n = T) {
 
-  cex.dot <- ifelse(bw,1,0)
+  # cex.dot <- ifelse(bw,1,0)
   if (is.null(ylim.plot))
     ylim.plot <- c(min(dat[, y], na.rm = T), max(dat[, y] + 0.2, na.rm = T))
   op <- par(cex.axis = cex.lab)
@@ -59,21 +58,21 @@ boxplot_bw <- function(y, group = NULL, dat,
   if (is.null(group)) {
     if (is.null(title.plot))
       title.plot <- y
-    beeswarm(dat[, y],
-             ylab = "",
-             main = strwrap(title.plot,width = 40),
-             sub = sub.plot,
-             cex.main = cex.main,
-             cex.sub = .7,
-             ylim = ylim.plot,
-             axes = F,
-             pch = 20,
-             col = gg_color(1),
-             corral = "gutter",
-             cex = cex.dot )
+    if(bw){
+      beeswarm(dat[, y],
+               ylab = "",
+               main = strwrap(title.plot,width = 40),
+               sub = sub.plot,
+               cex.main = cex.main,
+               cex.sub = .7,
+               ylim = ylim.plot,
+               axes = F,
+               pch = 20,
+               col = gg_color(1),
+               corral = "gutter")}
 
     boxplot(dat[, y],
-            add = T,
+            add = bw,
             col = makeTransparent("grey", alpha = 0.3),
             las = las)
 
@@ -91,18 +90,19 @@ boxplot_bw <- function(y, group = NULL, dat,
     if (is.null(color))  color <- gg_color(length(levels(dat[, group])))
 
     if(is.factor(dat[,group]))  dat[,group] <- droplevels(dat[,group])
-    beeswarm(dat[, y] ~ dat[, group],
-             ylab = "", xlab = wrap.it(xlab,30),
-             main = strwrap(title.plot,width = 40),
-             ylim = ylim.plot,
-             axes = F,
-             cex.main = cex.main,
-             cex.lab = 1,
-             cex.axis = cex.lab,
-             pch = 20,
-             col = color, cex = cex.dot )
+    if(bw){
+      beeswarm(dat[, y] ~ dat[, group],
+               ylab = "", xlab = wrap.it(xlab,30),
+               main = strwrap(title.plot,width = 40),
+               ylim = ylim.plot,
+               axes = F,
+               cex.main = cex.main,
+               cex.lab = 1,
+               cex.axis = cex.lab,
+               pch = 20,
+               col = color)}
     boxplot(dat[, y] ~ dat[, group],
-            add = T,
+            add = bw,
             col = makeTransparent("grey", alpha = 0.3),
             las = las,
             cex.lab = 1,
@@ -117,7 +117,7 @@ boxplot_bw <- function(y, group = NULL, dat,
             adj = 0, side = 3,cex = cex.pval)
     }
     if(show.n) mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
-          cex = cex.n)
+                     cex = cex.n)
   }
   par(op)
 }
