@@ -20,7 +20,8 @@ boxplot_bw(
   xlab = NULL,
   do.test = FALSE,
   color = NULL,
-  bw = TRUE
+  bw = TRUE,
+  show.n = T
 )
 }
 \arguments{

@@ -26,19 +26,14 @@ desc_unimods <- function(y, var2test, data, type = NULL,
                          show.n = TRUE,
                          group = TRUE){
 
-  if (!is.factor(data[,y]) ){
+  if (!is.factor(data[,y]) & type == "logistic" ){
     stop("variable 'y' must be factor")
-  }else{
-    data[,y] <- factor_ueb(data[,y])
   }
 
   if (is.null(type)) stop("model 'type' is needed ")
-  if (length(levels(data[,y])) != 2) stop("variable 'y' must have two levels")
+  if (length(levels(data[,y])) != 2 & type == "logistic") stop("variable 'y' must have two levels")
   if (is.null(caption)) caption <- paste("Univariate logistic regression (", y, ").",
                                          ifelse(type == "logistic", paste( "Reference level:", levels(data[,y])[1]), ""))
-
-
-
 
   unimod_df <- NULL
   for(i in seq_along(var2test)){
@@ -49,22 +44,12 @@ desc_unimods <- function(y, var2test, data, type = NULL,
                    "logistic" = glm(frml,data =  data, family = "binomial"),
                    "linear" = lm(frml, data)
     )
-
     unimod_df <- rbind(unimod_df, desc_mod(mod,show.pretty = T))
-
   }
-
-
   xtab <- kable_ueb(unimod_df[, !names(unimod_df) %in% "vars_label"], row.names = F, digits = 3,font_size = size,
                     caption = )
-
   if(group){
     xtab <- xtab %>% kableExtra::group_rows(index = table(unimod_df$vars_label)[unique(as.character(unimod_df$vars_label))])
   }
-
-
-
-
-
   return(list( unimod_ci_df = unimod_df, xtab = xtab))
 }
