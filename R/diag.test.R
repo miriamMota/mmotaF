@@ -23,6 +23,7 @@
 #' @keywords roc glm test
 
 
+
 diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
 
   if (class(y)[length(class(y))] != "factor") stop("La variable 'y' debe ser factor")
@@ -56,7 +57,7 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
 
     epiRes <- epi.tests(tab2test)
 
-    if (epiRes$elements$se == confusionMatrix(table(pred_i,y))$byClass[["Sensitivity"]] ) {
+    if (epiRes$detail$se$est == confusionMatrix(table(pred_i,y))$byClass[["Sensitivity"]] ) {
       positive <- confusionMatrix(table(pred_i,y))$positive
       classification[["variable"]][[name_var]][["positive.class"]] <- positive
       pos.class[i] <- positive
@@ -68,14 +69,14 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
 
 
     ll <- list()
-    ll[["Accuracy"]] <- unlist(c(epiRes$elements$diag.acc)) * 100
-    ll[["Sensitivity"]] <- unlist(c(epiRes$elements$sensitivity)) * 100
-    ll[["Specificity"]] <- unlist(c(epiRes$elements$specificity)) * 100
-    ll[["PPV"]] <-  c(epiRes$elements$ppv, epiRes$elements$ppv.low, epiRes$elements$ppv.up) * 100
-    ll[["NPV"]] <-  c(epiRes$elements$npv, epiRes$elements$npv.low, epiRes$elements$npv.up) * 100
-    ll[["LRpositive"]] <-  unlist(c(epiRes$elements$lr.positive))
-    ll[["LRnegative"]] <-  unlist(c(epiRes$elements$lr.negative))
-    ll[["Prevalence"]] <-  unlist(c(epiRes$elements$tprev)) * 100
+    ll[["Accuracy"]] <- unlist(c(epiRes$detail$diag.ac$est)) * 100
+    ll[["Sensitivity"]] <- unlist(c(epiRes$detail$se$est)) * 100
+    ll[["Specificity"]] <- unlist(c(epiRes$detail$sp$est)) * 100
+    ll[["PPV"]] <-  c(epiRes$detail$pv.pos$est, epiRes$detail$pv.pos$lower, epiRes$detail$pv.pos$upper) * 100
+    ll[["NPV"]] <-  c(epiRes$detail$pv.neg$est, epiRes$detail$pv.neg$lower, epiRes$detail$pv.neg$upper) * 100
+    ll[["LRpositive"]] <-  unlist(c(epiRes$detail$lr.pos))
+    ll[["LRnegative"]] <-  unlist(c(epiRes$detail$lr.neg))
+    ll[["Prevalence"]] <-  unlist(c(epiRes$detail$tp)) * 100
 
 
     res <- data.frame(matrix(unlist(ll), nrow = length(ll), byrow = T),stringsAsFactors = FALSE)
@@ -93,7 +94,7 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
   if (length(unique(pos.class)) == 1) {
     classification[["summary"]][["positive.class.all"]] <- unique(pos.class)
   }else{
-      stop("Existen distintas 'positive.class'")
+    stop("Existen distintas 'positive.class'")
   }
 
   sum_ac <- data.frame(matrix(unlist(sum_ac_l), nrow = length(sum_ac_l), byrow = T),stringsAsFactors = FALSE)
