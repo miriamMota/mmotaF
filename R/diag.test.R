@@ -22,8 +22,6 @@
 #' @return summary: taula detallada amb totes les mesures de classificació per a cada una de les variables
 #' @keywords roc glm test
 
-
-
 diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
 
   if (class(y)[length(class(y))] != "factor") stop("La variable 'y' debe ser factor")
@@ -74,9 +72,9 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
     ll[["Specificity"]] <- unlist(c(epiRes$detail$sp$est)) * 100
     ll[["PPV"]] <-  c(epiRes$detail$pv.pos$est, epiRes$detail$pv.pos$lower, epiRes$detail$pv.pos$upper) * 100
     ll[["NPV"]] <-  c(epiRes$detail$pv.neg$est, epiRes$detail$pv.neg$lower, epiRes$detail$pv.neg$upper) * 100
-    ll[["LRpositive"]] <-  unlist(c(epiRes$detail$lr.pos))
-    ll[["LRnegative"]] <-  unlist(c(epiRes$detail$lr.neg))
-    ll[["Prevalence"]] <-  unlist(c(epiRes$detail$tp)) * 100
+    ll[["LRpositive"]] <-  unlist(c(epiRes$detail$lr.pos$est))
+    ll[["LRnegative"]] <-  unlist(c(epiRes$detail$lr.neg$est))
+    ll[["Prevalence"]] <-  unlist(c(epiRes$detail$tp$est)) * 100
 
 
     res <- data.frame(matrix(unlist(ll), nrow = length(ll), byrow = T),stringsAsFactors = FALSE)
@@ -109,4 +107,3 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
   return(classification)
 
 }
-
