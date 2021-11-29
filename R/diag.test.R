@@ -67,14 +67,14 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
 
 
     ll <- list()
-    ll[["Accuracy"]] <- unlist(c(epiRes$detail$diag.ac$est)) * 100
-    ll[["Sensitivity"]] <- unlist(c(epiRes$detail$se$est)) * 100
-    ll[["Specificity"]] <- unlist(c(epiRes$detail$sp$est)) * 100
+    ll[["Accuracy"]] <- unlist(c(epiRes$detail$diag.ac)) * 100
+    ll[["Sensitivity"]] <- unlist(c(epiRes$detail$se)) * 100
+    ll[["Specificity"]] <- unlist(c(epiRes$detail$sp)) * 100
     ll[["PPV"]] <-  c(epiRes$detail$pv.pos$est, epiRes$detail$pv.pos$lower, epiRes$detail$pv.pos$upper) * 100
     ll[["NPV"]] <-  c(epiRes$detail$pv.neg$est, epiRes$detail$pv.neg$lower, epiRes$detail$pv.neg$upper) * 100
-    ll[["LRpositive"]] <-  unlist(c(epiRes$detail$lr.pos$est))
-    ll[["LRnegative"]] <-  unlist(c(epiRes$detail$lr.neg$est))
-    ll[["Prevalence"]] <-  unlist(c(epiRes$detail$tp$est)) * 100
+    ll[["LRpositive"]] <-  unlist(c(epiRes$detail$lr.pos))
+    ll[["LRnegative"]] <-  unlist(c(epiRes$detail$lr.neg))
+    ll[["Prevalence"]] <-  unlist(c(epiRes$detail$tp)) * 100
 
 
     res <- data.frame(matrix(unlist(ll), nrow = length(ll), byrow = T),stringsAsFactors = FALSE)
