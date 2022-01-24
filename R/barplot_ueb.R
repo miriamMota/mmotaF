@@ -28,7 +28,7 @@
 #' grup =  factor(c( rep('Casos', 500),rep('Control', 500)  )))
 #' barplot_ueb(y = "grup", dat = df)
 #' barplot_ueb(y = "sex",group = "grup", dat = df, cex.lab = 0.8, do.test = TRUE)
-#' El mateix cridant la funció amb formula
+#' # El mateix cridant la funció amb formula
 #' barplot_ueb(frml = ~ sex, dat = df)
 #' barplot_ueb(frml =  grup ~ sex, dat = df, cex.lab = 0.8, do.test = TRUE)
 

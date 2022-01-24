@@ -20,7 +20,8 @@ barplot_ueb(
   title.lg = FALSE,
   do.test = FALSE,
   show.lg = FALSE,
-  show.freq = TRUE
+  show.freq = TRUE,
+  max.levs = 10
 )
 }
 \arguments{
@@ -63,14 +64,14 @@ del univariante es posible añadir las frecuencias absolutas. Para el análisis
 bivariante es posible realizar test Chi cuadrado.
 }
 \examples{
-# df <- data.frame(sex = c(sample(c('Male Male', 'Female Female'), 500, replace = TRUE, prob = c(.2,.8) ),
-# sample(c('Male Male', 'Female Female'), 500, replace = TRUE, prob = c(.4,.6) )),
-# grup =  c( rep('Casos', 500),rep('Control', 500)  ))
-# barplot_ueb(y = "grup", dat = df)
-# barplot_ueb(y = "sex",group = "grup", dat = df, cex.lab = 0.8, do.test = TRUE)
-# El mateix cridant la funciÃ³ amb formula
-# barplot_ueb(frml = ~ sex, dat = df)
-# barplot_ueb(frml =  grup ~ sex, dat = df, cex.lab = 0.8, do.test = TRUE)
+df <- data.frame(sex = factor(c(sample(c('Male Male', 'Female Female'), 500, replace = TRUE, prob = c(.2,.8) ),
+sample(c('Male Male', 'Female Female'), 500, replace = TRUE, prob = c(.4,.6) ))),
+grup =  factor(c( rep('Casos', 500),rep('Control', 500)  )))
+barplot_ueb(y = "grup", dat = df)
+barplot_ueb(y = "sex",group = "grup", dat = df, cex.lab = 0.8, do.test = TRUE)
+# El mateix cridant la funció amb formula
+barplot_ueb(frml = ~ sex, dat = df)
+barplot_ueb(frml =  grup ~ sex, dat = df, cex.lab = 0.8, do.test = TRUE)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
