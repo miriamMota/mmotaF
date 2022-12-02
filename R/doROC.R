@@ -153,7 +153,7 @@ doROC <- function(frml, x , group  , dat,
     name_var_cuanti <-  rhs.vars(frml)
 
     if (length(rhs.vars(frml)) == 1) {
-      results$cutoff.variable <- results$dat[,name_var_cuanti][which(results$dat$pred == results$cutoff.probability)]
+      results$cutoff.variable <- unique(results$dat[,name_var_cuanti][which(results$dat$pred == results$cutoff.probability)])
     }else{
       results$cutoff.variable <- "No se puede calcular debido a que existe más de una variable explicativa."
     }
