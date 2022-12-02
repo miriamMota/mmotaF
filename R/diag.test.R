@@ -22,88 +22,81 @@
 #' @return summary: taula detallada amb totes les mesures de classificació per a cada una de les variables
 #' @keywords roc glm test
 
+
 diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
-
-  if (class(y)[length(class(y))] != "factor") stop("La variable 'y' debe ser factor")
-
+  if (class(y)[length(class(y))] != "factor")
+    stop("La variable 'y' debe ser factor")
   n_var <- ifelse(is.null(ncol(pred)), 1, ncol(pred))
-
   sum_ac_l <- list()
   classification <- list()
   pos.class <- NA
-
   for (i in 1:n_var) {
-
     if (n_var == 1) {
       name_var <- deparse(substitute(pred))
       pred_i <- pred
-    }else{
+    }
+    else {
       name_var <- names(pred)[i]
-      pred_i <- pred[,i]
+      pred_i <- pred[, i]
     }
     classification[["variable"]][[name_var]] <- list()
-
-
-    if (!all(levels(pred_i) %in% levels(y)) ) stop("\n ERROR: los niveles de las variables",name_var," e 'y' deben ser los mismos \n ")
-
-
-    pred_i <- factor(pred_i, c(levels(pred_i)[levels(pred_i) != tag.healthy], tag.healthy  ))
-    y <- factor(y, c(levels(y)[levels(y) != tag.healthy], tag.healthy  ))
-
-    tab2test <- table(pred_i,y)
+    if (!all(levels(pred_i) %in% levels(y)))
+      stop("\n ERROR: los niveles de las variables", name_var,
+           " e 'y' deben ser los mismos \n ")
+    pred_i <- factor(pred_i, c(levels(pred_i)[levels(pred_i) !=
+                                                tag.healthy], tag.healthy))
+    y <- factor(y, c(levels(y)[levels(y) != tag.healthy],
+                     tag.healthy))
+    tab2test <- table(pred_i, y)
     classification[["variable"]][[name_var]][["table"]] <- tab2test
-
     epiRes <- epi.tests(tab2test)
-
-    if (epiRes$detail$se$est == confusionMatrix(table(pred_i,y))$byClass[["Sensitivity"]] ) {
-      positive <- confusionMatrix(table(pred_i,y))$positive
+    if (epiRes$detail %>% filter(statistic == "se") %>% select(est) == confusionMatrix(table(pred_i,
+                                                                                             y))$byClass[["Sensitivity"]]) {
+      positive <- confusionMatrix(table(pred_i, y))$positive
       classification[["variable"]][[name_var]][["positive.class"]] <- positive
       pos.class[i] <- positive
-    }else{
+    }
+    else {
       stop("Error: Problemas calculo diag test! ")
     }
-
-    if (!identical(rownames(tab2test), colnames(tab2test))) stop("Error en l'ordre de les variables")
-
-
+    if (!identical(rownames(tab2test), colnames(tab2test)))
+      stop("Error en l'ordre de les variables")
     ll <- list()
-    ll[["Accuracy"]] <- unlist(c(epiRes$detail$diag.ac)) * 100
-    ll[["Sensitivity"]] <- unlist(c(epiRes$detail$se)) * 100
-    ll[["Specificity"]] <- unlist(c(epiRes$detail$sp)) * 100
-    ll[["PPV"]] <-  c(epiRes$detail$pv.pos$est, epiRes$detail$pv.pos$lower, epiRes$detail$pv.pos$upper) * 100
-    ll[["NPV"]] <-  c(epiRes$detail$pv.neg$est, epiRes$detail$pv.neg$lower, epiRes$detail$pv.neg$upper) * 100
-    ll[["LRpositive"]] <-  unlist(c(epiRes$detail$lr.pos))
-    ll[["LRnegative"]] <-  unlist(c(epiRes$detail$lr.neg))
-    ll[["Prevalence"]] <-  unlist(c(epiRes$detail$tp)) * 100
-
-
-    res <- data.frame(matrix(unlist(ll), nrow = length(ll), byrow = T),stringsAsFactors = FALSE)
+    ll[["Accuracy"]] <- unlist(c(epiRes$detail %>% filter(statistic == "diag.ac") %>% select(-statistic))) *
+      100
+    ll[["Sensitivity"]] <- unlist(c(epiRes$detail %>% filter(statistic == "se") %>% select(-statistic))) *
+      100
+    ll[["Specificity"]] <- unlist(c(epiRes$detail %>% filter(statistic == "sp") %>% select(-statistic))) *
+      100
+    ll[["PPV"]] <-  unlist(c(epiRes$detail %>% filter(statistic == "pv.pos") %>% select(-statistic))) * 100
+    ll[["NPV"]] <- c(unlist(c(epiRes$detail %>% filter(statistic == "pv.neg") %>% select(-statistic)))) * 100
+    ll[["LRpositive"]] <- unlist(c(epiRes$detail %>% filter(statistic == "lr.pos") %>% select(-statistic)))
+    ll[["LRnegative"]] <- unlist(c(epiRes$detail %>% filter(statistic == "lr.neg") %>% select(-statistic)))
+    ll[["Prevalence"]] <- unlist(c(epiRes$detail %>% filter(statistic == "tp") %>% select(-statistic))) *
+      100
+    res <- data.frame(matrix(unlist(ll), nrow = length(ll),
+                             byrow = T), stringsAsFactors = FALSE)
     rownames(res) <- names(ll)
     colnames(res) <- c("Value", "IC low 95%", "IC up 95% ")
-
-
-
     classification[["variable"]][[name_var]][[name_var]] <- res
-    sum_ac_l[[name_var]] <- apply(res, 1, function(x) paste0(round(x[1],nround), " (", round(x[2],nround), "; ", round(x[3],nround),")"))
+    sum_ac_l[[name_var]] <- apply(res, 1, function(x) paste0(round(x[1],
+                                                                   nround), " (", round(x[2], nround), "; ", round(x[3],
+                                                                                                                   nround), ")"))
   }
-
   classification[["summary"]] <- list()
+
   ## comprovem que per a totes les variables la positive.class (es a dir, els 'casos') sigui sempre el mateix
   if (length(unique(pos.class)) == 1) {
     classification[["summary"]][["positive.class.all"]] <- unique(pos.class)
-  }else{
+  }
+  else {
     stop("Existen distintas 'positive.class'")
   }
-
-  sum_ac <- data.frame(matrix(unlist(sum_ac_l), nrow = length(sum_ac_l), byrow = T),stringsAsFactors = FALSE)
+  sum_ac <- data.frame(matrix(unlist(sum_ac_l), nrow = length(sum_ac_l),
+                              byrow = T), stringsAsFactors = FALSE)
   rownames(sum_ac) <- names(sum_ac_l)
   colnames(sum_ac) <- names(sum_ac_l[[1]])
   sum_ac <- t(sum_ac)
   classification[["summary"]][["table"]] <- sum_ac
-
-
-  # print("Reference class is:" )
-  # print(classification$summary)
   return(classification)
-
 }
