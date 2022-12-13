@@ -39,8 +39,8 @@ desc_mod <- function(mod,
 
 
   type_mod <-  switch(class(mod)[1],
-                      glm= 'Odds Ratio',
-                      clogit='Hazard Ratio',
+                      glm = 'Odds Ratio',
+                      clogit = 'Hazard Ratio',
                       lm = "Estimate",
                       coxph = "Hazard Ratio")
   pret_mod <- papeR::prettify(summary(mod))
@@ -51,7 +51,7 @@ desc_mod <- function(mod,
 
 
 
-  if(!show.intcp){
+  if (!show.intcp) {
     res <- res %>% dplyr::filter(Variable != "(Intercept)" )
   }
 
@@ -69,36 +69,36 @@ desc_mod <- function(mod,
   if (!show.aov.pval) {    res <- res[,!names(res) %in% ("P-value (Global)")]  }
 
 
-  if (show.pretty){
-    if(class(mod)[1] == "glm" | class(mod)[1] == "lm") {
+  if (show.pretty) {
+    if (class(mod)[1] == "glm" | class(mod)[1] == "lm") {
       vars_mod <- get.vars(alias(mod)$Model)[-1]
-      Hmisc::label(mod$model, self = F)[Hmisc::label(mod$model) == ""] <- names(mod$model)[Hmisc::label(mod$model)==""]
+      Hmisc::label(mod$model, self = F)[Hmisc::label(mod$model) == ""] <- names(mod$model)[Hmisc::label(mod$model) == ""]
       # label_var <-  Hmisc::label(mod$model[,res$vars_name]) # Hmisc::label(mod$model)[-1]
     }else{
       vars_mod <- attr(terms(mod),"term.labels")
     }
 
-    matches <- stringr::str_c(vars_mod, collapse ="|")
+    matches <- stringr::str_c(vars_mod, collapse = "|")
     vars_name <- stringr::str_extract_all(res$Variable, matches, simplify = T)[,1]
     res <- tibble::add_column(res,vars_name,.before = "Variable")
 
-    if(class(mod)[1] == "glm" | class(mod)[1] == "lm") {
+    if (class(mod)[1] == "glm" | class(mod)[1] == "lm") {
       vars_label <-  Hmisc::label(mod$model[,res$vars_name])
-      if(show.intcp) vars_label <- c("Intercept",vars_label)
+      if (show.intcp) vars_label <- c("Intercept",vars_label)
       res <- tibble::add_column(res,vars_label,.before = "Variable")
     }
     levs <- stringr::str_replace_all(res$Variable,vars_name,"")
     res <- tibble::add_column(res,levs,.before = "Variable")
 
-    res <- res %>% select(- Variable,-vars_name)
+    res <- res %>% select(-Variable,-vars_name)
     res <- res %>%
       mutate_if(is.numeric, round,digits)
 
   }
 
   if (xtab) {
-    if(group_rw) {
-      kable_ueb(res[,!names(res)%in% c("var_name", "vars_label")],
+    if (group_rw) {
+      kable_ueb(res[,!names(res) %in% c("var_name", "vars_label")],
                 caption = title, row.names = row.names, digits = digits) %>%
         kableExtra::group_rows(index = table(res$vars_label)[unique(as.character(res$vars_label))])
     }else{
