@@ -72,14 +72,14 @@ desc_plot <- function(dat,
     par(mfrow = rowcol)
 
     ## en el cas de que hi hagi formula seleccionem el grup i les covariates
-    if(!is.null(frml)){
+    if (!is.null(frml)) {
         covariates <- rhs.vars(frml)
-        if(!is.null(lhs.vars(frml))) {y <- lhs.vars(frml)}
+        if (!is.null(lhs.vars(frml))) {y <- lhs.vars(frml)}
     }
 
     ## en el cas de que seleccionem variables a analitzar reduim bbdd a variables necesaies
-    if(!is.null(covariates)){
-        if(!is.null(y)) {
+    if (!is.null(covariates)) {
+        if (!is.null(y)) {
             dat <-  dat[,c(covariates,y)]
         }else{
             dat <- dat[,c(covariates)]
@@ -96,7 +96,7 @@ desc_plot <- function(dat,
     }
 
     ## Labels i names  de les a gràficar excepte la que crea grup.
-        lbls<- Hmisc::label(dat[!names(dat) %in% y])
+        lbls <- Hmisc::label(dat[!names(dat) %in% y])
         lbls[lbls == ""] <- names(dat)[!names(dat) %in% y][lbls == ""]
         namevar <- names(lbls)
 

@@ -58,7 +58,7 @@ boxplot_bw <- function(y, group = NULL, dat,
   if (is.null(group)) {
     if (is.null(title.plot))
       title.plot <- y
-    if(bw){
+    if (bw) {
       beeswarm(dat[, y],
                ylab = "",
                main = strwrap(title.plot,width = 40),
@@ -85,12 +85,12 @@ boxplot_bw <- function(y, group = NULL, dat,
     label_group <- Hmisc::label(dat[,group])
     xlab <- ifelse(is.null(xlab), ifelse(label_group == "", group, label_group), xlab)
     xlab <- strwrap(xlab,width = 40)
-    if (!is.factor(dat[,group]))  dat[,group] <-factor_ueb(dat[,group])
+    if (!is.factor(dat[,group]))  dat[,group] <- factor_ueb(dat[,group])
 
     if (is.null(color))  color <- gg_color(length(levels(dat[, group])))
 
-    if(is.factor(dat[,group]))  dat[,group] <- droplevels(dat[,group])
-    if(bw){
+    if (is.factor(dat[,group]))  dat[,group] <- droplevels(dat[,group])
+    if (bw) {
       beeswarm(dat[, y] ~ dat[, group],
                ylab = "", xlab = wrap.it(xlab,30),
                main = strwrap(title.plot,width = 40),
@@ -116,7 +116,7 @@ boxplot_bw <- function(y, group = NULL, dat,
       mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) ,
             adj = 0, side = 3,cex = cex.pval)
     }
-    if(show.n) mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
+    if (show.n) mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
                      cex = cex.n)
   }
   par(op)

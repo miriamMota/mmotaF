@@ -52,13 +52,13 @@ barplot_ueb <- function(y, group = NULL,
                         show.freq = TRUE,
                         max.levs = 10)  {
   ## en el cas de que hi hagi formula seleccionem el grup i la y
-  if(!is.null(frml)){
+  if (!is.null(frml)) {
     y <- rhs.vars(frml)
-    if(!is.null(lhs.vars(frml))) {group <- lhs.vars(frml)}
+    if (!is.null(lhs.vars(frml))) {group <- lhs.vars(frml)}
   }
 
 
-  if(is.null(title.plot))     title.plot <- ifelse(Hmisc::label(dat[,y]) == "", y, Hmisc::label(dat[,y]))
+  if (is.null(title.plot))     title.plot <- ifelse(Hmisc::label(dat[,y]) == "", y, Hmisc::label(dat[,y]))
 
   ## descriptiu univariat
   if (is.null(group)) {
@@ -66,16 +66,16 @@ barplot_ueb <- function(y, group = NULL,
   } else {
     parmar <- c(5.1, 4.1, 4.1, 7.1)
     label_group <- Hmisc::label(dat[,group])
-    if(!is.factor(dat[, group]))  dat[, group] <- as.factor(as.character(dat[, group]))
-    if(any(table(dat[,group]) == 0 ) ) {
+    if (!is.factor(dat[, group]))  dat[, group] <- as.factor(as.character(dat[, group]))
+    if (any(table(dat[,group]) == 0 ) ) {
       lbg <- Hmisc::label(dat[,group])
-      if(is.factor(dat[,group])) dat[,group] <- droplevels(dat[,group])
+      if (is.factor(dat[,group])) dat[,group] <- droplevels(dat[,group])
       message("Some levels of ", group, " are removed since no observation in that/those levels")
       Hmisc::label(dat[,group]) <- lbg
     }
   }
 
-  if(length(levels(dat[,y])) > max.levs){
+  if (length(levels(dat[,y])) > max.levs) {
     warning(paste("Revisar niveles de la variable", y))
   }
 
@@ -112,9 +112,9 @@ barplot_ueb <- function(y, group = NULL,
 
     ## descriptiu bivariat
   } else {
-    if(any(table(dat[,y]) == 0 ) ) {
+    if (any(table(dat[,y]) == 0 ) ) {
       lb <- Hmisc::label(dat[,y])
-      if(is.factor(dat[,y]))dat[,y] <- droplevels(dat[,y])
+      if (is.factor(dat[,y])) dat[,y] <- droplevels(dat[,y])
       message("Some levels of ", y, " are removed since no observation in that/those levels")
       Hmisc::label(dat[,y]) <- lb
     }
