@@ -26,7 +26,7 @@ desc_unimods <- function(y, var2test, data, type = NULL,
                          show.n = TRUE,
                          group = TRUE){
 
-  if (!is.factor(data[,y]) & type == "logistic" ){
+  if (!is.factor(data[,y]) & type == "logistic" ) {
     stop("variable 'y' must be factor")
   }
 
@@ -37,11 +37,11 @@ desc_unimods <- function(y, var2test, data, type = NULL,
 
   unimod_df <- NULL
   mod <- list()
-  for(i in seq_along(var2test)){
+  for (i in seq_along(var2test)) {
     # print(var_mod[i])
     frml <- as.formula(paste0(y," ~", var2test[i]))
 
-    mod[[var2test[i]]] <- switch (type,
+    mod[[var2test[i]]] <- switch(type,
                                   "logistic" = glm(frml,data =  data, family = "binomial"),
                                   "linear" = lm(frml, data)
     )
@@ -49,8 +49,8 @@ desc_unimods <- function(y, var2test, data, type = NULL,
   }
   xtab <- kable_ueb(unimod_df[, !names(unimod_df) %in% "vars_label"], row.names = F, digits = 3,font_size = size,
                     caption = )
-  if(group){
+  if (group) {
     xtab <- xtab %>% kableExtra::group_rows(index = table(unimod_df$vars_label)[unique(as.character(unimod_df$vars_label))])
   }
-  return(list( unimod_ci_df = unimod_df, xtab = xtab, mods =mod) )
+  return(list( unimod_ci_df = unimod_df, xtab = xtab, mods = mod) )
 }
