@@ -68,119 +68,120 @@ desc_plot <- function(dat,
                       las = 0,
                       do.test = FALSE,
                       bw = TRUE,
+                      bw.n.max = 999,
                       show.n=T, ...) {
+  par(mfrow = rowcol)
+
+  ## en el cas de que hi hagi formula seleccionem el grup i les covariates
+  if (!is.null(frml)) {
+    covariates <- rhs.vars(frml)
+    if (!is.null(lhs.vars(frml))) {y <- lhs.vars(frml)}
+  }
+
+  ## en el cas de que seleccionem variables a analitzar reduim bbdd a variables necesaies
+  if (!is.null(covariates)) {
+    if (!is.null(y)) {
+      dat <-  dat[,c(covariates,y)]
+    }else{
+      dat <- dat[,c(covariates)]
+    }
+  }
+
+
+  ## eliminem columnes buides
+  dat <- remove_empty(dat, which = c("cols"))
+
+  if (topdf) {
+    pdf(nameFile)
     par(mfrow = rowcol)
+  }
 
-    ## en el cas de que hi hagi formula seleccionem el grup i les covariates
-    if (!is.null(frml)) {
-        covariates <- rhs.vars(frml)
-        if (!is.null(lhs.vars(frml))) {y <- lhs.vars(frml)}
-    }
+  ## Labels i names  de les a gràficar excepte la que crea grup.
+  lbls <- Hmisc::label(dat[!names(dat) %in% y])
+  lbls[lbls == ""] <- names(dat)[!names(dat) %in% y][lbls == ""]
+  namevar <- names(lbls)
 
-    ## en el cas de que seleccionem variables a analitzar reduim bbdd a variables necesaies
-    if (!is.null(covariates)) {
-        if (!is.null(y)) {
-            dat <-  dat[,c(covariates,y)]
+
+  for (i in seq_along(namevar)) {
+
+    ##### variables factor
+    # if (ifelse(!is.null(y), names(dat)[i] != y, TRUE)) { ## comprovem que la variable que testem no es la resposta
+    if (class(dat[, namevar[i]])[length(class(dat[, namevar[i]]))] == "factor") {
+
+      ## descriptiu univariat
+      if (is.null(y)) {
+
+        barplot_ueb(y = namevar[i], dat = dat,
+                    title.plot = lbls[i] ,
+                    sub.plot = ifelse(is.null(subtitle), "", subtitle),
+                    las = las,
+                    cex.lab = cex.lab,
+                    cex.main = cex.main,
+                    cex.n = cex.n,
+                    show.freq = show.freq,
+                    show.lg = show.lg,
+                    cex.lg = cex.lg)
+
+
+        ## descriptiu bivariat
+      } else {
+
+        barplot_ueb(y = namevar[i], group = y, dat = dat,
+                    sub.plot = ifelse(is.null(subtitle), "", subtitle),
+                    las = las,
+                    cex.lab = cex.lab,
+                    cex.main = cex.main,
+                    show.freq = show.freq,
+                    show.lg = show.lg,
+                    cex.lg = cex.lg,
+                    cex.n = cex.n,
+                    do.test = do.test,
+                    title.plot = lbls[i],... )
+      }
+
+
+      ##### variables numeriques
+    } else if (class(dat[, namevar[i]])[length(class(dat[, namevar[i]]))] == "character") {
+      message(paste("La variable",namevar[i], "es tipo caracter y no se ha realizado gráfico"))
+    }else {
+
+      ## descriptiu univariat
+      if (is.null(y)) {
+        if (class(dat[,namevar[i]])[length(class(dat[,namevar[i]]))] == "Date" |
+            class(dat[,namevar[i]])[length(class(dat[,namevar[i]]))] == "POSIXt") {
+          breaks.units <- ifelse(length(unique(format(dat[,namevar[i]],"%Y"))) >= 4 , "years", "months"  )
+          try(hist(dat[, namevar[i]], xlab = "", breaks = breaks.units, cex.main = cex.main,
+                   main = strwrap(lbls[i],width = 40), freq = T, las = las, cex.axis = cex.lab,
+                   sub = ifelse(is.null(subtitle), "", subtitle),
+                   col = makeTransparent("#57ADC2", alpha = 0.8)), TRUE)
+
         }else{
-            dat <- dat[,c(covariates)]
+          try(hist(dat[, namevar[i]], xlab = "",
+                   main = strwrap(lbls[i],width = 40), cex.main = cex.main,
+                   sub = ifelse(is.null(subtitle), "", subtitle),
+                   col = makeTransparent(color, alpha = 0.8)), TRUE)
+          try(rug(dat[, i]))
+          try(mtext(paste0("n = ", sum(complete.cases(dat[,namevar[i]]))),side = 3, adj = 1,
+                    cex = cex.n))
         }
+        ## descriptiu bivariat
+      } else {
+        boxplot_bw(y = namevar[i],
+                   group = y,
+                   dat = dat, las = las,
+                   title.plot = strwrap(lbls[i],width = 40),
+                   cex.lab = cex.lab,
+                   do.test = do.test,
+                   cex.main = cex.main,bw = bw, show.n = show.n, bw.n.max = bw.n.max)
+        # mtext(paste0("n = ",nrow(na.omit(dat[,c(names(dat)[i],y)]))),side = 3, adj = 1,
+        #       cex = cex.n)
+      }
     }
 
 
-    ## eliminem columnes buides
-    dat <- remove_empty(dat, which = c("cols"))
-
-    if (topdf) {
-        pdf(nameFile)
-        par(mfrow = rowcol)
-    }
-
-    ## Labels i names  de les a gràficar excepte la que crea grup.
-        lbls <- Hmisc::label(dat[!names(dat) %in% y])
-        lbls[lbls == ""] <- names(dat)[!names(dat) %in% y][lbls == ""]
-        namevar <- names(lbls)
-
-
-    for (i in seq_along(namevar)) {
-
-        ##### variables factor
-        # if (ifelse(!is.null(y), names(dat)[i] != y, TRUE)) { ## comprovem que la variable que testem no es la resposta
-        if (class(dat[, namevar[i]])[length(class(dat[, namevar[i]]))] == "factor") {
-
-            ## descriptiu univariat
-            if (is.null(y)) {
-
-                barplot_ueb(y = namevar[i], dat = dat,
-                            title.plot = lbls[i] ,
-                            sub.plot = ifelse(is.null(subtitle), "", subtitle),
-                            las = las,
-                            cex.lab = cex.lab,
-                            cex.main = cex.main,
-                            cex.n = cex.n,
-                            show.freq = show.freq,
-                            show.lg = show.lg,
-                            cex.lg = cex.lg)
-
-
-                ## descriptiu bivariat
-            } else {
-
-                barplot_ueb(y = namevar[i], group = y, dat = dat,
-                            sub.plot = ifelse(is.null(subtitle), "", subtitle),
-                            las = las,
-                            cex.lab = cex.lab,
-                            cex.main = cex.main,
-                            show.freq = show.freq,
-                            show.lg = show.lg,
-                            cex.lg = cex.lg,
-                            cex.n = cex.n,
-                            do.test = do.test,
-                            title.plot = lbls[i],... )
-            }
-
-
-            ##### variables numeriques
-        } else if (class(dat[, namevar[i]])[length(class(dat[, namevar[i]]))] == "character") {
-            message(paste("La variable",namevar[i], "es tipo caracter y no se ha realizado gráfico"))
-        }else {
-
-            ## descriptiu univariat
-            if (is.null(y)) {
-                if (class(dat[,namevar[i]])[length(class(dat[,namevar[i]]))] == "Date" |
-                    class(dat[,namevar[i]])[length(class(dat[,namevar[i]]))] == "POSIXt") {
-                    breaks.units <- ifelse(length(unique(format(dat[,namevar[i]],"%Y"))) >= 4 , "years", "months"  )
-                    try(hist(dat[, namevar[i]], xlab = "", breaks = breaks.units, cex.main = cex.main,
-                             main = strwrap(lbls[i],width = 40), freq = T, las = las, cex.axis = cex.lab,
-                             sub = ifelse(is.null(subtitle), "", subtitle),
-                             col = makeTransparent("#57ADC2", alpha = 0.8)), TRUE)
-
-                }else{
-                    try(hist(dat[, namevar[i]], xlab = "",
-                             main = strwrap(lbls[i],width = 40), cex.main = cex.main,
-                             sub = ifelse(is.null(subtitle), "", subtitle),
-                             col = makeTransparent(color, alpha = 0.8)), TRUE)
-                    try(rug(dat[, i]))
-                    try(mtext(paste0("n = ", sum(complete.cases(dat[,namevar[i]]))),side = 3, adj = 1,
-                              cex = cex.n))
-                }
-                ## descriptiu bivariat
-            } else {
-                boxplot_bw(y = namevar[i],
-                           group = y,
-                           dat = dat, las = las,
-                           title.plot = strwrap(lbls[i],width = 40),
-                           cex.lab = cex.lab,
-                           do.test = do.test,
-                           cex.main = cex.main,bw = bw, show.n = show.n)
-                # mtext(paste0("n = ",nrow(na.omit(dat[,c(names(dat)[i],y)]))),side = 3, adj = 1,
-                #       cex = cex.n)
-            }
-        }
-
-
-        # }
-    }
-    if (topdf) {
-        dev.off()
-    }
+    # }
+  }
+  if (topdf) {
+    dev.off()
+  }
 }
