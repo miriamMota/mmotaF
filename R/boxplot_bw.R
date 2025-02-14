@@ -17,6 +17,7 @@
 #' @param cex.main expansion factor for main names (size main)
 #' @param cex.n expansion factor for size n
 #' @param bw logical value for beeswarm
+#' @param bw.n.max n max to show bw
 #' @export boxplot_bw
 #' @import beeswarm
 #' @author Miriam Mota \email{mmota.foix@@gmail.com}
@@ -47,9 +48,13 @@ boxplot_bw <- function(y, group = NULL, dat,
                        do.test = FALSE,
                        color = NULL,
                        bw = TRUE,
+                       bw.n.max = 999,
                        show.n = T) {
 
   # cex.dot <- ifelse(bw,1,0)
+
+  if(sum(!is.na(dat[, y])) > bw.n.max) {bw <- FALSE}
+
   if (is.null(ylim.plot))
     ylim.plot <- c(min(dat[, y], na.rm = T), max(dat[, y] + 0.2, na.rm = T))
   op <- par(cex.axis = cex.lab)
@@ -92,7 +97,7 @@ boxplot_bw <- function(y, group = NULL, dat,
     if (is.factor(dat[,group]))  dat[,group] <- droplevels(dat[,group])
     if (bw) {
       beeswarm(dat[, y] ~ dat[, group],
-               ylab = "", xlab = wrap.it(xlab,30),
+               ylab = "", xlab = strwrap(xlab,30),
                main = strwrap(title.plot,width = 40),
                ylim = ylim.plot,
                axes = F,
@@ -110,15 +115,17 @@ boxplot_bw <- function(y, group = NULL, dat,
             sub = sub.plot,
             cex.sub = .7,
             ylab = ylab,
-            names = wrap.it(levels(dat[,group]),10))
+            names = strwrap(levels(dat[,group]),10))
     if (do.test) {
       KWpval <- kruskal.test(dat[, y] ~ dat[, group])$p.val
       mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) ,
             adj = 0, side = 3,cex = cex.pval)
     }
     if (show.n) mtext(paste0("n = ",nrow(na.omit(dat[,c(group,y)]))),side = 3, adj = 1,
-                     cex = cex.n)
+                      cex = cex.n)
   }
   par(op)
 }
+
+
 

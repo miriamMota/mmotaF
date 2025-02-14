@@ -34,9 +34,6 @@ tabOR_lr(...)
 \description{
 Genera tabla resumen para modelos lineales,logisticos y cox
 }
-\examples{
-
-}
 \keyword{OR}
 \keyword{logistica}
 \keyword{regresion}

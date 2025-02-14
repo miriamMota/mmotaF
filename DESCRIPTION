@@ -27,6 +27,6 @@ VignetteBuilder: knitr
 License: GPL (>= 2)
 LazyData: true
 SystemRequirements: git for install_git
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 BugReports: https://github.com/miriamMota/mmotaF/issues
