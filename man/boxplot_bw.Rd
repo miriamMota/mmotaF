@@ -21,7 +21,6 @@ boxplot_bw(
   do.test = FALSE,
   color = NULL,
   bw = TRUE,
-  bw.n.max = 999,
   show.n = T
 )
 }
@@ -56,8 +55,6 @@ boxplot_bw(
 \item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
 
 \item{bw}{logical value for beeswarm}
-
-\item{bw.n.max}{n max to show bw}
 }
 \description{
 Boxplot incluyendo puntos individuales

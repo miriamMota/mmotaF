@@ -37,27 +37,25 @@ descPlot(...)
 \item{do.test}{logical value si se quiere realizar test kruskall Wallis.}
 
 \item{bw}{logical value for beeswarm}
-
-\item{bw.n.max}{n max to show bw}
 }
 \description{
 Genera graficos univariantes para todas las variables que se indiquen, el formato de entrada es 'data.frame'
 }
 \examples{
-#df <- data.frame(Y=as.factor(rbinom(50,1,.40)),Y1=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
-#desc_plot(dat = df, color = 'red', rowcol = c(1,2))
-#desc_plot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1), las = 2)
-#desc_plot(mtc_bis)
-#desc_plot(dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
+df <- data.frame(Y=as.factor(rbinom(50,1,.40)),Y1=as.factor(rbinom(50,1,.40)),X = rnorm(50,10,1))
+desc_plot(dat = df, color = 'red', rowcol = c(1,2))
+desc_plot(dat = df, y = 'Y', color = 'red', rowcol = c(1,1), las = 2)
+desc_plot(mtc_bis)
+desc_plot(dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
 
-### Indicant variables a evaluar
-#desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
-#desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
-#desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2,bw = FALSE )
+## Indicant variables a evaluar
+desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
+desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2 )
+desc_plot(covariates = c("cyl","wt"),dat = mtc_bis, y ='am', rowcol = c(2,2), do.test = FALSE, las = 2,bw = FALSE )
 
-## Indicanta variables a evaluar mitjançant formula
-#desc_plot(frml =  ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
-#desc_plot(frml = am ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
+# Indicanta variables a evaluar mitjançant formula
+desc_plot(frml =  ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
+desc_plot(frml = am ~ cyl + wt ,dat = mtc_bis, rowcol = c(2,2), do.test = FALSE, las = 2 )
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}
