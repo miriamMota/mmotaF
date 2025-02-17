@@ -3,7 +3,6 @@
 #' Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un modelo de regresión logística
 #' @param y response variable. Variable factor con 2 categorias
 #' @param var2test nombre de las variables a testar mediante regresión logítica
-#' @param format a character string; possible values are latex, html, markdown, pandoc, and rst; this will be automatically determined if the function is called within knitr; it can also be set in the global option knitr.table.format; if format is a function, it must return a character string
 #' @param size A numeric input for table font size
 #' @param caption Character vector containing the table's caption or title. Default value is "Univariate logistic regression"
 #' @param show.n TRUE o FALSE muestra el total de individuos usados para el ajuste del modelo. Default value is "TRUE".
@@ -15,12 +14,11 @@
 #' @examples
 #' # resglm <- glm.uni(y = "am",
 #' # var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
-#' # data = mtc_bis, format = "html", size = 10)
+#' # data = mtc_bis, size = 10)
 #'
 
 glm.uni <- function(y, var2test, var2match = NULL, data,
                     size = 8.5,
-                    format = "html",
                     caption = NULL,
                     show.n = TRUE,
                     show.aov.pval = FALSE,
@@ -73,7 +71,7 @@ glm.uni <- function(y, var2test, var2match = NULL, data,
 
   if (group) {
     tab_group <- table(unimod_df$Variable)[unique(as.character(unimod_df$Variable))]
-    xtab <- kable_ueb(unimod_df[,!names(unimod_df) %in% c("varlev", "Variable")], format = format, booktabs = T,caption = caption,  row.names = FALSE,
+    xtab <- kable_ueb(unimod_df[,!names(unimod_df) %in% c("varlev", "Variable")], booktabs = T,caption = caption,  row.names = FALSE,
                       longtable = TRUE, position = "left")  %>%
       column_spec(which(names(unimod_df) == "Global P-value") - 1, bold = T)  %>%
       kableExtra::group_rows(index = tab_group,latex_gap_space = '1em')
