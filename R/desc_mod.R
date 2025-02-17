@@ -1,10 +1,9 @@
 #' A desc_mod Function
 #'
-#' Genera tabla resumen para modelos lineales,logisticos y cox
+#' Resume y formatea modelos logísticos, lineales, de supervivencia, coxph, binomial negativa y clogit, tanto univariados como multivariados.
 #' @param mod a fitted object of class inheriting from "glm", "clogit","cox" or "lm".
 #' @param xtab TRUE o FALSE, para obtener tabla en formato .tex
 #' @param title if xtab = T, Character vector containing the table's caption or title.
-#' @param xtab.type Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".
 #' @param label Character vector of length 1 containing the LaTeX label. Default value is NULL.
 #' @param show.intcp TRUE o FALSE, indica si se muestra o no el intercept del modelo. En ambos casos el modelo se ha calcula con intercept. Default value is "FALSE".
 #' @param show.n TRUE o FALSE muestra el total de individuos usados para el ajuste del modelo. Default value is "TRUE".
@@ -28,7 +27,6 @@ tabOR_lr <- function(...) {
 desc_mod <- function(mod,
                      xtab = FALSE,
                      title = "Model summary",
-                     xtab.type = "latex",
                      font_size = 13,
                      show.pretty = FALSE,
                      group_rw = FALSE,
@@ -42,7 +40,8 @@ desc_mod <- function(mod,
                       glm = 'Odds Ratio',
                       clogit = 'Hazard Ratio',
                       lm = "Estimate",
-                      coxph = "Hazard Ratio")
+                      coxph = "Hazard Ratio",
+                      negbin = "Estimate")
   pret_mod <- papeR::prettify(summary(mod))
   names(pret_mod)[names(pret_mod) == " "] <- "Variable"
   res <- pret_mod[, c("Variable", type_mod, "CI (lower)", "CI (upper)", grep("Pr", names(pret_mod), value = T) ) ]
@@ -90,7 +89,7 @@ desc_mod <- function(mod,
     levs <- stringr::str_replace_all(res$Variable,vars_name,"")
     res <- tibble::add_column(res,levs,.before = "Variable")
 
-    res <- res %>% select(-Variable,-vars_name)
+    res <- res %>% dplyr::select(-Variable,-vars_name)
     res <- res %>%
       mutate_if(is.numeric, round,digits)
 
@@ -109,4 +108,6 @@ desc_mod <- function(mod,
     return(res)
   }
 }
+
+
 
