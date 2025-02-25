@@ -115,7 +115,7 @@ boxplot_bw <- function(y, group = NULL, dat,
             sub = sub.plot,
             cex.sub = .7,
             ylab = ylab,
-            names = strwrap(levels(dat[,group]),10))
+            names = levels(dat[,group]))
     if (do.test) {
       KWpval <- kruskal.test(dat[, y] ~ dat[, group])$p.val
       mtext(paste("KW p-value: ", ifelse( round(KWpval,3) < 0.001, "<0.001", round(KWpval,3) )) ,
