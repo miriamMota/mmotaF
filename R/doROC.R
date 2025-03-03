@@ -25,16 +25,16 @@
 #' @examples
 #'
 #' # univariate
-#' doROC(x = "mpg", group = "am", dat = mtc_bis, modGLM = FALSE)
-#' doROC(frml = am~mpg, dat = mtc_bis, modGLM = FALSE)
+#' # doROC(x = "mpg", group = "am", dat = mtc_bis, modGLM = FALSE)
+#' # doROC(frml = am~mpg, dat = mtc_bis, modGLM = FALSE)
 #'
 #' #univariate model (mateix resultat que univariate)
-#' doROC(x = "mpg", group = "am", dat = mtc_bis, modGLM = TRUE)
-#' doROC(frml = am~mpg, dat = mtc_bis, modGLM = TRUE)
+#' # doROC(x = "mpg", group = "am", dat = mtc_bis, modGLM = TRUE)
+#' # doROC(frml = am~mpg, dat = mtc_bis, modGLM = TRUE)
 #'
 #' #multivariate model
-#' doROC(x = c("mpg", "drat"), group = "am", dat = mtc_bis, modGLM = TRUE)
-#' doROC(frml = am~mpg+drat, dat = mtc_bis, modGLM = TRUE)
+#' # doROC(x = c("mpg", "drat"), group = "am", dat = mtc_bis, modGLM = TRUE)
+#' # doROC(frml = am~mpg+drat, dat = mtc_bis, modGLM = TRUE)
 #'
 
 #'

@@ -21,6 +21,7 @@ boxplot_bw(
   do.test = FALSE,
   color = NULL,
   bw = TRUE,
+  bw.n.max = 999,
   show.n = T
 )
 }

@@ -26,14 +26,14 @@ summary: taula detallada amb totes les mesures de classificació per a cada una 
 mesures de clasificació
 }
 \examples{
-data(aSAH)
-res_roc <- doROC (frml = outcome ~ s100b, title = 'prova1',
-cex.main = 0.6, dat = aSAH, modGLM = TRUE)
-diag.test(y = aSAH$outcome, pred = res_roc$dat$outcome.predict, tag.healthy = "Good"  )
+# data(aSAH)
+# res_roc <- doROC (frml = outcome ~ s100b, title = 'prova1',
+# cex.main = 0.6, dat = aSAH, modGLM = TRUE)
+# diag.test(y = aSAH$outcome, pred = res_roc$dat$outcome.predict, tag.healthy = "Good"  )
 
-df_pred <- data.frame(p1 = res_roc$dat$outcome.predict,
-p2 = factor(ifelse(aSAH$s100b >= 0.3, levels(aSAH$outcome)[2], levels(aSAH$outcome)[1]  )))
-diag.test(y = aSAH$outcome, pred = df_pred)
+# df_pred <- data.frame(p1 = res_roc$dat$outcome.predict,
+# p2 = factor(ifelse(aSAH$s100b >= 0.3, levels(aSAH$outcome)[2], levels(aSAH$outcome)[1]  )))
+# diag.test(y = aSAH$outcome, pred = df_pred)
 }
 \author{
 Miriam Mota \email{mmota.foix@gmail.com}

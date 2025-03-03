@@ -10,7 +10,6 @@ glm.uni(
   var2match = NULL,
   data,
   size = 8.5,
-  format = "html",
   caption = NULL,
   show.n = TRUE,
   show.aov.pval = FALSE,
@@ -24,8 +23,6 @@ glm.uni(
 \item{var2test}{nombre de las variables a testar mediante regresión logítica}
 
 \item{size}{A numeric input for table font size}
-
-\item{format}{a character string; possible values are latex, html, markdown, pandoc, and rst; this will be automatically determined if the function is called within knitr; it can also be set in the global option knitr.table.format; if format is a function, it must return a character string}
 
 \item{caption}{Character vector containing the table's caption or title. Default value is "Univariate logistic regression"}
 
@@ -41,7 +38,7 @@ Genera tabla con los coeficientes OR , intervalos de confianza y p-valores de un
 \examples{
 # resglm <- glm.uni(y = "am",
 # var2test = c("mpg","cyl","disp","hp","drat","wt","qsec","vs" ) ,
-# data = mtc_bis, format = "html", size = 10)
+# data = mtc_bis, size = 10)
 
 }
 \keyword{OR}

@@ -12,7 +12,6 @@ Depends:
     beeswarm, 
     survival, 
     kableExtra, 
-    knitr, 
     magrittr, 
     OptimalCutpoints, 
     epiR, 
@@ -22,8 +21,13 @@ Depends:
     formula.tools,
     dplyr,
     papeR,
-    stringr
-VignetteBuilder: knitr
+    stringr,
+    knitr,
+    gridExtra,
+    ggplot2,
+    purrr,
+    scales,
+    tidyr
 License: GPL (>= 2)
 LazyData: true
 SystemRequirements: git for install_git

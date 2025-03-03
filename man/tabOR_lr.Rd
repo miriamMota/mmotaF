@@ -13,8 +13,6 @@ tabOR_lr(...)
 
 \item{title}{if xtab = T, Character vector containing the table's caption or title.}
 
-\item{xtab.type}{Type of table to produce. Possible values for type are "latex" or "html". Default value is "latex".}
-
 \item{label}{Character vector of length 1 containing the LaTeX label. Default value is NULL.}
 
 \item{show.intcp}{TRUE o FALSE, indica si se muestra o no el intercept del modelo. En ambos casos el modelo se ha calcula con intercept. Default value is "FALSE".}
@@ -32,7 +30,7 @@ tabOR_lr(...)
 \item{digits}{numeric vector specifying the number of digits to display}
 }
 \description{
-Genera tabla resumen para modelos lineales,logisticos y cox
+Resume y formatea modelos logísticos, lineales, de supervivencia, coxph, binomial negativa y clogit, tanto univariados como multivariados.
 }
 \keyword{OR}
 \keyword{logistica}
