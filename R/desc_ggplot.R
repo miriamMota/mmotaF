@@ -104,7 +104,8 @@ desc_ggplot <- function(dat,
           theme(plot.title = element_text(hjust = 0.5,size = size.title),
                 legend.position = "none",
                 panel.grid.major = element_blank(),
-                plot.margin = margin(10, 10, 10, 10))
+                plot.margin = margin(10, 10, 10, 10))+
+          scale_x_discrete(labels = wrap_format(10))
 
         if(show.freq) graficos[[i]] <- graficos[[i]] + geom_text(stat = "count", aes(y = (..count..)/sum(..count..) * 100, label = ..count..), vjust = -0.5,size = size.freq)   # Agregar valores sobre las barras
 
