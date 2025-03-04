@@ -241,7 +241,6 @@ desc_ggplot <- function(dat,
 
     }
 
-    if(!is.null(options.ggplot)) graficos[[i]] <- graficos[[i]] + options.ggplot
   }
   graficos <- graficos[!sapply(graficos, is.null)]
 
