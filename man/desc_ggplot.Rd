@@ -17,48 +17,54 @@ desc_ggplot(
   show.freq = TRUE,
   bw = TRUE,
   size.n = 3,
-  size.freq = 3,
+  size.freq = 2.5,
   size.title = 10,
+  size.pval = 3,
   show.pval = FALSE,
   show.n = TRUE,
   show.na = FALSE,
+  legend.position = "right",
   ...
 )
 }
 \arguments{
-\item{dat}{Un data frame con los datos a analizar.}
+\item{dat}{Data frame con los datos a analizar.}
 
-\item{covariates}{Vector de nombres de las variables explicativas a analizar. Si es NULL, se analizan todas las variables.}
+\item{covariates}{Vector de nombres de variables a analizar. Si es NULL, se analizan todas las variables.}
 
-\item{frml}{Una fórmula opcional para especificar la variable dependiente y las covariables.}
+\item{frml}{Fórmula opcional para especificar la variable dependiente y las covariables.}
 
-\item{y}{Nombre de la variable dependiente (respuesta).}
+\item{y}{Nombre de la variable dependiente (opcional para análisis bivariado).}
 
-\item{nameFile}{Nombre del archivo PDF donde se guardarán los gráficos (por defecto, "descriptive_plots.pdf").}
+\item{nameFile}{Nombre del archivo PDF donde se guardarán los gráficos (si `topdf = TRUE`).}
 
 \item{topdf}{Lógico. Si es TRUE, guarda los gráficos en un archivo PDF.}
 
-\item{list.plots}{Lógico. Si es TRUE, devuelve una lista con los gráficos en lugar de imprimirlos.}
+\item{list.plots}{Lógico. Si es TRUE, devuelve una lista con los gráficos generados.}
 
-\item{color}{Color principal para los gráficos (por defecto, "#8D4ABA").}
+\item{color}{Color para los gráficos de variables numéricas.}
 
-\item{rowcol}{Vector de longitud 2 indicando el número de filas y columnas en el PDF de salida.}
+\item{rowcol}{Vector de longitud 2 especificando el número de filas y columnas en la salida de gráficos.}
 
-\item{show.freq}{Lógico. Si es TRUE, muestra la frecuencia en los gráficos de barras.}
+\item{show.freq}{Lógico. Si es TRUE, muestra frecuencias en gráficos de barras.}
 
-\item{bw}{Lógico. Si es TRUE, agrega dispersión a los diagramas de caja.}
+\item{bw}{Lógico. Si es TRUE, agrega dispersión en gráficos de cajas.}
 
-\item{size.n}{Tamaño del texto para la cantidad de observaciones.}
+\item{size.n}{Tamaño del texto para `n` en los gráficos.}
 
-\item{size.freq}{Tamaño del texto para las frecuencias en los gráficos de barras.}
+\item{size.freq}{Tamaño del texto para frecuencias en gráficos de barras.}
 
-\item{size.title}{Tamaño del texto para los títulos de los gráficos.}
+\item{size.title}{Tamaño del título de los gráficos.}
 
-\item{show.pval}{Lógico. Si es TRUE, muestra los valores p en los gráficos bivariados.}
+\item{size.pval}{Tamaño del texto del p-valor en gráficos bivariantes.}
 
-\item{show.n}{Lógico. Si es TRUE, muestra el número de observaciones en cada gráfico.}
+\item{show.pval}{Lógico. Si es TRUE, muestra el p-valor en gráficos bivariantes.}
+
+\item{show.n}{Lógico. Si es TRUE, muestra el número de observaciones en los gráficos.}
 
 \item{show.na}{Lógico. Si es TRUE, incluye valores NA en los gráficos.}
+
+\item{legend.position}{Posición de la leyenda en gráficos bivariantes.}
 }
 \value{
 Si `list.plots` es TRUE, devuelve una lista con los gráficos generados. Si `topdf` es TRUE, guarda los gráficos en un archivo PDF.
@@ -70,10 +76,10 @@ Se pueden generar histogramas, gráficos de barras, diagramas de caja y otras re
 }
 \examples{
 # Generar gráficos descriptivos para todas las variables
-desc_ggplot(mtcars)
+#desc_ggplot(mtcars)
 
 # Especificar variables de análisis
-desc_ggplot(mtcars, covariates = c("mpg", "hp"))
+#desc_ggplot(mtcars, covariates = c("mpg", "hp"))
 
 # Guardar gráficos en un PDF
 #desc_ggplot(mtcars, topdf = TRUE, nameFile = "graficos.pdf")

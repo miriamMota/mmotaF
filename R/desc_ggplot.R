@@ -3,23 +3,25 @@
 #' Esta función crea gráficos descriptivos univariados y bivariados en función de las variables proporcionadas.
 #' Se pueden generar histogramas, gráficos de barras, diagramas de caja y otras representaciones gráficas.
 #'
-#' @param dat Un data frame con los datos a analizar.
-#' @param covariates Vector de nombres de las variables explicativas a analizar. Si es NULL, se analizan todas las variables.
-#' @param frml Una fórmula opcional para especificar la variable dependiente y las covariables.
-#' @param y Nombre de la variable dependiente (respuesta).
-#' @param nameFile Nombre del archivo PDF donde se guardarán los gráficos (por defecto, "descriptive_plots.pdf").
+#' @param dat Data frame con los datos a analizar.
+#' @param covariates Vector de nombres de variables a analizar. Si es NULL, se analizan todas las variables.
+#' @param frml Fórmula opcional para especificar la variable dependiente y las covariables.
+#' @param y Nombre de la variable dependiente (opcional para análisis bivariado).
+#' @param nameFile Nombre del archivo PDF donde se guardarán los gráficos (si `topdf = TRUE`).
 #' @param topdf Lógico. Si es TRUE, guarda los gráficos en un archivo PDF.
-#' @param list.plots Lógico. Si es TRUE, devuelve una lista con los gráficos en lugar de imprimirlos.
-#' @param color Color principal para los gráficos (por defecto, "#8D4ABA").
-#' @param rowcol Vector de longitud 2 indicando el número de filas y columnas en el PDF de salida.
-#' @param show.freq Lógico. Si es TRUE, muestra la frecuencia en los gráficos de barras.
-#' @param bw Lógico. Si es TRUE, agrega dispersión a los diagramas de caja.
-#' @param size.n Tamaño del texto para la cantidad de observaciones.
-#' @param size.freq Tamaño del texto para las frecuencias en los gráficos de barras.
-#' @param size.title Tamaño del texto para los títulos de los gráficos.
-#' @param show.pval Lógico. Si es TRUE, muestra los valores p en los gráficos bivariados.
-#' @param show.n Lógico. Si es TRUE, muestra el número de observaciones en cada gráfico.
+#' @param list.plots Lógico. Si es TRUE, devuelve una lista con los gráficos generados.
+#' @param color Color para los gráficos de variables numéricas.
+#' @param rowcol Vector de longitud 2 especificando el número de filas y columnas en la salida de gráficos.
+#' @param show.freq Lógico. Si es TRUE, muestra frecuencias en gráficos de barras.
+#' @param bw Lógico. Si es TRUE, agrega dispersión en gráficos de cajas.
+#' @param size.n Tamaño del texto para `n` en los gráficos.
+#' @param size.freq Tamaño del texto para frecuencias en gráficos de barras.
+#' @param size.title Tamaño del título de los gráficos.
+#' @param size.pval Tamaño del texto del p-valor en gráficos bivariantes.
+#' @param show.pval Lógico. Si es TRUE, muestra el p-valor en gráficos bivariantes.
+#' @param show.n Lógico. Si es TRUE, muestra el número de observaciones en los gráficos.
 #' @param show.na Lógico. Si es TRUE, incluye valores NA en los gráficos.
+#' @param legend.position Posición de la leyenda en gráficos bivariantes.
 #'
 #' @return Si `list.plots` es TRUE, devuelve una lista con los gráficos generados. Si `topdf` es TRUE, guarda los gráficos en un archivo PDF.
 #'         Si ambos son FALSE, imprime los gráficos en la consola.
@@ -29,13 +31,14 @@
 #'
 #' @examples
 #' # Generar gráficos descriptivos para todas las variables
-#' desc_ggplot(mtcars)
+#' #desc_ggplot(mtcars)
 #'
 #' # Especificar variables de análisis
-#' desc_ggplot(mtcars, covariates = c("mpg", "hp"))
+#' #desc_ggplot(mtcars, covariates = c("mpg", "hp"))
 #'
 #' # Guardar gráficos en un PDF
 #' #desc_ggplot(mtcars, topdf = TRUE, nameFile = "graficos.pdf")
+
 
 desc_ggplot <- function(dat,
                         covariates = NULL,
@@ -49,11 +52,14 @@ desc_ggplot <- function(dat,
                         show.freq = TRUE,
                         bw = TRUE,
                         size.n = 3,
-                        size.freq = 3,
+                        size.freq = 2.5,
                         size.title = 10,
+                        size.pval = 3,
                         show.pval = FALSE,
                         show.n = TRUE,
-                        show.na = FALSE, ...) {
+                        show.na = FALSE,
+                        legend.position = "right",
+                        ...) {
 
   graficos <- list()
 
@@ -84,6 +90,14 @@ desc_ggplot <- function(dat,
 
 
 
+  common_theme <- theme_minimal() +
+    theme(
+      plot.title = element_text(hjust = 0.5, size = size.title),
+      panel.grid.major = element_blank(),
+      plot.margin = margin(10, 10, 10, 10)
+    )
+
+
 
   for (i in seq_along(namevar)) {
 
@@ -100,11 +114,8 @@ desc_ggplot <- function(dat,
         graficos[[i]] <- ggplot(dd, aes_string(x = namevar[i])) +
           geom_bar(aes(y = (..count..)/sum(..count..) * 100, fill = !!sym(namevar[i])), color = "black", linewidth = 0.3) +  # Barras en porcentaje
           labs(title = lbls[namevar[i]], x = NULL, y = "%") +  # Etiquetas
-          theme_minimal() +
-          theme(plot.title = element_text(hjust = 0.5,size = size.title),
-                legend.position = "none",
-                panel.grid.major = element_blank(),
-                plot.margin = margin(10, 10, 10, 10))+
+          common_theme +
+          theme(legend.position = "none") +
           scale_x_discrete(labels = wrap_format(10))
 
         if(show.freq) graficos[[i]] <- graficos[[i]] + geom_text(stat = "count", aes(y = (..count..)/sum(..count..) * 100, label = ..count..), vjust = -0.5,size = size.freq)   # Agregar valores sobre las barras
@@ -114,32 +125,62 @@ desc_ggplot <- function(dat,
         ## descriptiu bivariat
       } else {
 
-        dd <- if (show.na) dat else dat %>% select(any_of(c(namevar[i],y))) %>% na.omit()
+        dd <- if (show.na) dat else dat %>% select(any_of(c(namevar[i], y))) %>% na.omit()
 
 
 
         # Crear gráfico de barras apiladas con porcentajes
         graficos[[i]] <- ggplot(dd, aes_string(x = y, fill = namevar[i])) +
-          geom_bar(position = "fill", linewidth = 0.3) +  # Para que sean porcentajes
-          scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-          labs(title = lbls[namevar[i]],
-               x = lbl_y,
-               y = "%",
-               fill = "") +
-          theme(plot.title = element_text(hjust = 0.5,size = size.title),
-                panel.grid.major = element_blank(),
-                plot.margin = margin(10, 10, 10, 10)) +
-          theme_minimal()
-        if(show.pval) {
-          info_test <- test_categoricas(data = dd, factor1 = y, factor2 = namevar[i])
-          graficos[[i]] <- graficos[[i]] + annotate("text", x = 1, y = 1.05,
-                                                    label = paste(info_test$test," p:",format.pval(info_test$pvalor, digits = 3, eps = 0.001)),
-                                                    hjust = 0)
+          geom_bar(position = "fill", linewidth = 0.3) +
+          scale_y_continuous(labels = percent_format(accuracy = 1)) +
+          scale_fill_discrete(labels = function(x) stringr::str_wrap(x, width = 10)) +  # Cortar etiquetas largas
+          labs(title = lbls[namevar[i]], x = lbl_y, y = "%", fill = "") +
+          common_theme +
+          theme(legend.position = legend.position,  # Mueve la leyenda abajo
+                legend.spacing.y = unit(0.5, "cm")  # Espaciado entre elementos de la leyenda
+          ) +
+          ggtitle(label = str_wrap(lbls[namevar[i]], width = 40))
+
+        # Agregar etiquetas con el porcentaje dentro de cada región
+        if (show.freq) {
+          graficos[[i]] <- graficos[[i]] +
+            geom_text(
+              aes(label = scales::percent(..count.. / tapply(..count.., ..x.., sum)[..x..], accuracy = 1)),
+              stat = "count",
+              position = position_fill(vjust = 0.5),
+              color = "black",
+              size = size.freq
+            )
         }
-        if(show.n)
-          graficos[[i]] <- graficos[[i]] + annotate("text", x = Inf, y = Inf,
-                                                    label = paste("n =", nrow(na.omit(dd %>% select(any_of(c(namevar[i],y)))))),
-                                                    hjust = 1.2, vjust = 1.5, size = size.n)
+
+        if (show.n) {
+          df_counts <- dd %>%
+            count(!!sym(y))  # Contar observaciones por grupo en el eje x
+
+          graficos[[i]] <- graficos[[i]] +
+            geom_text(data = df_counts,
+                      aes(x = !!sym(y),
+                          y = 1.01,  # Ubicación encima de la barra (ajusta según el gráfico)
+                          label = paste0("n = ", n)),
+                      inherit.aes = FALSE,
+                      size = (size.n-0.5),
+                      vjust = 0,  # Coloca el texto arriba
+                      color = "black")
+
+          total_n <- sum(df_counts$n)  # Calcula la n total
+          graficos[[i]] <- graficos[[i]] +
+            annotate("text", x = length(unique(dd[[y]])) + 0.5, y = 1.1,
+                     label = paste0("n = ", total_n), hjust = 1, size = (size.n + 0.5))
+        }
+
+        # Agregar p-valor si es necesario
+        if (show.pval) {
+          info_test <- test_categoricas(data = dd, factor1 = y, factor2 = namevar[i])
+          graficos[[i]] <- graficos[[i]] +
+            annotate("text", x = 1, y = 1.06,
+                     label = paste(info_test$test, "p:", format.pval(info_test$pvalor, digits = 3, eps = 0.001)),
+                     hjust = 0, size = size.pval)
+        }
       }
       ##### variables caracter
     } else if (class(dat[, namevar[i]])[length(class(dat[, namevar[i]]))] == "character") {
@@ -155,10 +196,8 @@ desc_ggplot <- function(dat,
         labs(title = lbls[namevar[i]], x = "Fecha", y = "Frecuencia") +
         # scale_x_datetime(date_labels = "%Y-%m-%d", date_breaks = "5 days") +
         theme_minimal() +
-        theme(axis.text.x = element_text(angle = 45, hjust = 1),
-              plot.title = element_text(hjust = 0.5,size = size.title),
-              panel.grid.major = element_blank(),
-              plot.margin = margin(10, 10, 10, 10)) +
+        common_theme +
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
         annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dat %>% select(namevar[i])))), hjust = 1.2, vjust = 1.5, size = size.n)
 
       ##### variables numeriques
@@ -171,11 +210,9 @@ desc_ggplot <- function(dat,
           geom_histogram( fill = color, color = "black", alpha = 0.6, linewidth = 0.3) + # Histograma
           geom_rug(sides = "b") +  # Agregar rayitas (rug plot) en la base
           labs(title = lbls[namevar[i]], x = NULL, y = "Frequency") +
-          theme_minimal() +
-          theme(plot.title = element_text(hjust = 0.5, size = size.title),
-                panel.grid.major = element_blank(),
-                plot.margin = margin(10, 10, 10, 10)) + # Centrar el título
-          annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dat %>% select(namevar[i])))), hjust = 1.2, vjust = 1.5, size = size.n)
+          annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dat %>% select(namevar[i])))),
+                   hjust = 1.2, vjust = 1.5, size = size.n) +
+          common_theme
 
       } else {
 
@@ -189,13 +226,10 @@ desc_ggplot <- function(dat,
                               lbls[namevar[i]]),  # Título con etiqueta de Hmisc
                x = lbl_y,
                y = "") +
-          theme_minimal() +
-          theme(legend.position = "none",
-                plot.title = element_text(hjust = 0.5,size = size.title),
-                panel.grid.major = element_blank(),
-                plot.margin = margin(10, 10, 10, 10))
+          common_theme +
+          theme(legend.position = "none")
 
-        if(bw) graficos[[i]] <- graficos[[i]] + geom_jitter(width = 0.2, alpha = 0.7)   # Puntos dispersos
+        if(bw) graficos[[i]] <- graficos[[i]] + geom_jitter(width = 0.2, height = 0, alpha = 0.7)   # Puntos dispersos
 
         if(show.n){
           graficos[[i]] <- graficos[[i]] +
@@ -206,6 +240,8 @@ desc_ggplot <- function(dat,
       }
 
     }
+
+    if(!is.null(options.ggplot)) graficos[[i]] <- graficos[[i]] + options.ggplot
   }
   graficos <- graficos[!sapply(graficos, is.null)]
 
@@ -217,3 +253,4 @@ desc_ggplot <- function(dat,
     return(walk(graficos, print))
   }
 }
+
