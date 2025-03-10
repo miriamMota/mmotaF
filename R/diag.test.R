@@ -50,7 +50,7 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
     tab2test <- table(pred_i, y)
     classification[["variable"]][[name_var]][["table"]] <- tab2test
     epiRes <- epi.tests(tab2test)
-    if (epiRes$detail %>% dplyr::filter(statistic == "se") %>% select(est) == confusionMatrix(table(pred_i,
+    if (epiRes$detail %>% dplyr::filter(statistic == "se") %>% dplyr::select(est) == confusionMatrix(table(pred_i,
                                                                                              y))$byClass[["Sensitivity"]]) {
       positive <- confusionMatrix(table(pred_i, y))$positive
       classification[["variable"]][[name_var]][["positive.class"]] <- positive
@@ -62,17 +62,17 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
     if (!identical(rownames(tab2test), colnames(tab2test)))
       stop("Error en l'ordre de les variables")
     ll <- list()
-    ll[["Accuracy"]] <- unlist(c(epiRes$detail %>% filter(statistic == "diag.ac") %>% select(-statistic))) *
+    ll[["Accuracy"]] <- unlist(c(epiRes$detail %>% filter(statistic == "diag.ac") %>% dplyr::select(-statistic))) *
       100
-    ll[["Sensitivity"]] <- unlist(c(epiRes$detail %>% filter(statistic == "se") %>% select(-statistic))) *
+    ll[["Sensitivity"]] <- unlist(c(epiRes$detail %>% filter(statistic == "se") %>% dplyr::select(-statistic))) *
       100
-    ll[["Specificity"]] <- unlist(c(epiRes$detail %>% filter(statistic == "sp") %>% select(-statistic))) *
+    ll[["Specificity"]] <- unlist(c(epiRes$detail %>% filter(statistic == "sp") %>% dplyr::select(-statistic))) *
       100
-    ll[["PPV"]] <-  unlist(c(epiRes$detail %>% filter(statistic == "pv.pos") %>% select(-statistic))) * 100
-    ll[["NPV"]] <- c(unlist(c(epiRes$detail %>% filter(statistic == "pv.neg") %>% select(-statistic)))) * 100
-    ll[["LRpositive"]] <- unlist(c(epiRes$detail %>% filter(statistic == "lr.pos") %>% select(-statistic)))
-    ll[["LRnegative"]] <- unlist(c(epiRes$detail %>% filter(statistic == "lr.neg") %>% select(-statistic)))
-    ll[["Prevalence"]] <- unlist(c(epiRes$detail %>% filter(statistic == "tp") %>% select(-statistic))) *
+    ll[["PPV"]] <-  unlist(c(epiRes$detail %>% filter(statistic == "pv.pos") %>% dplyr::select(-statistic))) * 100
+    ll[["NPV"]] <- c(unlist(c(epiRes$detail %>% filter(statistic == "pv.neg") %>% dplyr::select(-statistic)))) * 100
+    ll[["LRpositive"]] <- unlist(c(epiRes$detail %>% filter(statistic == "lr.pos") %>% dplyr::select(-statistic)))
+    ll[["LRnegative"]] <- unlist(c(epiRes$detail %>% filter(statistic == "lr.neg") %>% dplyr::select(-statistic)))
+    ll[["Prevalence"]] <- unlist(c(epiRes$detail %>% filter(statistic == "tp") %>% dplyr::select(-statistic))) *
       100
     res <- data.frame(matrix(unlist(ll), nrow = length(ll),
                              byrow = T), stringsAsFactors = FALSE)
