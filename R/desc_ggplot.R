@@ -204,23 +204,26 @@ desc_ggplot <- function(dat,
     }else {
 
       if (is.null(y)) {
+
+        dd <- if (show.na) dat else dat %>% select(any_of(c(namevar[i]))) %>% na.omit()
         ################# HISTOGRAMA
         ######### UNI
-        graficos[[i]] <- ggplot(dat, aes_string(x = namevar[i])) +
+        graficos[[i]] <- ggplot(dd, aes_string(x = namevar[i])) +
           geom_histogram( fill = color, color = "black", alpha = 0.6, linewidth = 0.3) + # Histograma
           geom_rug(sides = "b") +  # Agregar rayitas (rug plot) en la base
           labs(title = lbls[namevar[i]], x = NULL, y = "Frequency") +
-          annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dat %>% select(namevar[i])))),
+          annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dd %>% select(namevar[i])))),
                    hjust = 1.2, vjust = 1.5, size = size.n) +
           common_theme
 
       } else {
 
+        dd <- if (show.na) dat else dat %>% select(any_of(c(namevar[i], y))) %>% na.omit()
         ######## BIVARIANT
         # Gráfico con ggplot2
         if(show.pval)       info_test <- test_numericas(factor_col = y,numerica_col = namevar[i] ,data = dat,parametrico = FALSE)
 
-        graficos[[i]] <- ggplot(dat, aes_string(x = y, y = namevar[i], color = y)) +
+        graficos[[i]] <- ggplot(dd, aes_string(x = y, y = namevar[i], color = y)) +
           geom_boxplot(fill = "gray80", alpha = 0.5, outlier.shape = NA) +  # Caja gris sin outliers
           labs(title = ifelse(show.pval, paste(lbls[namevar[i]],".",info_test$test,  "p:", format.pval(info_test$pvalor, digits = 3, eps = 0.001)),
                               lbls[namevar[i]]),  # Título con etiqueta de Hmisc
