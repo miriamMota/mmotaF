@@ -50,7 +50,7 @@ diag.test <- function(pred, y, tag.healthy = levels(y)[1] , nround = 2){
     tab2test <- table(pred_i, y)
     classification[["variable"]][[name_var]][["table"]] <- tab2test
     epiRes <- epi.tests(tab2test)
-    if (epiRes$detail %>% dplyr::dplyr::filter(statistic == "se") %>% dplyr::select(est) == confusionMatrix(table(pred_i,
+    if (epiRes$detail %>% dplyr::filter(statistic == "se") %>% dplyr::select(est) == confusionMatrix(table(pred_i,
                                                                                              y))$byClass[["Sensitivity"]]) {
       positive <- confusionMatrix(table(pred_i, y))$positive
       classification[["variable"]][[name_var]][["positive.class"]] <- positive
