@@ -71,7 +71,7 @@ desc_ggplot <- function(dat,
 
   ## en el cas de que seleccionem variables a analitzar reduim bbdd a variables necesaies
   if (!is.null(covariates)) {
-    dat %<>% select(any_of(c(covariates,y)))
+    dat %<>% dplyr::select(any_of(c(covariates,y)))
   }
 
   # if (sum(!is.na(dat[, y])) > bw.n.max) {
@@ -108,7 +108,7 @@ desc_ggplot <- function(dat,
       ## descriptiu univariat
       if (is.null(y)) {
 
-        dd <- if (show.na) dat else dat %>% select(any_of(c(namevar[i]))) %>% na.omit()
+        dd <- if (show.na) dat else dat %>% dplyr::select(any_of(c(namevar[i]))) %>% na.omit()
 
         # Crear el gráfico de barras
         graficos[[i]] <- ggplot(dd, aes_string(x = namevar[i])) +
@@ -125,7 +125,7 @@ desc_ggplot <- function(dat,
         ## descriptiu bivariat
       } else {
 
-        dd <- if (show.na) dat else dat %>% select(any_of(c(namevar[i], y))) %>% na.omit()
+        dd <- if (show.na) dat else dat %>% dplyr::select(any_of(c(namevar[i], y))) %>% na.omit()
 
 
 
@@ -198,27 +198,27 @@ desc_ggplot <- function(dat,
         theme_minimal() +
         common_theme +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-        annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dat %>% select(namevar[i])))), hjust = 1.2, vjust = 1.5, size = size.n)
+        annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dat %>% dplyr::select(namevar[i])))), hjust = 1.2, vjust = 1.5, size = size.n)
 
       ##### variables numeriques
     }else {
 
       if (is.null(y)) {
 
-        dd <- if (show.na) dat else dat %>% select(any_of(c(namevar[i]))) %>% na.omit()
+        dd <- if (show.na) dat else dat %>% dplyr::select(any_of(c(namevar[i]))) %>% na.omit()
         ################# HISTOGRAMA
         ######### UNI
         graficos[[i]] <- ggplot(dd, aes_string(x = namevar[i])) +
           geom_histogram( fill = color, color = "black", alpha = 0.6, linewidth = 0.3) + # Histograma
           geom_rug(sides = "b") +  # Agregar rayitas (rug plot) en la base
           labs(title = lbls[namevar[i]], x = NULL, y = "Frequency") +
-          annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dd %>% select(namevar[i])))),
+          annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dd %>% dplyr::select(namevar[i])))),
                    hjust = 1.2, vjust = 1.5, size = size.n) +
           common_theme
 
       } else {
 
-        dd <- if (show.na) dat else dat %>% select(any_of(c(namevar[i], y))) %>% na.omit()
+        dd <- if (show.na) dat else dat %>% dplyr::select(any_of(c(namevar[i], y))) %>% na.omit()
         ######## BIVARIANT
         # Gráfico con ggplot2
         if(show.pval)       info_test <- test_numericas(factor_col = y,numerica_col = namevar[i] ,data = dat,parametrico = FALSE)
@@ -237,7 +237,7 @@ desc_ggplot <- function(dat,
         if(show.n){
           graficos[[i]] <- graficos[[i]] +
             annotate("text", x = Inf, y = Inf,
-                     label = paste("n =", nrow(dat %>% select(any_of(c(namevar[i],y))) %>% na.omit())), hjust = 1.2, vjust = 1.5, size = size.n)
+                     label = paste("n =", nrow(dat %>% dplyr::select(any_of(c(namevar[i],y))) %>% na.omit())), hjust = 1.2, vjust = 1.5, size = size.n)
         }
 
       }
