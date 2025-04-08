@@ -9,7 +9,7 @@
 #' @keywords lasso
 #' @export desc_lasso
 #' @import Hmisc stringr
-#' @examples
+#'
 
 
 

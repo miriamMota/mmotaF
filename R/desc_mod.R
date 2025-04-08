@@ -16,7 +16,7 @@
 #' @export tabOR_lr
 #' @export desc_mod
 #' @import xtable dplyr papeR
-#' @examples
+#'
 #'
 
 tabOR_lr <- function(...) {
