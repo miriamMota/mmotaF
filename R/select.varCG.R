@@ -11,11 +11,16 @@
 #' select.varCG(restab)
 #' }
 
-select.varCG <- function(restab, p.value = 0.05){
-  pval <- getResults(restab, "p.overall")
-  varSel <- names(which(pval < p.value))
-  nameVarSel <- NULL
-  for (i in 1:length(varSel)) nameVarSel[i] <- unlist(strsplit(varSel[i], ":"))[1]
-  return(nameVarSel)
+select.varCG <- function(...) {
+  .Defunct(msg = "Esta función ha sido eliminada.")
 }
+
+
+# select.varCG <- function(restab, p.value = 0.05){
+#   pval <- getResults(restab, "p.overall")
+#   varSel <- names(which(pval < p.value))
+#   nameVarSel <- NULL
+#   for (i in 1:length(varSel)) nameVarSel[i] <- unlist(strsplit(varSel[i], ":"))[1]
+#   return(nameVarSel)
+# }
 
