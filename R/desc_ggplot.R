@@ -1,44 +1,47 @@
-#' Genera gráficos descriptivos con ggplot2
+#' Gráficos descriptivos automáticos para variables categóricas y numéricas
 #'
-#' Esta función crea gráficos descriptivos univariados y bivariados en función de las variables proporcionadas.
-#' Se pueden generar histogramas, gráficos de barras, diagramas de caja y otras representaciones gráficas.
+#' Esta función genera gráficos descriptivos (barras, histogramas, boxplots) para un conjunto de variables,
+#' de forma univariada o bivariada, con opciones para personalizar estilo, leyendas, etiquetas, tamaños de texto, etc.
 #'
-#' @param dat Data frame con los datos a analizar.
-#' @param covariates Vector de nombres de variables a analizar. Si es NULL, se analizan todas las variables.
-#' @param frml Fórmula opcional para especificar la variable dependiente y las covariables.
-#' @param y Nombre de la variable dependiente (opcional para análisis bivariado).
-#' @param nameFile Nombre del archivo PDF donde se guardarán los gráficos (si `topdf = TRUE`).
-#' @param topdf Lógico. Si es TRUE, guarda los gráficos en un archivo PDF.
-#' @param list.plots Lógico. Si es TRUE, devuelve una lista con los gráficos generados.
-#' @param color Color para los gráficos de variables numéricas.
-#' @param rowcol Vector de longitud 2 especificando el número de filas y columnas en la salida de gráficos.
-#' @param show.freq Lógico. Si es TRUE, muestra frecuencias en gráficos de barras.
-#' @param bw Lógico. Si es TRUE, agrega dispersión en gráficos de cajas.
-#' @param size.n Tamaño del texto para `n` en los gráficos.
-#' @param size.freq Tamaño del texto para frecuencias en gráficos de barras.
-#' @param size.title Tamaño del título de los gráficos.
-#' @param size.pval Tamaño del texto del p-valor en gráficos bivariantes.
-#' @param show.pval Lógico. Si es TRUE, muestra el p-valor en gráficos bivariantes.
-#' @param show.n Lógico. Si es TRUE, muestra el número de observaciones en los gráficos.
-#' @param show.na Lógico. Si es TRUE, incluye valores NA en los gráficos.
-#' @param legend.position Posición de la leyenda en gráficos bivariantes.
+#' @param dat Data frame que contiene las variables a analizar.
+#' @param covariates Vector de nombres de variables a graficar. Si se usa \code{frml}, se sobreescribe.
+#' @param frml Fórmula del tipo \code{y ~ x1 + x2 + ...} para definir la variable dependiente y las independientes.
+#' @param y Variable de agrupación (dependiente) para análisis bivariado. Ignorado si se usa \code{frml}.
+#' @param nameFile Nombre del archivo PDF de salida si \code{topdf = TRUE}.
+#' @param topdf Lógico. Si \code{TRUE}, guarda los gráficos en un archivo PDF.
+#' @param list.plots Lógico. Si \code{TRUE}, retorna una lista con los objetos ggplot generados.
+#' @param color Color de relleno para histogramas.
+#' @param rowcol Vector de longitud 2 que indica el número de filas y columnas en el PDF.
+#' @param show.freq Lógico. Si \code{TRUE}, muestra frecuencias sobre las barras o dentro de los gráficos.
+#' @param bw Lógico. Si \code{TRUE}, agrega jitter (dispersión) a los boxplots.
+#' @param size.n Tamaño del texto que muestra el número total de observaciones (\code{n}).
+#' @param size.freq Tamaño del texto para frecuencias o porcentajes.
+#' @param size.title Tamaño del título del gráfico.
+#' @param size.pval Tamaño del texto del p-valor.
+#' @param show.pval Lógico. Si \code{TRUE}, incluye el p-valor en los gráficos bivariados.
+#' @param show.n Lógico. Si \code{TRUE}, muestra el número total de observaciones.
+#' @param show.na Lógico. Si \code{TRUE}, se incluyen los \code{NA} en los análisis.
+#' @param legend.position Posición de la leyenda en los gráficos (por ejemplo, \code{"right"}, \code{"bottom"}).
+#' @param ... Argumentos adicionales (no usados actualmente).
 #'
-#' @return Si `list.plots` es TRUE, devuelve una lista con los gráficos generados. Si `topdf` es TRUE, guarda los gráficos en un archivo PDF.
-#'         Si ambos son FALSE, imprime los gráficos en la consola.
+#' @return Por defecto imprime los gráficos. Si \code{list.plots = TRUE}, retorna una lista de objetos ggplot.
+#' Si \code{topdf = TRUE}, guarda los gráficos en un archivo PDF.
 #'
-#' @import ggplot2 dplyr Hmisc purrr tidyr scales
-#' @export
+#' @details
+#' La función selecciona automáticamente el tipo de gráfico según el tipo de variable:
+#' - Variables \code{factor}: gráfico de barras (univariado o apilado bivariado).
+#' - Variables numéricas: histograma (univariado) o boxplot (bivariado).
+#' - Variables \code{Date} o \code{POSIXt}: histograma por fechas.
+#'
+#' Variables de tipo \code{character} son ignoradas con una advertencia.
 #'
 #' @examples
-#' # Generar gráficos descriptivos para todas las variables
-#' #desc_ggplot(mtcars)
+#' \dontrun{
+#' desc_ggplot(mtcars, covariates = c("mpg", "cyl"), y = "am", topdf = TRUE)
+#' }
 #'
-#' # Especificar variables de análisis
-#' #desc_ggplot(mtcars, covariates = c("mpg", "hp"))
-#'
-#' # Guardar gráficos en un PDF
-#' #desc_ggplot(mtcars, topdf = TRUE, nameFile = "graficos.pdf")
-
+#' @import ggplot2 dplyr Hmisc scales stringr
+#' @export
 
 desc_ggplot <- function(dat,
                         covariates = NULL,

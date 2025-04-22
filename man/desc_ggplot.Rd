@@ -2,7 +2,7 @@
 % Please edit documentation in R/desc_ggplot.R
 \name{desc_ggplot}
 \alias{desc_ggplot}
-\title{Genera gráficos descriptivos con ggplot2}
+\title{Gráficos descriptivos automáticos para variables categóricas y numéricas}
 \usage{
 desc_ggplot(
   dat,
@@ -28,59 +28,65 @@ desc_ggplot(
 )
 }
 \arguments{
-\item{dat}{Data frame con los datos a analizar.}
+\item{dat}{Data frame que contiene las variables a analizar.}
 
-\item{covariates}{Vector de nombres de variables a analizar. Si es NULL, se analizan todas las variables.}
+\item{covariates}{Vector de nombres de variables a graficar. Si se usa \code{frml}, se sobreescribe.}
 
-\item{frml}{Fórmula opcional para especificar la variable dependiente y las covariables.}
+\item{frml}{Fórmula del tipo \code{y ~ x1 + x2 + ...} para definir la variable dependiente y las independientes.}
 
-\item{y}{Nombre de la variable dependiente (opcional para análisis bivariado).}
+\item{y}{Variable de agrupación (dependiente) para análisis bivariado. Ignorado si se usa \code{frml}.}
 
-\item{nameFile}{Nombre del archivo PDF donde se guardarán los gráficos (si `topdf = TRUE`).}
+\item{nameFile}{Nombre del archivo PDF de salida si \code{topdf = TRUE}.}
 
-\item{topdf}{Lógico. Si es TRUE, guarda los gráficos en un archivo PDF.}
+\item{topdf}{Lógico. Si \code{TRUE}, guarda los gráficos en un archivo PDF.}
 
-\item{list.plots}{Lógico. Si es TRUE, devuelve una lista con los gráficos generados.}
+\item{list.plots}{Lógico. Si \code{TRUE}, retorna una lista con los objetos ggplot generados.}
 
-\item{color}{Color para los gráficos de variables numéricas.}
+\item{color}{Color de relleno para histogramas.}
 
-\item{rowcol}{Vector de longitud 2 especificando el número de filas y columnas en la salida de gráficos.}
+\item{rowcol}{Vector de longitud 2 que indica el número de filas y columnas en el PDF.}
 
-\item{show.freq}{Lógico. Si es TRUE, muestra frecuencias en gráficos de barras.}
+\item{show.freq}{Lógico. Si \code{TRUE}, muestra frecuencias sobre las barras o dentro de los gráficos.}
 
-\item{bw}{Lógico. Si es TRUE, agrega dispersión en gráficos de cajas.}
+\item{bw}{Lógico. Si \code{TRUE}, agrega jitter (dispersión) a los boxplots.}
 
-\item{size.n}{Tamaño del texto para `n` en los gráficos.}
+\item{size.n}{Tamaño del texto que muestra el número total de observaciones (\code{n}).}
 
-\item{size.freq}{Tamaño del texto para frecuencias en gráficos de barras.}
+\item{size.freq}{Tamaño del texto para frecuencias o porcentajes.}
 
-\item{size.title}{Tamaño del título de los gráficos.}
+\item{size.title}{Tamaño del título del gráfico.}
 
-\item{size.pval}{Tamaño del texto del p-valor en gráficos bivariantes.}
+\item{size.pval}{Tamaño del texto del p-valor.}
 
-\item{show.pval}{Lógico. Si es TRUE, muestra el p-valor en gráficos bivariantes.}
+\item{show.pval}{Lógico. Si \code{TRUE}, incluye el p-valor en los gráficos bivariados.}
 
-\item{show.n}{Lógico. Si es TRUE, muestra el número de observaciones en los gráficos.}
+\item{show.n}{Lógico. Si \code{TRUE}, muestra el número total de observaciones.}
 
-\item{show.na}{Lógico. Si es TRUE, incluye valores NA en los gráficos.}
+\item{show.na}{Lógico. Si \code{TRUE}, se incluyen los \code{NA} en los análisis.}
 
-\item{legend.position}{Posición de la leyenda en gráficos bivariantes.}
+\item{legend.position}{Posición de la leyenda en los gráficos (por ejemplo, \code{"right"}, \code{"bottom"}).}
+
+\item{...}{Argumentos adicionales (no usados actualmente).}
 }
 \value{
-Si `list.plots` es TRUE, devuelve una lista con los gráficos generados. Si `topdf` es TRUE, guarda los gráficos en un archivo PDF.
-        Si ambos son FALSE, imprime los gráficos en la consola.
+Por defecto imprime los gráficos. Si \code{list.plots = TRUE}, retorna una lista de objetos ggplot.
+Si \code{topdf = TRUE}, guarda los gráficos en un archivo PDF.
 }
 \description{
-Esta función crea gráficos descriptivos univariados y bivariados en función de las variables proporcionadas.
-Se pueden generar histogramas, gráficos de barras, diagramas de caja y otras representaciones gráficas.
+Esta función genera gráficos descriptivos (barras, histogramas, boxplots) para un conjunto de variables,
+de forma univariada o bivariada, con opciones para personalizar estilo, leyendas, etiquetas, tamaños de texto, etc.
+}
+\details{
+La función selecciona automáticamente el tipo de gráfico según el tipo de variable:
+- Variables \code{factor}: gráfico de barras (univariado o apilado bivariado).
+- Variables numéricas: histograma (univariado) o boxplot (bivariado).
+- Variables \code{Date} o \code{POSIXt}: histograma por fechas.
+
+Variables de tipo \code{character} son ignoradas con una advertencia.
 }
 \examples{
-# Generar gráficos descriptivos para todas las variables
-#desc_ggplot(mtcars)
+\dontrun{
+desc_ggplot(mtcars, covariates = c("mpg", "cyl"), y = "am", topdf = TRUE)
+}
 
-# Especificar variables de análisis
-#desc_ggplot(mtcars, covariates = c("mpg", "hp"))
-
-# Guardar gráficos en un PDF
-#desc_ggplot(mtcars, topdf = TRUE, nameFile = "graficos.pdf")
 }
