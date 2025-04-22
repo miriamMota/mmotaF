@@ -211,9 +211,15 @@ desc_ggplot <- function(dat,
         dd <- if (show.na) dat else dat %>% dplyr::select(any_of(c(namevar[i]))) %>% na.omit()
         ################# HISTOGRAMA
         ######### UNI
+        n_obs <- sum(!is.na(dd[[namevar[i]]]))
+        n_bins <- ceiling(log2(n_obs) + 1)
+        x <- dd[[namevar[i]]]
+        n_breaks <- nclass.Sturges(x)
+        breaks <- pretty(range(x, na.rm = TRUE), n = n_breaks)
+
         graficos[[i]] <- ggplot(dd, aes_string(x = namevar[i])) +
-          geom_histogram( fill = color, color = "black", alpha = 0.6, linewidth = 0.3) + # Histograma
-          geom_rug(sides = "b") +  # Agregar rayitas (rug plot) en la base
+          geom_histogram( fill = color, color = "black", alpha = 0.6, linewidth = 0.3,bins = n_bins,breaks =breaks) + # Histograma
+          # geom_rug(sides = "b") +  # Agregar rayitas (rug plot) en la base
           labs(title = lbls[namevar[i]], x = NULL, y = "Frequency") +
           annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dd %>% dplyr::select(namevar[i])))),
                    hjust = 1.2, vjust = 1.5, size = size.n) +

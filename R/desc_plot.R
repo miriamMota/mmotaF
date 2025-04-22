@@ -160,7 +160,7 @@ desc_plot <- function(dat,
                    main = strwrap(lbls[i],width = 40), cex.main = cex.main,
                    sub = ifelse(is.null(subtitle), "", subtitle),
                    col = makeTransparent(color, alpha = 0.8)), TRUE)
-          try(rug(dat[, i]))
+          # try(rug(dat[, i]))
           try(mtext(paste0("n = ", sum(complete.cases(dat[,namevar[i]]))),side = 3, adj = 1,
                     cex = cex.n))
         }
