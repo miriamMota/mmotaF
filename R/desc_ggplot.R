@@ -195,14 +195,14 @@ desc_ggplot <- function(dat,
       library(ggplot2)
       # Gráfico de histograma para visualizar la frecuencia de fechas
       ggplot(dat, aes_string(x = namevar[i])) +
-        geom_histogram(binwidth = 86400, fill = "steelblue", color = "black", linewidth = 0.3) +  # binwidth = 86400 (1 día en segundos)
+        geom_histogram(binwidth = 1, fill = "steelblue", color = "black", linewidth = 0.3) +
         labs(title = lbls[namevar[i]], x = "Fecha", y = "Frecuencia") +
-        # scale_x_datetime(date_labels = "%Y-%m-%d", date_breaks = "5 days") +
+        scale_x_date(date_labels = "%Y-%m-%d", date_breaks = "5 days") +
         theme_minimal() +
         common_theme +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-        annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dat %>% dplyr::select(namevar[i])))), hjust = 1.2, vjust = 1.5, size = size.n)
-
+        annotate("text", x = Inf, y = Inf, label = paste0("n = ", sum(complete.cases(dat %>% dplyr::select(namevar[i])))),
+                 hjust = 1.2, vjust = 1.5, size = size.n)
       ##### variables numeriques
     }else {
 
