@@ -233,7 +233,7 @@ desc_ggplot <- function(dat,
         if(show.pval)       info_test <- test_numericas(factor_col = y,numerica_col = namevar[i] ,data = dat,parametrico = FALSE)
 
         graficos[[i]] <- ggplot(dd, aes_string(x = y, y = namevar[i], color = y)) +
-          geom_boxplot(fill = "gray80", alpha = 0.5, outlier.shape = NA) +  # Caja gris sin outliers
+          geom_boxplot(fill = "gray80", alpha = 0.5) +  # Caja gris sin outliers
           labs(title = ifelse(show.pval, paste(lbls[namevar[i]],".",info_test$test,  "p:", format.pval(info_test$pvalor, digits = 3, eps = 0.001)),
                               lbls[namevar[i]]),  # Título con etiqueta de Hmisc
                x = lbl_y,
