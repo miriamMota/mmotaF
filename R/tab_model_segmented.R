@@ -15,8 +15,8 @@
 #'
 #' @import sjPlot
 #' @export
-
-tab_model_segmented <- function(mod_segm) {
+#'
+tab_model_segmented <- function(mod_segm,show.df = F) {
 
   # Obtener el resumen del modelo segmentado
   sum_seg <- summary(mod_segm)
@@ -28,5 +28,5 @@ tab_model_segmented <- function(mod_segm) {
   sum_seg$coefficients[grepl("^psi", rownames(sum_seg$coefficients)), "Estimate"] <- sum_seg$psi[, "Est."]
 
   # Crear tabla sjPlot con los coeficientes corregidos
-  return(sjPlot::tab_model(sum_seg))
+  return(sjPlot::tab_model(sum_seg,show.df = show.df))
 }
