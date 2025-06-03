@@ -27,7 +27,8 @@ Depends:
     ggplot2,
     purrr,
     scales,
-    tidyr
+    tidyr,
+    sjPlot
 License: GPL (>= 2)
 LazyData: true
 SystemRequirements: git for install_git
