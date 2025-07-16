@@ -4,7 +4,7 @@
 \alias{tab_model_segmented}
 \title{Crear una tabla sjPlot::tab_model limpia para un modelo segmentado}
 \usage{
-tab_model_segmented(mod_segm)
+tab_model_segmented(mod_segm, show.df = F)
 }
 \arguments{
 \item{mod_segm}{Un objeto de clase `segmented`, creado con la función `segmented()`.}
