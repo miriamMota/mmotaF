@@ -113,6 +113,8 @@ desc_ggplot <- function(dat,
 
         dd <- if (show.na) dat else dat %>% dplyr::select(any_of(c(namevar[i]))) %>% na.omit()
 
+        dd[[namevar[i]]] <- factor(dd[[namevar[i]]], levels = names(sort(table(dd[[namevar[i]]]), decreasing = TRUE))) ## ordenar por freq
+
         # Crear el gráfico de barras
         graficos[[i]] <- ggplot(dd, aes_string(x = namevar[i])) +
           geom_bar(aes(y = (..count..)/sum(..count..) * 100, fill = !!sym(namevar[i])), color = "black", linewidth = 0.3) +  # Barras en porcentaje
