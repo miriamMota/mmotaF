@@ -234,8 +234,11 @@ desc_ggplot <- function(dat,
         # Gráfico con ggplot2
         if(show.pval)       info_test <- test_numericas(factor_col = y,numerica_col = namevar[i] ,data = dat,parametrico = FALSE)
 
+        if(bw) outliers <- NA else outliers <- 1.5 # Si mostramos los puntos dispersos, quitamos los outliers del boxplot para no duplicar puntos
+        # sino, estos tendran el valor por defecto de este parametro en la funcion geom_boxplot
+
         graficos[[i]] <- ggplot(dd, aes_string(x = y, y = namevar[i], color = y)) +
-          geom_boxplot(fill = "gray80", alpha = 0.5) +  # Caja gris sin outliers
+          geom_boxplot(fill = "gray80", alpha = 0.5, outlier.shape = outliers) +  # Boxplot con o sin outliers (segun bw)
           labs(title = ifelse(show.pval, paste(lbls[namevar[i]],".",info_test$test,  "p:", format.pval(info_test$pvalor, digits = 3, eps = 0.001)),
                               lbls[namevar[i]]),  # Título con etiqueta de Hmisc
                x = lbl_y,
