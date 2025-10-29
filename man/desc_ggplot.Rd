@@ -24,6 +24,7 @@ desc_ggplot(
   show.n = TRUE,
   show.na = FALSE,
   legend.position = "right",
+  angle_x = "horizontal",
   ...
 )
 }
@@ -65,6 +66,8 @@ desc_ggplot(
 \item{show.na}{Lógico. Si \code{TRUE}, se incluyen los \code{NA} en los análisis.}
 
 \item{legend.position}{Posición de la leyenda en los gráficos (por ejemplo, \code{"right"}, \code{"bottom"}).}
+
+\item{angle_x}{Define la orientación de las etiquetas del eje X: puede ser \code{"horizontal"} (por defecto), \code{"vertical"} o \code{"diagonal"}.}
 
 \item{...}{Argumentos adicionales (no usados actualmente).}
 }

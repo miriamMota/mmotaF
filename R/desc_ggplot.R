@@ -22,6 +22,7 @@
 #' @param show.n Lógico. Si \code{TRUE}, muestra el número total de observaciones.
 #' @param show.na Lógico. Si \code{TRUE}, se incluyen los \code{NA} en los análisis.
 #' @param legend.position Posición de la leyenda en los gráficos (por ejemplo, \code{"right"}, \code{"bottom"}).
+#' @param angle_x Define la orientación de las etiquetas del eje X: puede ser \code{"horizontal"} (por defecto), \code{"vertical"} o \code{"diagonal"}.
 #' @param ... Argumentos adicionales (no usados actualmente).
 #'
 #' @return Por defecto imprime los gráficos. Si \code{list.plots = TRUE}, retorna una lista de objetos ggplot.
@@ -62,6 +63,7 @@ desc_ggplot <- function(dat,
                         show.n = TRUE,
                         show.na = FALSE,
                         legend.position = "right",
+                        angle_x = "horizontal",
                         ...) {
 
   graficos <- list()
@@ -100,11 +102,20 @@ desc_ggplot <- function(dat,
       plot.margin = margin(10, 10, 10, 10)
     )
 
+  # Especificamos orientacion de las etiquetas del eje X en el boxplot (de momento solo boxplot, TODO añadir en barplot)
+  angle_settings <- switch(
+    angle_x,
+    "horizontal" = element_text(angle = 0, hjust = 0.5, vjust = 1),
+    "diagonal"   = element_text(angle = 45, hjust = 1, vjust = 1),
+    "vertical"   = element_text(angle = 90, hjust = 1, vjust = 0.5),
+    element_text(angle = 0, hjust = 0.5, vjust = 1)  # valor por defecto si no coincide
+  )
+
 
 
   for (i in seq_along(namevar)) {
 
-    if (class(dat[, namevar[i]])[length(class(dat[, namevar[i]]))] == "factor") {
+    if (inherits(dat[[namevar[i]]], "factor")) {
 
 
 
@@ -142,7 +153,8 @@ desc_ggplot <- function(dat,
           labs(title = lbls[namevar[i]], x = lbl_y, y = "%", fill = "") +
           common_theme +
           theme(legend.position = legend.position,  # Mueve la leyenda abajo
-                legend.spacing.y = unit(0.5, "cm")  # Espaciado entre elementos de la leyenda
+                legend.spacing.y = unit(0.5, "cm"),  # Espaciado entre elementos de la leyenda
+                axis.text.x = angle_settings # Orientacion de las etiquetas del eje X
           ) +
           ggtitle(label = str_wrap(lbls[namevar[i]], width = 40))
 
@@ -188,12 +200,12 @@ desc_ggplot <- function(dat,
         }
       }
       ##### variables caracter
-    } else if (class(dat[, namevar[i]])[length(class(dat[, namevar[i]]))] == "character") {
+    } else if (inherits(dat[[namevar[i]]], "character")) {
       message(paste("La variable",namevar[i], "es tipo caracter y no se ha realizado gráfico"))
 
       ##### variables dates
-    } else if (class(dat[,namevar[i]])[length(class(dat[,namevar[i]]))] == "Date" |
-               class(dat[,namevar[i]])[length(class(dat[,namevar[i]]))] == "POSIXt"){
+    } else if (inherits(dat[[namevar[i]]], "Date") |
+               inherits(dat[[namevar[i]]], "POSIXt")){
       library(ggplot2)
       # Gráfico de histograma para visualizar la frecuencia de fechas
       ggplot(dat, aes_string(x = namevar[i])) +
@@ -244,7 +256,9 @@ desc_ggplot <- function(dat,
                x = lbl_y,
                y = "") +
           common_theme +
-          theme(legend.position = "none")
+          theme(legend.position = "none",
+                axis.text.x = angle_settings # Orientacion de las etiquetas del eje X
+                )
 
         if(bw) graficos[[i]] <- graficos[[i]] + geom_jitter(width = 0.2, height = 0, alpha = 0.7)   # Puntos dispersos
 
