@@ -39,7 +39,7 @@
 #' @importFrom pROC roc auc
 #' @export
 
-plot_multi_roc <- function(modelos, datos, outcome, colores = NULL) {
+plot_multi_roc <- function(modelos, datos, outcome, colores = NULL, text.xlim = 0.15, text.ylim = 0.7 ) {
 
   # Verificar si se proporcionan colores o asignarlos automáticamente
   if (is.null(colores)) {
@@ -74,6 +74,6 @@ plot_multi_roc <- function(modelos, datos, outcome, colores = NULL) {
   # Añadir leyenda al gráfico
   legend("bottomright", legend = legend_text, col = colores, lwd = 2, bg = "white")
   # Añadir texto con los niveles de control y caso
-  text(0.5, 0.25, paste0("controls: ", roc_modelo[[i]]$levels[1], "\n cases: ", roc_modelo[[i]]$levels[2]), cex = 1)
+  text(text.xlim, text.ylim, paste0("controls: ", roc_modelo[[i]]$levels[1], "\n cases: ", roc_modelo[[i]]$levels[2]), cex = 1)
 
 }
