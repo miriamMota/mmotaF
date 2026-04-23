@@ -74,11 +74,13 @@ desc_unimods <- function(y, var2test, data, type = NULL,
     stop("Cálculo de p-valor global no está implementado para modelos mixtos (con efectos aleatorios).")
   }
 
+  data_or <- data # Guardamos data original porque se modifica en el p-global
   unimod_df <- NULL
   mod <- list()
   global_pvals <- c()
 
   for (i in seq_along(var2test)) {
+    data <- data_or # cada iteración con los datos originales
     # Construir fórmula con o sin efecto aleatorio
     if (is.null(random_effect)) {
       frml <- as.formula(paste0(y, " ~ ", var2test[i]))
@@ -102,6 +104,8 @@ desc_unimods <- function(y, var2test, data, type = NULL,
     )
 
     if (show.p.global){
+      vars <- all.vars(frml)
+      data <- data[complete.cases(data[, vars]), ]
       # Calcular p-valor global
       if(type == "linear"){
         global_pvals[[Hmisc::label(data[[var2test[i]]])]] <- anova(mod[[var2test[i]]])$`Pr(>F)`[1]
